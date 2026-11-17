@@ -22,7 +22,8 @@ const SEC: Record<string, { emoji: string; c: string; en: string; ar: string }> 
 function CarText({ text }: { text: string }) {
   const m = text.match(/^([^:.؛:]{3,60})[:：]\s*(.*)$/s);
   const body = (t: string) => t.split(/(\b[PRNDM]\b(?=[\s,./)]|$))/g).map((part, i) => /^[PRNDM]$/.test(part) ? <kbd key={i} className="gear">{part}</kbd> : <Hl key={i} text={part} />);
-  return m ? <><strong className="ct-title">{m[1]}</strong> {body(m[2])}</> : <>{body(text)}</>;
+  if (/\*\*|==/.test(text)) return <span><Md text={text} /></span>;
+  return <span>{m ? <><strong className="ct-title">{m[1]}</strong> {body(m[2])}</> : body(text)}</span>;
 }
 
 function VTag({ it }: { it: any }) {
