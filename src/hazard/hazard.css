@@ -1,0 +1,47 @@
+/* Hazard perception test */
+.hz { max-width: 1000px; margin: 0 auto; padding: 1rem; }
+.hz-head h1 { font: 800 1.7rem/1.2 var(--f-sign); color: var(--sign); margin: 0.5rem 0 0.25rem; }
+.hz-h { font: 700 1.2rem/1.3 var(--f-sign); margin: 1rem 0 0.5rem; }
+.hz-step { font: 700 0.95rem var(--f-sign); color: var(--ink-2); margin: 0.75rem 0 0.5rem; }
+.hz-lede { font-size: 1.1rem; max-width: var(--measure); }
+.hz-rules { max-width: var(--measure); padding-inline-start: 1.2rem; }
+.hz-rules li { margin: 0.3rem 0; }
+.hz-note, .hz-warn { border-inline-start: 4px solid var(--amber); background: var(--darb-bg); padding: 0.6rem 0.8rem; border-radius: var(--radius); max-width: var(--measure); }
+.hz-warn { border-color: var(--must); background: #fbe9e7; }
+.hz-check { display: flex; gap: 0.5rem; align-items: center; margin: 0.75rem 0; }
+.hz-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1rem 0; }
+.hz-ready { text-align: center; padding: 3rem 1rem; background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); }
+
+.hz-player { background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); padding: 0.5rem; box-shadow: var(--shadow); }
+.hz-stage { position: relative; aspect-ratio: 16 / 9; background: #111; border-radius: 4px; overflow: hidden; cursor: crosshair; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; outline: none; }
+.hz-stage.review { cursor: default; }
+.hz-stage:focus-visible { box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--amber); }
+.hz-canvas { display: block; width: 100%; height: 100%; object-fit: contain; }
+.hz-count { position: absolute; inset-inline-start: 0.6rem; top: 0.6rem; background: rgb(0 0 0 / 0.55); color: #fff; font: 700 0.85rem var(--f-sign); padding: 0.2rem 0.55rem; border-radius: 4px; }
+.hz-pulse { position: absolute; inset: 0; pointer-events: none; border: 0 solid var(--amber); }
+.hz-pulse.on { animation: hz-pulse 0.35s ease-out; }
+@keyframes hz-pulse { from { border-width: 8px; } to { border-width: 0; } }
+@media (prefers-reduced-motion: reduce) { .hz-pulse.on { animation: none; } }
+
+.hz-tl { margin: 0.6rem 0.2rem 0.2rem; }
+.hz-tl-track { position: relative; height: 26px; background: var(--rule-2); border-radius: 3px; }
+.hz-tl-prog { position: absolute; inset-block: 0; left: 0; background: var(--rule); border-radius: 3px; }
+.hz-tl-win { position: absolute; inset-block: 0; display: flex; }
+.hz-tl-win span { flex: 1; display: grid; place-items: center; font: 700 0.7rem var(--f-sign); color: #fff; }
+.hz-tl-win .s5 { background: #00663d; } .hz-tl-win .s4 { background: #2f8a55; } .hz-tl-win .s3 { background: #6aa84f; }
+.hz-tl-win .s2 { background: #c9a227; } .hz-tl-win .s1 { background: #d9822b; }
+.hz-flag { position: absolute; top: -6px; width: 2px; height: 32px; background: var(--must); transform: translateX(-1px); }
+.hz-flag::after { content: ""; position: absolute; top: 0; left: 2px; border: 6px solid transparent; border-left: 9px solid var(--must); border-top-width: 5px; border-bottom-width: 5px; }
+.hz-seek { width: 100%; margin-top: 0.4rem; accent-color: var(--sign); }
+.hz-ctrl { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; padding: 0.3rem 0.2rem; font-size: 0.9rem; }
+.hz-time { font: 700 0.9rem var(--f-sign); }
+
+.hz-score { display: flex; flex-direction: column; gap: 0.2rem; padding: 1rem 1.2rem; border-radius: var(--radius); color: #fff; background: var(--sign); margin: 1rem 0; }
+.hz-score.fail { background: var(--fronx); }
+.hz-score strong { font: 800 2.2rem/1 var(--f-sign); }
+.hz-table { width: 100%; border-collapse: collapse; background: var(--paper); }
+.hz-table th, .hz-table td { text-align: start; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--rule); }
+.hz-tag { margin-inline-start: 0.5rem; font: 700 0.75rem var(--f-sign); color: var(--must); }
+.hz-pts { color: var(--sign); }
+.hz-hz { padding-inline-start: 1.2rem; }
+.hz .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }

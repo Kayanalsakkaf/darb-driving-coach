@@ -9,6 +9,7 @@ import { JourneyPage, ReadyPage, SkillsPage, TestsPage, LicencePage } from "./pa
 import { TheoryIndex, TopicPage, SignsPage } from "./pages/Theory";
 import { CarPage } from "./pages/Car";
 import { TheoryTestPage } from "./pages/TheoryTest";
+import { HazardPage } from "./hazard/HazardTest";
 import { LessonsPage, LessonPage } from "./pages/Lessons";
 import { SettingsPage } from "./pages/Log";
 
@@ -40,6 +41,7 @@ export function App() {
             <Route path="/theory/:id" element={<TopicPage />} />
             <Route path="/car" element={<CarPage />} />
             <Route path="/theory-test" element={<TheoryTestPage />} />
+            <Route path="/theory-test/hazard" element={<HazardPage />} />
             <Route path="/lessons" element={<LessonsPage />} />
             <Route path="/lessons/:id" element={<LessonPage />} />
             <Route path="/skills" element={<SkillsPage />} />

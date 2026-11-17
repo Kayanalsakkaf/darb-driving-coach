@@ -77,13 +77,13 @@ export function drive(keys: number[][]) {
 export const ourLane = (e: { median: number }, i: number) => e.median / 2 + (i + 0.5) * LW;
 export const oppLane = (e: { median: number }, i: number) => -(e.median / 2 + (i + 0.5) * LW);
 
-const H = 0; // shorthand for readability in keyframes
+
 
 /* ---------------- Practice clip ---------------- */
 function practice(): Scene {
   const speed = [[0, 10], [17, 10], [19.5, 4], [22, 4], [25, 10], [35, 10]];
   const c = drive(speed);
-  const env: Env = { look: "city", lanes: 1, median: 0, parking: "parallel", parkedGaps: [[194, 206]], oncoming: 3, seed: 3 };
+  const env: Env = { look: "city", lanes: 1, median: 0, parking: "parallel", parkedGaps: [[183, 206]], oncoming: 3, seed: 3 };
   return {
     id: "practice", en: "Practice: parked car pulling out", ar: "تدريب: سيارة متوقفة تخرج إلى الطريق",
     capEn: "The parked car's left indicator comes on and it starts to move out into your lane. The hazard develops as soon as it signals and edges out.",
@@ -106,7 +106,7 @@ function s1(): Scene {
     env: { look: "city", lanes: 1, median: 0, oncoming: 3, buildGaps: [[320, 341]], seed: 11 },
     marks: [{ type: "sideroad", z: 325.5, w: 10, side: 1 }],
     actors: [{
-      kind: "suv", color: "#e8e6df",
+      kind: "suv", color: "#b03a2e",
       k: [[0, 15, 328], [20.5, 14, 328], [23, 9, 328], [24, 7.5, 328.5], [25.5, 4.5, 330], [26.8, 2.2, 334], [28, 1.75, 338], [30, 1.75, c.z(30) + 12], [33, 1.75, c.z(33) + 16], [40, 1.75, c.z(40) + 30], [56, 1.75, c.z(56) + 70]],
       face: [[0, "side", -1], [26.3, "rear"]], blink: [[20.5, 28, "r"]],
     }],
@@ -343,4 +343,4 @@ function s14(): Scene {
 
 export const PRACTICE: Scene = practice();
 export const SCENES: Scene[] = [s1(), s2(), s3(), s4(), s5(), s6(), s7(), s8(), s9(), s10(), s11(), s12(), s13(), s14()];
-void H;
+
