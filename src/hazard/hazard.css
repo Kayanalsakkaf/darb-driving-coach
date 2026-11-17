@@ -6,8 +6,8 @@
 .hz-lede { font-size: 1.1rem; max-width: var(--measure); }
 .hz-rules { max-width: var(--measure); padding-inline-start: 1.2rem; }
 .hz-rules li { margin: 0.3rem 0; }
-.hz-note, .hz-warn { border-inline-start: 4px solid var(--amber); background: var(--darb-bg); padding: 0.6rem 0.8rem; border-radius: var(--radius); max-width: var(--measure); }
-.hz-warn { border-color: var(--must); background: #fbe9e7; }
+.hz-note, .hz-warn { border: 1px solid #ecd58a; background: var(--darb-bg); padding: 0.6rem 0.8rem; border-radius: var(--radius); max-width: var(--measure); }
+.hz-warn { border-color: #f0b7b1; background: #fbe9e7; }
 .hz-check { display: flex; gap: 0.5rem; align-items: center; margin: 0.75rem 0; }
 .hz-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1rem 0; }
 .hz-ready { text-align: center; padding: 3rem 1rem; background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); }

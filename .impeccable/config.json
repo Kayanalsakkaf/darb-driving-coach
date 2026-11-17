@@ -11,6 +11,15 @@
         ],
         "createdAt": "2026-11-17T19:02:36.428Z",
         "reason": "assistant: L454 .topic-head is a 3px bottom rule on an unrounded header, not a rounded card"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/hazard/hazard.css"
+        ],
+        "createdAt": "2026-11-17T21:44:27.903Z",
+        "reason": "assistant: L34 .hz-flag::after is a CSS-triangle flag pennant on the timeline, not a card accent"
       }
     ]
   }
