@@ -5,6 +5,7 @@ import "../data/bank.js";
 import { useStore, today, uid } from "../lib/store";
 import type React from "react";
 import { SrcTag, StepList } from "../components/ui";
+import { YouTube, VIDEOS } from "../components/YouTube";
 import { THEORY_BOOK } from "../lib/journey";
 
 type Q = { id: string; topic: string; q: any; o: any[]; a: number[]; x?: any; src?: "moroor" | "dvsa"; ref?: string; img?: string; caseId?: string };
@@ -150,6 +151,10 @@ export function TheoryTestPage({ embedded = false }: { embedded?: boolean }) {
           <Link className="btn big" to="/theory-test/hazard">{ar ? "ابدأ" : "Start hazard test"}</Link>
         </section>
       </div>
+      <section className="yt-row">
+        <h3>{ar ? "أدلة DVSA الرسمية بالفيديو" : "Official DVSA video guides"}</h3>
+        <div className="yt-grid"><YouTube v={VIDEOS.theory} /><YouTube v={VIDEOS.hazard} /></div>
+      </section>
       {mocks.length ? (
         <section>
           <h2>{ar ? "نتائجك" : "Your mock results"}</h2>

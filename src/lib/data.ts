@@ -7,6 +7,9 @@ import "../data/diagrams.js";
 import "../data/hb.js";
 import "../data/hc.js";
 import "../data/lessons.js";
+import "../data/bank.js";
+/* Optional gap-fill content (DVSA syllabus): merged into lessons and the question bank when present. */
+const _gap = import.meta.glob("../data/gapfill.js", { eager: true }); void _gap;
 import car from "../data/car.js";
 import figures, { points as figPoints } from "../data/figures.js";
 
@@ -29,6 +32,13 @@ export const FIGURES: { id: string; page: number; src: string; ar: string; en: s
 export const FIG_POINTS: { page: number; topic: string; ar: string; en: string }[] = ((figPoints as any[]) || []).map((f) => ({ ...f, page: pp(f) }));
 
 export const CHAPTERS: any[] = COURSE.chapters;
+const GAP = D.gapfill || { questions: [], lessonPoints: [] };
+for (const { to, point } of GAP.lessonPoints || []) {
+  const l = D.lessons2.lessons.find((x: any) => x.id === to) || D.lessons2.theoryOnly.find((x: any) => x.id === to);
+  if (l) (l.before || l.points).push({ ...point, gap: true });
+}
+if (D.bank && GAP.questions?.length) D.bank.questions.push(...GAP.questions.filter((q: any) => !D.bank.questions.some((b: any) => b.id === q.id)));
+export const SYLLABUS: any[] = GAP.syllabus || [];
 export const LESSONS: any[] = D.lessons2.lessons;
 export const THEORY_ONLY: { id: string; en: string; ar: string; points: any[] }[] = D.lessons2.theoryOnly;
 export const FIG = Object.fromEntries((figures as any[]).map((f) => [f.id, { ...f, page: f.printedPage ?? f.page - 1, src: "img/hbf/" + f.src }]));

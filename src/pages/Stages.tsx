@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { NotebookPen, ClipboardCheck, ListChecks, Flag, IdCard } from "lucide-react";
 import { TheoryTestPage } from "./TheoryTest";
+import { YouTube, VIDEOS } from "../components/YouTube";
 import { LogPage } from "./Log";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useStore, setSkill } from "../lib/store";
@@ -158,6 +159,7 @@ export function TestsPage() {
         <h2 className="plate"><span className="sec-no">3</span> {parts[2][2]}</h2>
         <StepList steps={BOOK_STEPS} />
         {tests ? <section className="know"><h3>{ar ? "ماذا يتضمن الاختبار" : "What the test involves"} <SrcTag src="darb" /></h3><ul>{tests.teach.map((x: any, k: number) => <li key={k}><Md text={ar ? x.ar : x.en} /></li>)}</ul><Blocks blocks={tests.blocks} /></section> : null}
+        <div className="yt-grid"><YouTube v={VIDEOS.driving} /><YouTube v={VIDEOS.tellme} /></div>
         <div className="check-grid"><Checklist id="week" /><Checklist id="day" /></div>
         <Checklist id="mock" />
         <section className="reference">

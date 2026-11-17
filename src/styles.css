@@ -727,3 +727,13 @@ kbd.gear { display: inline-grid; place-items: center; min-width: 1.45em; height:
 .rule-flat { list-style: none; padding: 0; display: grid; gap: 0.4rem; }
 .rule-flat li { --c: var(--ink-3); background: var(--paper); border-radius: 8px; padding: 0.65rem 0.9rem; box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--c) 35%, transparent); line-height: 1.55; }
 @media (max-width: 720px) { .part-road { grid-template-columns: 1fr 1fr; } }
+.yt-row { margin: 1.5rem 0; }
+.yt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 1rem; margin: 1rem 0; }
+.yt { margin: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.yt-frame { aspect-ratio: 16 / 9; background: #000; }
+.yt-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.yt-poster { width: 100%; height: 100%; border: 0; cursor: pointer; background-size: cover; background-position: center; color: #fff; display: grid; place-items: center; }
+.yt-poster svg { filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.6)); transition: transform 0.2s; }
+.yt-poster:hover svg { transform: scale(1.08); }
+.yt figcaption { padding: 0.65rem 0.85rem; display: grid; gap: 0.2rem; font-size: 0.92rem; }
+.yt-cite { font-size: 0.8rem; color: var(--ink-3); }
