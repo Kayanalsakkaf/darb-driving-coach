@@ -231,7 +231,7 @@ input:focus-visible + .box { outline: 3px solid var(--amber); outline-offset: 2p
 .topic-list .read .t-name { color: var(--ink-3); }
 
 .topic > h1 { margin-bottom: 0.6rem; }
-.know { background: var(--paper); border: 1px solid var(--rule); border-top: 4px solid var(--amber); border-radius: 8px; padding: 0.25rem 1.25rem 1rem; margin: 1.5rem 0; }
+.know { background: var(--darb-bg); border: 1px solid #ecd58a; border-radius: 8px; padding: 0.25rem 1.25rem 1rem; margin: 1.5rem 0; }
 .know h2 { margin-top: 1rem; display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; font-size: 1.15rem; }
 .know ul { max-width: var(--measure); }
 .know li { margin-bottom: 0.4rem; }
