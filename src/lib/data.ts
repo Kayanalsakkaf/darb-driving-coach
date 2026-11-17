@@ -35,7 +35,7 @@ export const CHAPTERS: any[] = COURSE.chapters;
 const GAP = D.gapfill || { questions: [], lessonPoints: [] };
 for (const { to, point } of GAP.lessonPoints || []) {
   const l = D.lessons2.lessons.find((x: any) => x.id === to) || D.lessons2.theoryOnly.find((x: any) => x.id === to);
-  if (l) (l.before || l.points).push({ ...point, gap: true });
+  if (l) (l.before || l.points).push({ ...point, topic: /^k\d+$/.test(point.topic || "") ? point.topic : undefined, gap: true });
 }
 if (D.bank && GAP.questions?.length) D.bank.questions.push(...GAP.questions.filter((q: any) => !D.bank.questions.some((b: any) => b.id === q.id)));
 export const SYLLABUS: any[] = GAP.syllabus || [];
