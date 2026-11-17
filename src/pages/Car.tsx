@@ -1,6 +1,7 @@
 import { Check } from "lucide-react";
 import { useStore } from "../lib/store";
-import { CAR, CH } from "../lib/data";
+import { CAR, CH, LES } from "../lib/data";
+import { Link } from "react-router-dom";
 import { Checklist, Hl, Md, NextPrev, SrcTag, StageHead } from "../components/ui";
 
 const URG: Record<string, { en: string; ar: string }> = {
@@ -22,6 +23,23 @@ function CarText({ text }: { text: string }) {
   const m = text.match(/^([^:.؛:]{3,60})[:：]\s*(.*)$/s);
   const body = (t: string) => t.split(/(\b[PRNDM]\b(?=[\s,./)]|$))/g).map((part, i) => /^[PRNDM]$/.test(part) ? <kbd key={i} className="gear">{part}</kbd> : <Hl key={i} text={part} />);
   return m ? <><strong className="ct-title">{m[1]}</strong> {body(m[2])}</> : <>{body(text)}</>;
+}
+
+function VTag({ it }: { it: any }) {
+  const { ar } = useStore();
+  if (!it.variant || it.variant === "both") return <span className="vtag v-all">{ar ? "كل الفرونكس" : "All Fronx"}</span>;
+  return <span className={"vtag v-" + (it.variant === "manual" ? "manual" : "auto")}>{it.variant === "manual" ? (ar ? "يدوي فقط" : "Manual only") : it.autoType === "AGS" ? "AGS" : ar ? "أوتوماتيك (سيارتك)" : "Automatic (your car)"}</span>;
+}
+
+/** Manual page + the lessons where this comes up again. */
+function ItemFoot({ it }: { it: any }) {
+  const { ar, L } = useStore();
+  return (
+    <p className="ci-meta">
+      <span className="pg">📖 {(ar ? "ص " : "p. ") + it.page}</span>
+      {it.lessons?.length ? <span className="again">🔁 {ar ? "يتكرر في" : "Comes up again in"} {it.lessons.map((id: string) => <Link key={id} to={"/lessons/" + id} className="again-chip" title={LES[id] ? L(LES[id]) : id}>{id}</Link>)}</span> : null}
+    </p>
+  );
 }
 
 export function CarPage() {
@@ -61,8 +79,13 @@ export function CarPage() {
                     {it.icon ? <img src={"car/" + it.icon} alt="" width={48} height={48} /> : <span className="light-noicon" />}
                     <div>
                       <span className="urg">{L(URG[it.urgency || "info"])}</span>
-                      <p><CarText text={L(it)} /></p>
-                      <span className="pg">{pg(it.page)}</span>
+                      {it.title ? <>
+                        <h3 className="lt-title">{L(it.title)}</h3>
+                        {it.looks ? <p className="lt-row"><span>👁️ {ar ? "شكله" : "Looks like"}</span> <span><Md text={L(it.looks)} /></span></p> : null}
+                        {it.means ? <p className="lt-row"><span>💡 {ar ? "معناه" : "Means"}</span> <span><Md text={L(it.means)} /></span></p> : null}
+                        {it.todo ? <p className="lt-row todo"><span>👉 {ar ? "افعل" : "Do this"}</span> <span><Md text={L(it.todo)} /></span></p> : null}
+                      </> : <p><CarText text={L(it)} /></p>}
+                      <ItemFoot it={it} />
                     </div>
                   </li>
                 ))}
@@ -73,9 +96,17 @@ export function CarPage() {
                   <article key={it.id} className="car-item">
                     {it.fig ? <img className="car-fig" src={"car/" + it.fig} alt="" loading="lazy" /> : null}
                     <div>
-                      <p><CarText text={L(it)} /></p>
-                      <p className="ci-meta"><span className="pg">📖 {pg(it.page)}</span>{it.variant && it.variant !== "both" ? <span className={"vtag v-" + (it.variant === "manual" ? "manual" : "auto")}>{it.variant === "manual" ? (ar ? "يدوي فقط" : "Manual only") : it.autoType ? (it.autoType === "AT" ? (ar ? "أوتوماتيك (سيارتك)" : "Automatic (your car)") : "AGS") : ar ? "أوتوماتيك" : "Automatic"}</span> : <span className="vtag v-all">{ar ? "كل الفرونكس" : "All Fronx"}</span>}</p>
-                      {it.steps?.length ? <ol className="ci-steps">{it.steps.map((st: any, k: number) => <li key={k}><CarText text={L(st)} /></li>)}</ol> : null}
+                      {it.title ? <>
+                        <h3 className="ci-title">{L(it.title)} <VTag it={it} /></h3>
+                        {it.what ? <p className="ci-row"><span className="ci-k">📍 {ar ? "ما هو وأين" : "What and where"}</span> <span><Md text={L(it.what)} /></span></p> : null}
+                        {it.does ? <p className="ci-row"><span className="ci-k">⚡ {ar ? "ماذا يفعل" : "What it does"}</span> <span><Md text={L(it.does)} /></span></p> : null}
+                        {(it.how || it.steps)?.length ? <><p className="ci-k how">🛠️ {ar ? "كيف تستخدمه" : "How to use it"}</p><ol className="ci-steps">{(it.how || it.steps).map((st: any, k: number) => <li key={k}><CarText text={L(st)} /></li>)}</ol></> : null}
+                        {it.tip ? <p className="ci-tip"><b>⚠️ {ar ? "انتبه:" : "Watch out:"}</b> <Md text={L(it.tip)} /></p> : null}
+                      </> : <>
+                        <p><CarText text={L(it)} /> <VTag it={it} /></p>
+                        {it.steps?.length ? <ol className="ci-steps">{it.steps.map((st: any, k: number) => <li key={k}><CarText text={L(st)} /></li>)}</ol> : null}
+                      </>}
+                      <ItemFoot it={it} />
                     </div>
                   </article>
                 ))}
