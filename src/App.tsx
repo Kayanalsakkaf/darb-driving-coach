@@ -1,13 +1,22 @@
+import type React from "react";
 import { useEffect } from "react";
 import { HashRouter, Route, Routes, useLocation } from "react-router-dom";
 import { StoreProvider } from "./lib/store";
 import { Masthead } from "./components/ui";
+import { STAGE_HUE } from "./components/Street";
+import { STAGES } from "./lib/journey";
 import { JourneyPage, ReadyPage, SkillsPage, TestsPage, LicencePage } from "./pages/Stages";
 import { TheoryIndex, TopicPage, SignsPage } from "./pages/Theory";
 import { CarPage } from "./pages/Car";
 import { TheoryTestPage } from "./pages/TheoryTest";
 import { LessonsPage, LessonPage } from "./pages/Lessons";
 import { LogPage, SettingsPage } from "./pages/Log";
+
+function Main({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation();
+  const st = STAGES.find((x) => pathname.startsWith(x.path));
+  return <div id="main" data-stage={st?.id || "home"} style={{ ["--hue" as any]: st ? STAGE_HUE[st.id] : "#00663d" }}>{children}</div>;
+}
 
 function ScrollTop() {
   const { pathname } = useLocation();
@@ -22,7 +31,7 @@ export function App() {
         <ScrollTop />
         <a className="skip" href="#main">Skip to content</a>
         <Masthead />
-        <div id="main">
+        <Main>
           <Routes>
             <Route path="/" element={<JourneyPage />} />
             <Route path="/ready" element={<ReadyPage />} />
@@ -40,7 +49,7 @@ export function App() {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<JourneyPage />} />
           </Routes>
-        </div>
+        </Main>
       </HashRouter>
     </StoreProvider>
   );

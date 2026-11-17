@@ -13,7 +13,7 @@ export type Progress = {
   read: Record<string, { at: string }>;
   steps: Record<string, { at: string }>;
 };
-export type LogEntry = { id: string; userId: string; by: string; date: string; durationMin: number; lesson: string; area: string; skills: { id: string; level: number }[]; notes: string; next: string };
+export type LogEntry = { id: string; userId: string; by: string; date: string; durationMin: number; lessons: string[]; area: string; skills: { id: string; level: number }[]; notes: string; next: string };
 export type Attempt = { id: string; userId: string; date: string; kind: "mock" | "practice"; score: number; total: number };
 export type State = { schema: 3; app: "darb"; users: User[]; activeUser: string; lang: Lang; gearbox: "auto" | "manual"; progress: Record<string, Progress>; logs: LogEntry[]; attempts: Attempt[] };
 
@@ -29,7 +29,7 @@ function fresh(): State {
 /** Accepts a v3 state or the earlier Darb v2 export and returns a v3 state. */
 export function migrate(raw: any): State | null {
   if (!raw || raw.app !== "darb") return null;
-  if (raw.schema === 3) return { ...fresh(), ...raw };
+  if (raw.schema === 3) return { ...fresh(), ...raw, logs: (raw.logs || []).map((l: any) => ({ ...l, lessons: l.lessons || (l.lesson ? [l.lesson] : []) })) };
   if (raw.schema === 2) {
     const s = fresh();
     s.users = (raw.profiles?.learners || s.users).map((u: any) => ({ id: u.id, name: u.name }));
@@ -38,7 +38,7 @@ export function migrate(raw: any): State | null {
     const names: Record<string, string> = {};
     [...(raw.profiles?.learners || []), ...(raw.profiles?.instructors || [])].forEach((p: any) => (names[p.id] = p.name));
     for (const [id, p] of Object.entries<any>(raw.progress || {})) s.progress[id] = { ...emptyProgress(), ...p };
-    s.logs = (raw.logs || []).map((l: any) => ({ id: l.id, userId: l.learnerId, by: names[l.instructorId] || "", date: l.date, durationMin: l.durationMin || 0, lesson: l.lesson || "", area: l.area || "", skills: (l.skills || []).map((x: any) => ({ id: String(x.skillId || x.id), level: x.level })), notes: l.notes || "", next: l.next || "" }));
+    s.logs = (raw.logs || []).map((l: any) => ({ id: l.id, userId: l.learnerId, by: names[l.instructorId] || "", date: l.date, durationMin: l.durationMin || 0, lessons: l.lesson ? [l.lesson] : [], area: l.area || "", skills: (l.skills || []).map((x: any) => ({ id: String(x.skillId || x.id), level: x.level })), notes: l.notes || "", next: l.next || "" }));
     s.attempts = (raw.attempts || []).map((a: any) => ({ id: a.id || uid("a"), userId: a.learnerId, date: a.date || a.at || today(), kind: a.kind === "practice" ? "practice" : "mock", score: a.score ?? 0, total: a.total ?? 50 }));
     return s;
   }

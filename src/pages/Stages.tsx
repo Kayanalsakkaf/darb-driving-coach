@@ -6,6 +6,7 @@ import { STAGES, READY_STEPS, BOOK_STEPS, DVSA_BOOKING } from "../lib/journey";
 import { useStageStatus, CORE_SKILLS, TOPICS, topicTitle } from "../lib/progress";
 import { Checklist, LevelPicker, Md, NextPrev, Shield, SrcTag, StageHead, StepList } from "../components/ui";
 import { Blocks } from "./Theory";
+import { STAGE_HUE } from "../components/Street";
 
 /* ---------- Home: where am I on the road ---------- */
 export function JourneyPage() {
@@ -34,7 +35,7 @@ export function JourneyPage() {
           const s = st[x.id];
           const state = s.done ? "done" : x.id === st.next ? "here" : "ahead";
           return (
-            <li key={x.id} className={"road-stop " + state}>
+            <li key={x.id} className={"road-stop " + state} style={{ ["--stop-hue" as any]: STAGE_HUE[x.id] }}>
               <Link to={x.path}>
                 <Shield n={x.n} />
                 <span className="rs-main"><span className="rs-name">{L(x)}</span><span className="rs-desc">{ar ? x.dAr : x.dEn}</span></span>

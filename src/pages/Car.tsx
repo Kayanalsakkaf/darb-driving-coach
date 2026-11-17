@@ -12,23 +12,21 @@ const URG: Record<string, { en: string; ar: string }> = {
 export function CarPage() {
   const { L, ar, s, set, p, toggle } = useStore();
   const gb = s.gearbox;
-  const fits = (v?: string) => !v || v === "both" || v === gb;
+  const fits = (v?: string) => !v || v === "both" || v === "auto" || (gb === "manual" && v === "manual");
   const pg = (x: string) => (ar ? "ص " : "p. ") + x;
   return (
     <main className="page car">
       <StageHead id="car" />
       <div className="car-intro">
-        <p className="measure">{ar ? "تعرّف على السيارة قبل أن تتحرك. كل نقطة من دليل مالك فرونكس مع رقم الصفحة." : "Learn the car before it moves. Every point comes from the Fronx owner's manual, with its page number."}</p>
-        <div className="seg" role="radiogroup" aria-label={ar ? "ناقل الحركة" : "Gearbox"}>
-          {(["auto", "manual"] as const).map((g) => (
-            <button key={g} role="radio" aria-checked={gb === g} onClick={() => set((n) => { n.gearbox = g; })}>
-              {g === "auto" ? (ar ? "أوتوماتيك" : "Automatic") : ar ? "يدوي" : "Manual"}
-            </button>
-          ))}
-        </div>
+        <p className="measure">{ar ? "سيارتك: سوزوكي فرونكس GLX 1.5 أوتوماتيك 2026. كل نقطة من دليل مالك فرونكس مع رقم الصفحة." : "Your car: 2026 Suzuki Fronx GLX 1.5 automatic. Every point comes from the Fronx owner's manual, with its page number."}</p>
+        <label className="toggle-row">
+          <input type="checkbox" checked={gb === "manual"} onChange={(e) => set((n) => { n.gearbox = e.target.checked ? "manual" : "auto"; })} />
+          <span className="switch" aria-hidden="true" />
+          {ar ? "أظهر معلومات ناقل الحركة اليدوي أيضا" : "Also show manual-gearbox info"}
+        </label>
       </div>
       <nav className="toc-inline" aria-label={ar ? "الأقسام" : "Sections"}>
-        {CAR.sections.map((sec: any) => <a key={sec.id} href={"#car-" + sec.id} className={p.read["car:" + sec.id] ? "read" : ""}>{L(sec)}</a>)}
+        {CAR.sections.map((sec: any) => <a key={sec.id} href={"#car-" + sec.id} className={p.read["car:" + sec.id] ? "read" : ""}>{L(sec)}</a>)}<a href="#car-annex">{ar ? "ملحق اليدوي" : "Manual annex"}</a>
       </nav>
 
       {CAR.sections.map((sec: any) => {
@@ -75,7 +73,14 @@ export function CarPage() {
           </section>
         );
       })}
-      {CH["c-car"] && gb === "auto" ? (
+      <section id="car-annex" className="car-sec annex">
+        <header className="car-sec-head"><h2>{ar ? "ملحق: سيارات ناقل الحركة اليدوي" : "Annex: manual-gearbox cars"}</h2><SrcTag src="fronx" /></header>
+        <p className="muted measure">{ar ? "سيارتك أوتوماتيك. هذا للرجوع إليه إذا قدت سيارة يدوية، مثل سيارة المدرسة." : "Your car is automatic. This is for reference if you drive a manual, such as a school car."}</p>
+        <div className="car-items">{CAR.sections.flatMap((sec: any) => sec.items.filter((it: any) => it.variant === "manual")).map((it: any) => (
+          <article key={it.id} className="car-item"><div><p><Md text={L(it)} /> <span className="muted">{pg(it.page)}</span></p>{it.steps?.length ? <ol>{it.steps.map((st: any, k: number) => <li key={k}>{L(st)}</li>)}</ol> : null}</div></article>
+        ))}</div>
+      </section>
+      {CH["c-car"] ? (
         <section className="know">
           <h2>{ar ? "ملاحظات المدرب عن الفرونكس" : "Coach's notes on the Fronx"} <SrcTag src="darb" /></h2>
           <ul>{CH["c-car"].teach.map((x: any, k: number) => <li key={k}><Md text={L(x)} /></li>)}</ul>

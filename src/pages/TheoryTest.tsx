@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Check, X, Timer } from "lucide-react";
 import { useStore, today, uid } from "../lib/store";
 import { QUESTIONS, QTOPICS, SIGNS } from "../lib/data";
-import { NextPrev, SrcTag, StageHead } from "../components/ui";
+import { NextPrev, SrcTag, StageHead, StepList } from "../components/ui";
+import { THEORY_BOOK } from "../lib/journey";
 import { TOPICS } from "../lib/progress";
 
 type Q = { id: string; q: any; o: any[]; a: number; x?: any; img?: string; src?: { hb?: number; hc?: number | string }; t: string };

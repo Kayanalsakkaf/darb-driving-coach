@@ -17,7 +17,7 @@ export function topicsForLesson(l: any) {
 
 export function LessonsPage() {
   const { L, ar, p, s, user } = useStore();
-  const logged = new Set(s.logs.filter((x) => x.userId === user.id).map((x) => x.lesson));
+  const logged = new Set(s.logs.filter((x) => x.userId === user.id).flatMap((x) => x.lessons));
   return (
     <main className="page">
       <StageHead id="lessons" />

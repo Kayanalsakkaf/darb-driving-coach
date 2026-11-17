@@ -1,10 +1,12 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Check, ChevronDown, ExternalLink, FileImage, ArrowRight, ArrowLeft } from "lucide-react";
+import { Check, ChevronDown, ExternalLink, FileImage, ArrowRight, ArrowLeft, BookOpen, Car, Route, Gauge, ClipboardCheck, ListChecks, Flag, IdCard } from "lucide-react";
+export const STAGE_ICON: Record<string, any> = { theory: BookOpen, car: Car, lessons: Route, skills: Gauge, ready: ClipboardCheck, "theory-test": ListChecks, tests: Flag, licence: IdCard };
 import { useStore } from "../lib/store";
 import { STAGES, SRC_LABEL, type Src } from "../lib/journey";
 import { CHECKLISTS, LEVELS } from "../lib/data";
 import { useStageStatus as stageStatus } from "../lib/progress";
+import { Street } from "./Street";
 
 /* Inline markup in course text: **bold** __underline__ !!must!! ++priority++ ==number== */
 export function Md({ text }: { text: string }) {
@@ -71,10 +73,8 @@ export function Masthead() {
   const st = stageStatus();
   const loc = useLocation();
   const current = STAGES.find((x) => loc.pathname.startsWith(x.path));
-  const strip = useRef<HTMLElement>(null);
   const [menu, setMenu] = useState(false);
   useEffect(() => { setMenu(false); }, [loc.pathname]);
-  useEffect(() => { const el = strip.current?.querySelector<HTMLElement>("[aria-current=page]") || strip.current?.querySelector<HTMLElement>(".exit-next a"); const nav = strip.current; if (el && nav) nav.scrollTo({ left: el.offsetLeft - nav.clientWidth / 2 + el.clientWidth / 2 }); }, [current?.id]);
   return (
     <header className="sign">
       <div className="sign-top">
@@ -95,22 +95,7 @@ export function Masthead() {
           <NavLink to="/settings" className="tool-link">{ar ? "الإعدادات" : "Settings"}</NavLink>
         </div>
       </div>
-      <nav ref={strip} className="exits" aria-label={ar ? "مراحل الرحلة" : "Journey stages"}>
-        <ol>
-          {STAGES.map((x) => {
-            const state = st[x.id].done ? "done" : current?.id === x.id ? "here" : st.next === x.id ? "next" : "ahead";
-            return (
-              <li key={x.id} className={"exit exit-" + state}>
-                <NavLink to={x.path} aria-current={current?.id === x.id ? "page" : undefined}>
-                  <span className="exit-no">{ar ? "مخرج" : "Exit"} {x.n}</span>
-                  <span className="exit-name">{L(x)}</span>
-                  <span className="exit-state">{st[x.id].done ? <><Check size={14} strokeWidth={3} /> {ar ? "تم" : "Done"}</> : current?.id === x.id ? (ar ? "أنت هنا" : "You are here") : st.next === x.id ? (ar ? "التالي" : "Next") : st[x.id].pct ? <bdi>{st[x.id].pct}%</bdi> : ""}</span>
-                </NavLink>
-              </li>
-            );
-          })}
-        </ol>
-      </nav>
+      <nav className="street-nav" aria-label={ar ? "مراحل الرحلة" : "Journey stages"}><Street /></nav>
       <p className="vh">{user.name}</p>
     </header>
   );
@@ -125,7 +110,7 @@ export function StageHead({ id, children }: { id: string; children?: ReactNode }
     <div className="stage-head">
       <Shield n={x.n} size="lg" />
       <div className="stage-head-text">
-        <h1>{L(x)}</h1>
+        <h1>{(() => { const I = STAGE_ICON[x.id]; return <I className="stage-icon" size={30} strokeWidth={2.25} aria-hidden="true" />; })()} {L(x)}</h1>
         <p className="lede">{ar ? x.dAr : x.dEn}</p>
       </div>
       <div className="stage-meter">
