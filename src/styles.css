@@ -781,3 +781,11 @@ kbd.gear { display: inline-grid; place-items: center; min-width: 1.45em; height:
 .bp-body .hbfig, .lesson-pics .hbfig { max-width: 26rem; }
 .num-chip { gap: 0.4rem; }
 .chip-no { display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; border-radius: 50%; background: var(--hue); color: #fff; font: 800 0.72rem var(--f-sign); }
+.everyday { background: #fff7d6; border: 1.5px solid #ecd58a; border-radius: 10px; padding: 0.25rem 1rem 0.9rem; margin: 1rem 0; }
+.everyday h2 { margin-top: 0.8rem; font-size: 1.15rem; }
+.everyday-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); gap: 0.4rem; }
+.everyday-list a { display: flex; align-items: center; gap: 0.5rem; background: var(--paper); border: 1px solid #ecd58a; border-radius: 6px; padding: 0.45rem 0.6rem; text-decoration: none; color: var(--ink); font: 700 0.92rem var(--f-sign); }
+.everyday-list a:hover { border-color: var(--darb); }
+.ev-no { display: inline-grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--darb); color: #fff; font-size: 0.78rem; flex: none; }
+.car-item, .light { scroll-margin-top: 5rem; }
+.tc-pic img[src*="img/ksa"], .tc-pic img[src*="img/uk/"] { object-fit: contain; padding: 0.75rem; background: #fff; }

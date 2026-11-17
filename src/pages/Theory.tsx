@@ -19,7 +19,12 @@ function topicThumb(t: any): string | null {
   }
   const r = t.hc.find((x: any) => Array.isArray(x));
   const d = r && DIAGRAMS.find((d) => typeof d.rule === "number" && d.rule >= r[0] && d.rule <= r[1]);
-  return d ? d.uk : null;
+  if (d) return d.uk;
+  // fall back to a sign tied to the topic's Highway Code rules, else the Fronx dashboard
+  const rules = t.hc.filter((x: any) => Array.isArray(x));
+  const sg = SIGNS.find((x) => (x.rules || []).some((n: number) => rules.some((r: any) => n >= r[0] && n <= r[1])));
+  if (sg) return (sg.imgs.find((i: any) => i.o === "ksa") || sg.imgs[0]).src;
+  return "car/figs/dashboard.webp";
 }
 
 const SETTINGS: [string, { en: string; ar: string }][] = [

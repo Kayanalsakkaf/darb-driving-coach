@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 import { useStore } from "../lib/store";
 import { CAR, CH, LES } from "../lib/data";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { Checklist, Hl, Md, NextPrev, SrcTag, StageHead } from "../components/ui";
 
 const URG: Record<string, { en: string; ar: string }> = {
@@ -43,7 +44,15 @@ function ItemFoot({ it }: { it: any }) {
   );
 }
 
+/* Importance: how many lessons use it, plus urgency for warning lights. Sections run from most to least used. */
+const score = (it: any) => (it.lessons?.length || 0) * 2 + (it.urgency === "stop" ? 3 : it.urgency === "soon" ? 1 : 0);
+const SECTION_ORDER = ["gearbox", "cockpit", "warning-lights", "checks", "emergencies"];
+const ORDERED = SECTION_ORDER.map((id) => CAR.sections.find((x: any) => x.id === id)).filter(Boolean).concat(CAR.sections.filter((x: any) => !SECTION_ORDER.includes(x.id)))
+  .map((sec: any) => ({ ...sec, items: sec.items.map((it: any, i: number) => ({ it, i })).sort((a: any, b: any) => score(b.it) - score(a.it) || a.i - b.i).map((x: any) => x.it) }));
+const TOP = CAR.sections.flatMap((sec: any) => sec.items).filter((it: any) => it.variant !== "manual" && !it.urgency).sort((a: any, b: any) => score(b) - score(a)).slice(0, 10);
+
 export function CarPage() {
+  const [showRare, setShowRare] = useState<Record<string, boolean>>({});
   const { L, ar, s, set, p, toggle } = useStore();
   const gb = s.gearbox;
   const fits = (v?: string) => !v || v === "both" || v === "auto" || (gb === "manual" && v === "manual");
@@ -60,11 +69,18 @@ export function CarPage() {
         </label>
       </div>
       <nav className="toc-inline" aria-label={ar ? "الأقسام" : "Sections"}>
-        {CAR.sections.map((sec: any) => <a key={sec.id} href={"#car-" + sec.id} className={p.read["car:" + sec.id] ? "read" : ""}>{L(sec)}</a>)}<a href="#car-annex">{ar ? "ملحق اليدوي" : "Manual annex"}</a>
+        {ORDERED.map((sec: any) => <a key={sec.id} href={"#car-" + sec.id} className={p.read["car:" + sec.id] ? "read" : ""}>{L(sec)}</a>)}<a href="#car-annex">{ar ? "ملحق اليدوي" : "Manual annex"}</a>
       </nav>
 
-      {CAR.sections.map((sec: any) => {
-        const items = sec.items.filter((it: any) => fits(it.variant));
+      <section className="everyday">
+        <h2>⭐ {ar ? "ما تستخدمه في كل مشوار" : "What you use on every drive"}</h2>
+        <ol className="everyday-list">{TOP.map((it: any, k: number) => <li key={it.id}><a href={"#ci-" + it.id} onClick={(e) => { e.preventDefault(); document.getElementById("ci-" + it.id)?.scrollIntoView({ behavior: "smooth", block: "center" }); }}><span className="ev-no">{k + 1}</span>{L(it.title || it)}</a></li>)}</ol>
+      </section>
+
+      {ORDERED.map((sec: any) => {
+        const all = sec.items.filter((it: any) => fits(it.variant));
+        const rareCount = all.filter((it: any) => !score(it)).length;
+        const items = showRare[sec.id] ? all : all.filter((it: any) => score(it) > 0);
         const lights = sec.id === "warning-lights";
         return (
           <section key={sec.id} id={"car-" + sec.id} className={"car-sec" + (lights ? " lights" : "")} style={{ ["--sc" as any]: SEC[sec.id]?.c || "var(--hue)" }}>
@@ -76,7 +92,7 @@ export function CarPage() {
             {lights ? (
               <ul className="light-grid">
                 {items.map((it: any) => (
-                  <li key={it.id} className={"light urg-" + (it.urgency || "info")}>
+                  <li key={it.id} id={"ci-" + it.id} className={"light urg-" + (it.urgency || "info")}>
                     {it.icon ? <img src={"car/" + it.icon} alt="" width={48} height={48} /> : <span className="light-noicon" />}
                     <div>
                       <span className="urg">{L(URG[it.urgency || "info"])}</span>
@@ -94,7 +110,7 @@ export function CarPage() {
             ) : (
               <div className="car-items">
                 {items.map((it: any) => (
-                  <article key={it.id} className="car-item">
+                  <article key={it.id} id={"ci-" + it.id} className="car-item">
                     {it.fig ? <img className="car-fig" src={"car/" + it.fig} alt="" loading="lazy" /> : null}
                     <div>
                       {it.title ? <>
@@ -113,6 +129,7 @@ export function CarPage() {
                 ))}
               </div>
             )}
+            {rareCount ? <p><button className="btn ghost sm" aria-expanded={!!showRare[sec.id]} onClick={() => setShowRare({ ...showRare, [sec.id]: !showRare[sec.id] })}>{showRare[sec.id] ? (ar ? "إخفاء الأقل استخداما" : "Hide less-used items") : ar ? `أظهر ${rareCount} عناصر أقل استخداما` : `Show ${rareCount} less-used items`}</button></p> : null}
             {sec.id === "cockpit" ? <><Checklist id="cockpit" /><Checklist id="controls" /></> : null}
             <p className="done-row">
               <button className={"btn" + (p.read["car:" + sec.id] ? " ghost" : "")} onClick={() => toggle("read", "car:" + sec.id)}>
