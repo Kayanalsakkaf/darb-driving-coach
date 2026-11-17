@@ -2,10 +2,11 @@ import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Check, ArrowLeft, ArrowRight } from "lucide-react";
 import { useStore } from "../lib/store";
-import { COURSE, CHAPTERS, LESSONS, SIGNS, SK, DIAGRAMS, META } from "../lib/data";
+import { COURSE, CHAPTERS, LESSONS, SIGNS, SK, DIAGRAMS, META, HBU, FIGURES, FIG_POINTS } from "../lib/data";
 import { TOPICS, topicTitle, figCount } from "../lib/progress";
-import { Checklist, Md, NextPrev, SrcTag, StageHead } from "../components/ui";
-import { MoroorPane, DvsaPane, Diagram } from "../components/sources";
+import { Checklist, ColourKey, Md, NextPrev, SrcTag, StageHead } from "../components/ui";
+import { MoroorPane, DvsaPane, Diagram, HbFigure } from "../components/sources";
+import { RuleCards, SUMMARIES } from "../components/rules";
 
 const GROUPS: any[] = COURSE.groups;
 
@@ -110,31 +111,64 @@ export function TopicPage() {
   const blocks = chapters.flatMap((c) => c.blocks || []);
   const prev = TOPICS[i - 1], next = TOPICS[i + 1];
   const Back = ar ? ArrowRight : ArrowLeft, Fwd = ar ? ArrowLeft : ArrowRight;
+  const figs: typeof FIGURES = t.hb.flatMap((h: any) => { const u = HBU[Array.isArray(h) ? h[0] : h]; if (!u) return []; const a = Array.isArray(h) ? h[1] : u.from, b = Array.isArray(h) ? h[2] : u.to; return FIGURES.filter((f) => f.page >= a && f.page <= b); });
+  const pts: typeof FIG_POINTS = t.hb.flatMap((h: any) => { const u = HBU[Array.isArray(h) ? h[0] : h]; if (!u) return []; const a = Array.isArray(h) ? h[1] : u.from, b = Array.isArray(h) ? h[2] : u.to; return FIG_POINTS.filter((f) => f.page >= a && f.page <= b); });
+  const hasRules = !!SUMMARIES[t.id]?.length;
+  const index: [string, string][] = [
+    ...(hasRules ? [["rules", ar ? "القواعد باختصار" : "Rules in brief"] as [string, string]] : []),
+    ...(chapters.length ? [["know", ar ? "ملاحظات المدرب" : "Coach's notes"] as [string, string]] : []),
+    ...(figs.length ? [["pictures", ar ? "بالصور" : "In pictures"] as [string, string]] : []),
+    ...(t.signs ? [["signs", ar ? "الإشارات" : "Signs"] as [string, string]] : []),
+    ...(t.hb.length || t.hc.length ? [["sources", ar ? "النص الكامل" : "Full text"] as [string, string]] : []),
+  ];
   return (
     <main className="page topic">
       <nav className="crumbs"><Link to="/theory">{ar ? "النظري" : "Theory"}</Link> <span>/</span> {L(group)}</nav>
-      <h1>{topicTitle(t, L)}</h1>
-      {sk ? <p className="lede"><Md text={ar ? sk.tAr : sk.tEn} /> <SrcTag src="dvsa" at={ar ? "مهارة " + sk.id : "Skill " + sk.id} /></p> : null}
+      <header className="topic-head">
+        <span className="plate-no"><bdi>{i + 1}/{TOPICS.length}</bdi></span>
+        <h1>{topicTitle(t, L)}</h1>
+        {sk ? <p className="lede"><Md text={ar ? sk.tAr : sk.tEn} /></p> : null}
+        <ColourKey />
+      </header>
+      {index.length > 1 ? <nav className="on-page" aria-label={ar ? "في هذه الصفحة" : "On this page"}>{index.map(([id, label]) => <a key={id} href={"#" + id} onClick={(e) => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); }}>{label}</a>)}</nav> : null}
+
+      {hasRules ? <section id="rules" className="anchor"><h2 className="plate">{ar ? "القواعد باختصار" : "Rules in brief"}</h2><RuleCards id={t.id} /></section> : null}
 
       {chapters.length ? (
-        <section className="know">
-          <h2>{ar ? "ما يجب أن تعرفه" : "What to know"} <SrcTag src="darb" /></h2>
+        <section id="know" className="know anchor">
+          <h2>{ar ? "ملاحظات المدرب" : "Coach's notes"} <SrcTag src="darb" /></h2>
           <ul>{chapters.flatMap((c) => c.teach).map((x: any, k: number) => <li key={k}><Md text={L(x)} /></li>)}</ul>
+          {blocks.length ? <Blocks blocks={blocks} /> : null}
           {sk?.l4En ? <p className="standard"><b>{ar ? "مستوى الجاهزية:" : "Test-ready looks like:"}</b> {ar ? sk.l4Ar : sk.l4En}</p> : null}
         </section>
       ) : null}
-
-      {blocks.length ? <Blocks blocks={blocks} /> : null}
 
       {lessons.length ? (
         <p className="row"><span className="muted">{ar ? "تتدرب عليه في:" : "Practised in:"}</span> {lessons.map((l) => <Link key={l.id} className="chip" to={"/lessons/" + l.id}>{l.id} · {L(l)}</Link>)}</p>
       ) : null}
 
-      {t.hb.length ? <section className="src-block"><h2>{ar ? "دليل المرور" : "Moroor handbook"}</h2>{t.hb.map((h: any, k: number) => <MoroorPane key={k} r={h} />)}</section> : null}
-      {t.hc.length ? <section className="src-block"><h2>{ar ? "نظام الطرق البريطاني" : "The Highway Code"}</h2><p className="muted measure">{ar ? "مرجع بريطاني. حيث يختلف عن النظام السعودي، يتبع النظام السعودي." : "UK reference. Where it differs from Saudi rules, the Saudi rule applies."}</p>{t.hc.map((h: any, k: number) => <DvsaPane key={k} r={h} />)}</section> : null}
-      {dgs.length ? <section className="src-block"><h2>{ar ? "رسوم توضيحية" : "Diagrams"}</h2><div className="dg-grid">{dgs.map((d) => <Diagram key={d.id} id={d.id} />)}</div></section> : null}
-      {t.signs ? <section className="src-block"><h2>{ar ? "الإشارات في هذا الموضوع" : "Signs in this topic"}</h2><SignGallery cats={t.signs} /></section> : null}
+      {figs.length ? (
+        <section id="pictures" className="anchor">
+          <h2 className="plate">{ar ? "بالصور" : "In pictures"} <SrcTag src="moroor" /></h2>
+          {pts.length ? <ol className="pic-points">{pts.map((x, k) => <li key={k}><Md text={ar ? x.ar : x.en} /> <span className="muted">{ar ? "ص" : "p."} {x.page}</span></li>)}</ol> : null}
+          <div className="figs strip">{figs.map((f, k) => <HbFigure key={f.id} f={f} n={k + 1} />)}</div>
+        </section>
+      ) : null}
+
+      {dgs.length ? <section className="anchor"><h2 className="plate">{ar ? "رسوم توضيحية" : "Diagrams"} <SrcTag src="dvsa" /></h2><div className="dg-grid">{dgs.map((d) => <Diagram key={d.id} id={d.id} />)}</div></section> : null}
+      {t.signs ? <section id="signs" className="anchor"><h2 className="plate">{ar ? "الإشارات في هذا الموضوع" : "Signs in this topic"}</h2><SignGallery cats={t.signs} /></section> : null}
       {checks.map((c) => <Checklist key={c} id={c} />)}
+
+      {t.hb.length || t.hc.length ? (
+        <section id="sources" className="anchor full-text">
+          <h2 className="plate">{ar ? "النص الكامل من المصادر" : "Full text from the sources"}</h2>
+          <p className="muted measure">{ar ? "للرجوع إليه. الكلمات الملونة تتبع دليل الألوان أعلاه." : "For reference. Coloured words follow the colour key above."}</p>
+          {t.hb.map((h: any, k: number) => <MoroorPane key={"m" + k} r={h} />)}
+          {t.hc.length ? <p className="muted measure small">{ar ? "نظام الطرق البريطاني مرجع فقط. حيث يختلف، يتبع النظام السعودي." : "The Highway Code is a UK reference. Where it differs, the Saudi rule applies."}</p> : null}
+          {t.hc.map((h: any, k: number) => <DvsaPane key={"d" + k} r={h} />)}
+        </section>
+      ) : null}
+
 
       <p className="done-row">
         <button className={"btn" + (p.read[t.id] ? " ghost" : "")} onClick={() => toggle("read", t.id)}>

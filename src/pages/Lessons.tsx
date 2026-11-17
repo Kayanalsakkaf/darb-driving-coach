@@ -5,6 +5,7 @@ import { LESSONS, LES, SK, COURSE } from "../lib/data";
 import { TOPICS, topicTitle, figCount } from "../lib/progress";
 import { Checklist, LevelPicker, Md, NextPrev, SrcTag, StageHead } from "../components/ui";
 import { Diagram } from "../components/sources";
+import { SUMMARIES } from "../components/rules";
 
 const WHERE = { yard: { en: "Yard training", ar: "التدريب في الساحة", dEn: "Private ground, away from traffic: control, steering and the test manoeuvres.", dAr: "أرض خاصة بعيدا عن المرور: التحكم والتوجيه ومناورات الاختبار." }, road: { en: "Road training", ar: "التدريب على الطريق", dEn: "Real traffic in the school car with its instructor.", dAr: "مرور حقيقي في سيارة المدرسة مع مدربها." } };
 
@@ -74,6 +75,7 @@ export function LessonPage() {
               <li key={t.id} className={p.read[t.id] ? "read" : ""}>
                 <Link to={"/theory/" + t.id}>{topicTitle(t, L)}</Link>
                 <span className="t-meta">{t.hb.length ? <SrcTag src="moroor" /> : null}{t.hc.length ? <SrcTag src="dvsa" /> : null}{figs ? <span className="pill">{figs} {ar ? "صورة" : "figures"}</span> : null}{p.read[t.id] ? <span className="readmark"><Check size={14} strokeWidth={3} /> {ar ? "مقروء" : "Read"}</span> : null}</span>
+                {SUMMARIES[t.id]?.length ? <ul className="key-rules">{SUMMARIES[t.id].filter((r) => r.kind === "never" || r.kind === "must" || r.kind === "priority").slice(0, 3).map((r, k) => <li key={k} className={"rk-" + r.kind}><Md text={L(r)} /></li>)}</ul> : null}
               </li>
             );
           })}

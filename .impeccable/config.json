@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-11-17T19:02:36.428Z",
+        "reason": "assistant: L454 .topic-head is a 3px bottom rule on an unrounded header, not a rounded card"
+      }
+    ]
+  }
+}

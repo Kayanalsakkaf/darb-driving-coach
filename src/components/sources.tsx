@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { ExternalLink, Scale } from "lucide-react";
 import { HBU, HC, FIGURES, FIG_POINTS, hbPage, hcImg, DG } from "../lib/data";
 import { useStore } from "../lib/store";
-import { Disclosure, PageImage, SrcTag } from "./ui";
+import { Disclosure, Hl, PageImage, SrcTag } from "./ui";
 
 function groupLi(blocks: any[], render: (b: any, i: number) => ReactNode, li: (b: any) => ReactNode) {
   const out: ReactNode[] = [];
@@ -38,7 +38,7 @@ export function MoroorPane({ r }: { r: any }) {
   let figNo = 0;
   const pages = from === to ? `${from}` : `${from}–${to}`;
   return (
-    <Disclosure className="pane pane-moroor" defaultOpen title={<><SrcTag src="moroor" at={(ar ? "ص " : "p. ") + pages} /> <span lang="ar" dir="rtl">{u.title}</span></>} extra={figs.length ? <span className="pill">{figs.length} {ar ? "صورة" : "figures"}</span> : null}>
+    <Disclosure className="pane pane-moroor" title={<><SrcTag src="moroor" at={(ar ? "ص " : "p. ") + pages} /> <span lang="ar" dir="rtl">{u.title}</span></>} extra={figs.length ? <span className="count-note">{figs.length} {ar ? "صورة" : "figures"}</span> : null}>
       <div className="src-text" lang="ar" dir="rtl">
         {groupLi(blocks, (b, i) => {
           if (b.k === "page") {
@@ -50,11 +50,11 @@ export function MoroorPane({ r }: { r: any }) {
               </div>
             );
           }
-          if (b.k === "h2") return <h3 key={i}>{b.t}</h3>;
+          if (b.k === "h2") return <h3 key={i}><Hl text={b.t} /></h3>;
           if (b.k === "h3") return <h4 key={i}>{b.t}</h4>;
-          if (b.k === "remember") return <p key={i} className="remember"><b>تذكر:</b> {b.t}</p>;
-          return <p key={i}>{b.b ? <b>{b.t}</b> : b.t}</p>;
-        }, (b) => (b.b ? <b>{b.t}</b> : b.t))}
+          if (b.k === "remember") return <p key={i} className="remember"><b>تذكر:</b> <Hl text={b.t} /></p>;
+          return <p key={i}>{b.b ? <b><Hl text={b.t} /></b> : <Hl text={b.t} />}</p>;
+        }, (b) => (b.b ? <b><Hl text={b.t} /></b> : <Hl text={b.t} />))}
       </div>
       {pts.length ? (
         <div className="fig-points">
@@ -72,8 +72,8 @@ function hcBlocks(blocks: any[]) {
     if (b.k === "h3" || b.k === "h4") return <h4 key={i}>{b.t}</h4>;
     if (b.k === "law") return <p key={i} className="law"><Scale size={14} /> {b.t}</p>;
     if (b.k === "img") return <img key={i} className="hcfig" src={hcImg(b.key)} alt="" loading="lazy" />;
-    return <p key={i}>{b.t}</p>;
-  }, (b) => b.t);
+    return <p key={i}><Hl text={b.t} /></p>;
+  }, (b) => <Hl text={b.t} />);
 }
 
 /** One Highway Code reference: a unit id or a [from, to] rule range. Shown in English, collapsed by default. */
@@ -91,7 +91,7 @@ export function DvsaPane({ r }: { r: any }) {
     body = nums.map((k) => <div key={k}>{hcBlocks([{ k: "rule", n: k }, ...HC.rules[k].b.filter((b: any) => b.k !== "rule")])}</div>);
   }
   return (
-    <Disclosure className="pane pane-dvsa" title={<><SrcTag src="dvsa" at="Highway Code" /> <span lang="en-GB">{title}</span></>} extra={<span className="pill">{n} {typeof r === "string" ? (ar ? "فقرة" : "items") : ar ? "قاعدة" : "rules"}</span>}>
+    <Disclosure className="pane pane-dvsa" title={<><SrcTag src="dvsa" at="Highway Code" /> <span lang="en-GB">{title}</span></>} extra={<span className="count-note">{n} {typeof r === "string" ? (ar ? "فقرة" : "items") : ar ? "قاعدة" : "rules"}</span>}>
       <div className="src-text" lang="en-GB" dir="ltr">
         {body}
         <p className="muted"><a href={src} target="_blank" rel="noopener noreferrer">gov.uk <ExternalLink size={12} /></a> · Open Government Licence v3.0</p>

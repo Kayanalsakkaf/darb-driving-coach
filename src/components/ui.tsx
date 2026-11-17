@@ -15,13 +15,44 @@ export function Md({ text }: { text: string }) {
     if (m.index > last) parts.push(text.slice(last, m.index));
     if (m[1]) parts.push(<b key={i++}>{m[1]}</b>);
     else if (m[2]) parts.push(<u key={i++}>{m[2]}</u>);
-    else if (m[3]) parts.push(<span key={i++} className="k-must">{m[3]}</span>);
-    else if (m[4]) parts.push(<span key={i++} className="k-prio">{m[4]}</span>);
-    else if (m[5]) parts.push(<span key={i++} className="k-num">{m[5]}</span>);
+    else if (m[3]) parts.push(<mark key={i++} className="k-must">{m[3]}</mark>);
+    else if (m[4]) parts.push(<mark key={i++} className="k-prio">{m[4]}</mark>);
+    else if (m[5]) parts.push(<mark key={i++} className="k-num">{m[5]}</mark>);
     last = re.lastIndex;
   }
   if (last < text.length) parts.push(text.slice(last));
   return <>{parts}</>;
+}
+
+/* Automatic colour-coding for source text (Moroor Arabic, Highway Code English):
+   must / never / priority / numbers / allowed, marked with tint + underline so colour is never the only signal. */
+const HL: [RegExp, string][] = [
+  [/(لا يجوز|لا يسمح|يُمنع|يمنع|ممنوع|يحظر|محظور|لا تقم|لا تتجاوز|لا تستخدم|إياك|\bMUST NOT\b|\bmust not\b|\bnever\b|\bNever\b|\bNEVER\b|\bdo not\b|\bDo not\b|\bDO NOT\b)/g, "k-never"],
+  [/(يجب(?: عليك| على السائق)?|يلزم|يتوجب|إلزامي|\bMUST\b|\bmust\b)/g, "k-must"],
+  [/(حق الأولوية|الأولوية|أعط[ِ]? حق الأولوية|أفسح الطريق|\bgive way\b|\bGive way\b|\bpriority\b|\bright of way\b)/g, "k-prio"],
+  [/(يسمح|يجوز|مسموح|\bmay\b|\byou can\b)/g, "k-ok"],
+  [/((?:\d+(?:[.,]\d+)?|[٠-٩]+)\s?(?:كم\/س|كم\/ساعة|كيلومتر|كم|متر|م\b|ثوان[ٍي]?|ثانية|ثواني|دقيقة|دقائق|ساعة|ساعات|ريال|نقطة|نقاط|%|سنوات|سنة|km\/h|mph|metres?|feet|seconds?|minutes?|hours?|tonnes?|kg|%|mm|miles?|yards?|years?|points?))/g, "k-num"],
+];
+export function Hl({ text }: { text: string }) {
+  let parts: (string | ReactNode)[] = [text];
+  let key = 0;
+  for (const [re, cls] of HL) {
+    parts = parts.flatMap((p) => {
+      if (typeof p !== "string") return [p];
+      const out: (string | ReactNode)[] = []; let last = 0; re.lastIndex = 0; let m: RegExpExecArray | null;
+      while ((m = re.exec(p))) { if (m.index > last) out.push(p.slice(last, m.index)); out.push(<mark key={key++} className={cls}>{m[0]}</mark>); last = re.lastIndex; }
+      if (last < p.length) out.push(p.slice(last));
+      return out;
+    });
+  }
+  return <>{parts}</>;
+}
+
+/** Legend for the colour code; shown at the top of reading pages. */
+export function ColourKey() {
+  const { ar } = useStore();
+  const k: [string, string, string][] = [["k-must", "Must", "يجب"], ["k-never", "Never / prohibited", "ممنوع"], ["k-prio", "Priority / give way", "الأولوية"], ["k-num", "Numbers & limits", "أرقام وحدود"], ["k-ok", "Allowed", "مسموح"]];
+  return <p className="colour-key" aria-label={ar ? "دليل الألوان" : "Colour key"}>{k.map(([c, en, a]) => <mark key={c} className={c}>{ar ? a : en}</mark>)}</p>;
 }
 
 export function SrcTag({ src, at: r }: { src: Src; at?: string }) {
@@ -41,7 +72,9 @@ export function Masthead() {
   const loc = useLocation();
   const current = STAGES.find((x) => loc.pathname.startsWith(x.path));
   const strip = useRef<HTMLElement>(null);
-  useEffect(() => { strip.current?.querySelector("[aria-current=page]")?.scrollIntoView({ inline: "center", block: "nearest" }); }, [current?.id]);
+  const [menu, setMenu] = useState(false);
+  useEffect(() => { setMenu(false); }, [loc.pathname]);
+  useEffect(() => { const el = strip.current?.querySelector<HTMLElement>("[aria-current=page]") || strip.current?.querySelector<HTMLElement>(".exit-next a"); const nav = strip.current; if (el && nav) nav.scrollTo({ left: el.offsetLeft - nav.clientWidth / 2 + el.clientWidth / 2 }); }, [current?.id]);
   return (
     <header className="sign">
       <div className="sign-top">
@@ -49,7 +82,8 @@ export function Masthead() {
           <span className="brand-ar">درب</span><span className="brand-en">Darb</span>
         </Link>
         <span className="sign-sub">{ar ? "مدرب القيادة للرخصة السعودية" : "Driving coach for the Saudi licence"}</span>
-        <div className="sign-tools">
+        <button className="menu-btn" aria-expanded={menu} aria-controls="sign-tools" onClick={() => setMenu(!menu)}>{ar ? "القائمة" : "Menu"}</button>
+        <div className={"sign-tools" + (menu ? " open" : "")} id="sign-tools">
           <label className="who">
             <span className="vh">{ar ? "المتعلم" : "Learner"}</span>
             <select value={s.activeUser} onChange={(e) => set((n) => { n.activeUser = e.target.value; })}>
@@ -70,7 +104,7 @@ export function Masthead() {
                 <NavLink to={x.path} aria-current={current?.id === x.id ? "page" : undefined}>
                   <span className="exit-no">{ar ? "مخرج" : "Exit"} {x.n}</span>
                   <span className="exit-name">{L(x)}</span>
-                  <span className="exit-state">{st[x.id].done ? <><Check size={14} strokeWidth={3} /> {ar ? "تم" : "Done"}</> : `${st[x.id].pct}%`}</span>
+                  <span className="exit-state">{st[x.id].done ? <><Check size={14} strokeWidth={3} /> {ar ? "تم" : "Done"}</> : current?.id === x.id ? (ar ? "أنت هنا" : "You are here") : st.next === x.id ? (ar ? "التالي" : "Next") : st[x.id].pct ? <bdi>{st[x.id].pct}%</bdi> : ""}</span>
                 </NavLink>
               </li>
             );
@@ -93,8 +127,10 @@ export function StageHead({ id, children }: { id: string; children?: ReactNode }
       <div className="stage-head-text">
         <h1>{L(x)}</h1>
         <p className="lede">{ar ? x.dAr : x.dEn}</p>
+      </div>
+      <div className="stage-meter">
+        <span className="meter-label"><bdi>{st.label}</bdi></span>
         <div className="meter" role="progressbar" aria-valuenow={st.pct} aria-valuemin={0} aria-valuemax={100} aria-label={ar ? "التقدم" : "Progress"}><i style={{ width: st.pct + "%" }} /></div>
-        <span className="meter-label">{st.label}</span>
       </div>
       {children}
     </div>
