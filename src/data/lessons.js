@@ -196,45 +196,85 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Walk round the car. Look at the tyres, lights and under the car.",
-     "ar": "امشِ حول السيارة. انظر إلى الإطارات والأنوار وتحت السيارة."
+     "ar": "امشِ حول السيارة. انظر إلى الإطارات والأنوار وتحت السيارة.",
+     "why": {
+      "en": "A quick look finds **flat tyres, broken lights** or leaks before they cause trouble on the road.",
+      "ar": "نظرة سريعة تكشف **الإطارات الضعيفة أو الأنوار المعطلة** أو أي تسريب قبل أن تسبب مشكلة في الطريق."
+     }
     },
     {
      "en": "Get in and close the door.",
-     "ar": "اركب وأغلق الباب."
+     "ar": "اركب وأغلق الباب.",
+     "why": {
+      "en": "A door that is not fully shut can **open while driving**, and the car will warn you about it.",
+      "ar": "الباب غير المغلق جيدًا قد **يُفتح أثناء القيادة**، وستنبهك السيارة إليه."
+     }
     },
     {
      "en": "Move the seat so your knee is a little bent when the brake is pressed down.",
-     "ar": "حرّك المقعد حتى تبقى ركبتك منثنية قليلًا وأنت تضغط الفرامل حتى آخرها."
+     "ar": "حرّك المقعد حتى تبقى ركبتك منثنية قليلًا وأنت تضغط الفرامل حتى آخرها.",
+     "why": {
+      "en": "A slightly bent knee lets you **press the brake fully and firmly** without stretching.",
+      "ar": "الركبة المثنية قليلًا تتيح لك **الضغط على الفرامل بالكامل وبقوة** دون أن تمد رجلك."
+     }
     },
     {
      "en": "Set the steering wheel and head rest.",
-     "ar": "اضبط المقود ومسند الرأس."
+     "ar": "اضبط المقود ومسند الرأس.",
+     "why": {
+      "en": "The wheel should be easy to reach, and the head rest **protects your neck** if you are hit from behind.",
+      "ar": "يجب أن يكون المقود قريبًا منك، ومسند الرأس **يحمي رقبتك** إذا صدمتك سيارة من الخلف."
+     }
     },
     {
      "en": "Put on your seat belt. Pull it to check it clicked.",
-     "ar": "اربط الحزام. اسحبه لتتأكد أنه مقفل."
+     "ar": "اربط الحزام. اسحبه لتتأكد أنه مقفل.",
+     "why": {
+      "en": "The driver and all passengers must wear belts. Pulling it checks it is **really locked**.",
+      "ar": "يجب أن يربط السائق وكل الركاب الحزام، والسحب يؤكد أنه **مقفل فعلًا**."
+     }
     },
     {
      "en": "Set the middle mirror, then the two side mirrors.",
-     "ar": "اضبط المرآة الوسطى، ثم المرآتين الجانبيتين."
+     "ar": "اضبط المرآة الوسطى، ثم المرآتين الجانبيتين.",
+     "why": {
+      "en": "Set them **before** you move, never while driving. The side mirrors should just show the side of your car.",
+      "ar": "اضبطها **قبل** التحرك، لا أثناء القيادة. يجب أن تُظهر المرايا الجانبية طرف سيارتك بالكاد."
+     }
     },
     {
      "en": "Find each control with your hand: lights, indicators, wipers, horn, hazards.",
-     "ar": "المس كل أداة بيدك: الأنوار، الإشارات، المساحات، البوق، أنوار الطوارئ."
+     "ar": "المس كل أداة بيدك: الأنوار، الإشارات، المساحات، البوق، أنوار الطوارئ.",
+     "why": {
+      "en": "Knowing where things are means you **won't look down** for them while driving. In this car the lights and indicator stalk is on the left.",
+      "ar": "معرفة مكان كل شيء تعني أنك **لن تنظر للأسفل** بحثًا عنه أثناء القيادة. ذراع الأنوار والإشارات على يسار المقود."
+     }
     },
     {
      "en": "Foot on the brake. Check the lever is on P. Press START.",
      "ar": "قدمك على الفرامل. تأكد أن الذراع على P. اضغط زر التشغيل.",
-     "applies": "fronx"
+     "applies": "fronx",
+     "why": {
+      "en": "This car **only starts with the brake pressed** and the lever on P (Park), so it cannot jump forward.",
+      "ar": "هذه السيارة **لا تعمل إلا والفرامل مضغوطة** والذراع على P (وضع الوقوف)، حتى لا تندفع للأمام."
+     }
     },
     {
      "en": "Look at the dashboard. No red light should stay on.",
-     "ar": "انظر إلى لوحة العدادات. يجب ألا تبقى أي لمبة حمراء مضاءة."
+     "ar": "انظر إلى لوحة العدادات. يجب ألا تبقى أي لمبة حمراء مضاءة.",
+     "why": {
+      "en": "Many lights flash at start-up as a test. A **red light that stays on** means stop and check the car.",
+      "ar": "تومض لمبات كثيرة عند التشغيل للفحص. أما **اللمبة الحمراء التي تبقى مضاءة** فتعني أن تتوقف وتفحص السيارة."
+     }
     },
     {
      "en": "To finish: foot on brake, P, handbrake up, press START to switch off.",
      "ar": "للإنهاء: قدمك على الفرامل، ثم P، ثم ارفع فرامل اليد، واضغط زر التشغيل للإطفاء.",
-     "applies": "fronx"
+     "applies": "fronx",
+     "why": {
+      "en": "This order makes sure the car **cannot roll away** after you switch it off.",
+      "ar": "هذا الترتيب يضمن أن السيارة **لن تتحرك وحدها** بعد إطفائها."
+     }
     }
    ],
    "check": [
@@ -404,45 +444,85 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Engine on. Foot on the brake.",
-     "ar": "المحرك يعمل. قدمك على الفرامل."
+     "ar": "المحرك يعمل. قدمك على الفرامل.",
+     "why": {
+      "en": "Keeping the brake pressed stops the car **moving before you are ready**.",
+      "ar": "إبقاء قدمك على الفرامل يمنع السيارة من **التحرك قبل أن تكون جاهزًا**."
+     }
     },
     {
      "en": "Put the lever in D.",
      "ar": "ضع الذراع على D.",
-     "applies": "fronx"
+     "applies": "fronx",
+     "why": {
+      "en": "D means **Drive**: the car will go forward. The brake must be pressed to move the lever from P.",
+      "ar": "D تعني **القيادة للأمام**. لا يتحرك الذراع من P إلا والفرامل مضغوطة."
+     }
     },
     {
      "en": "Release the handbrake.",
-     "ar": "أنزل فرامل اليد."
+     "ar": "أنزل فرامل اليد.",
+     "why": {
+      "en": "If you forget, the car **beeps three times** as you move. Driving with it on damages the brakes.",
+      "ar": "إن نسيتها **تصفر السيارة ثلاث مرات** عند التحرك، والقيادة بها تضر الفرامل."
+     }
     },
     {
      "en": "Check the mirrors. Look over your shoulder.",
-     "ar": "انظر في المرايا. التفت فوق كتفك."
+     "ar": "انظر في المرايا. التفت فوق كتفك.",
+     "why": {
+      "en": "The **blind spot** is the area beside and behind you that the mirrors cannot show. Only turning your head shows it.",
+      "ar": "**النقطة العمياء** هي المنطقة بجانبك وخلفك التي لا تظهر في المرايا، ولا تراها إلا بالالتفات."
+     }
     },
     {
      "en": "Signal if someone could need it.",
-     "ar": "أعطِ الإشارة إن كان هناك من يحتاج إليها."
+     "ar": "أعطِ الإشارة إن كان هناك من يحتاج إليها.",
+     "why": {
+      "en": "A signal tells others **what you are about to do**, so nobody is surprised.",
+      "ar": "الإشارة تخبر الآخرين **بما ستفعله**، حتى لا يتفاجأ أحد."
+     }
     },
     {
      "en": "Lift your foot off the brake slowly. Let the car creep.",
      "ar": "ارفع قدمك عن الفرامل ببطء. دع السيارة تزحف.",
-     "applies": "fronx"
+     "applies": "fronx",
+     "why": {
+      "en": "To **creep** means the car rolls forward slowly by itself in D. It is the gentlest way to start moving.",
+      "ar": "**الزحف** يعني أن السيارة تتقدم ببطء وحدها في وضع D، وهو ألطف طريقة لبدء الحركة."
+     }
     },
     {
      "en": "Press the gas gently. Look far ahead, not at the bonnet.",
-     "ar": "اضغط البنزين بلطف. انظر بعيدًا للأمام، لا إلى مقدمة السيارة."
+     "ar": "اضغط البنزين بلطف. انظر بعيدًا للأمام، لا إلى مقدمة السيارة.",
+     "why": {
+      "en": "Looking far ahead keeps the car **straight and gives you time** to see dangers.",
+      "ar": "النظر بعيدًا للأمام يُبقي السيارة **مستقيمة ويعطيك وقتًا** لرؤية الخطر."
+     }
     },
     {
      "en": "Steer with both hands. Feed the wheel through your hands.",
-     "ar": "أمسك المقود باليدين. مرّر المقود بين يديك."
+     "ar": "أمسك المقود باليدين. مرّر المقود بين يديك.",
+     "why": {
+      "en": "Both hands give **full control**. Sliding the wheel through your hands keeps turns smooth.",
+      "ar": "اليدان معًا تعطيانك **تحكمًا كاملًا**، وتمرير المقود بين يديك يجعل الانعطاف سلسًا."
+     }
     },
     {
      "en": "To stop: check mirrors, ease off the gas, brake gently, then a little more.",
-     "ar": "للتوقف: انظر في المرايا، ارفع قدمك عن البنزين، اضغط الفرامل بلطف ثم أكثر قليلًا."
+     "ar": "للتوقف: انظر في المرايا، ارفع قدمك عن البنزين، اضغط الفرامل بلطف ثم أكثر قليلًا.",
+     "why": {
+      "en": "Braking **early and lightly**, then a bit firmer, gives a smooth stop and warns drivers behind.",
+      "ar": "الفرملة **مبكرًا وبخفة** ثم بقوة أكبر قليلًا تعطي توقفًا سلسًا وتنبه من خلفك."
+     }
     },
     {
      "en": "Stopped: keep your foot on the brake. Handbrake up if you wait long.",
-     "ar": "بعد التوقف: أبقِ قدمك على الفرامل. ارفع فرامل اليد إن طال الانتظار."
+     "ar": "بعد التوقف: أبقِ قدمك على الفرامل. ارفع فرامل اليد إن طال الانتظار.",
+     "why": {
+      "en": "In D the car creeps if you lift your foot. The handbrake **holds the car** during a long wait.",
+      "ar": "في وضع D تزحف السيارة إذا رفعت قدمك، وفرامل اليد **تثبّت السيارة** عند الانتظار الطويل."
+     }
     }
    ],
    "check": [
@@ -640,35 +720,67 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Drive in the middle of your lane, a little to the right.",
-     "ar": "سِر في منتصف مسارك، مع ميل خفيف إلى اليمين."
+     "ar": "سِر في منتصف مسارك، مع ميل خفيف إلى اليمين.",
+     "why": {
+      "en": "On a two-way road you keep to the right. A steady position **keeps you clear** of cars on both sides.",
+      "ar": "في الطريق ذي الاتجاهين تلتزم باليمين، والموقع الثابت **يبعدك** عن السيارات على الجانبين."
+     }
     },
     {
      "en": "Look in the middle mirror every few seconds.",
-     "ar": "انظر في المرآة الوسطى كل بضع ثوانٍ."
+     "ar": "انظر في المرآة الوسطى كل بضع ثوانٍ.",
+     "why": {
+      "en": "You always know **what is behind you**, so no move is a surprise.",
+      "ar": "تعرف دائمًا **ما خلفك**، فلا تفاجئك أي حركة."
+     }
     },
     {
      "en": "Before you slow down or turn, look in the mirrors first.",
-     "ar": "قبل أن تبطئ أو تنعطف، انظر في المرايا أولًا."
+     "ar": "قبل أن تبطئ أو تنعطف، انظر في المرايا أولًا.",
+     "why": {
+      "en": "Check the middle mirror first, then the side mirror on the side you are moving to. The car behind may be **too close**.",
+      "ar": "انظر في المرآة الوسطى أولًا، ثم المرآة الجانبية في جهة تحركك؛ فقد تكون السيارة الخلفية **قريبة جدًا**."
+     }
     },
     {
      "en": "Then signal. Give it time to be seen.",
-     "ar": "ثم أعطِ الإشارة. امنحها وقتًا لتُرى."
+     "ar": "ثم أعطِ الإشارة. امنحها وقتًا لتُرى.",
+     "why": {
+      "en": "Signal **in plenty of time**, so others can see it and get ready.",
+      "ar": "أعطِ الإشارة **مبكرًا بوقت كافٍ** حتى يراها الآخرون ويستعدوا."
+     }
     },
     {
      "en": "Then look over your shoulder for the blind spot.",
-     "ar": "ثم التفت فوق كتفك لترى النقطة العمياء."
+     "ar": "ثم التفت فوق كتفك لترى النقطة العمياء.",
+     "why": {
+      "en": "The **blind spot** is the area the mirrors cannot show. Relying on mirrors alone can mean **hitting a car** you did not see.",
+      "ar": "**النقطة العمياء** منطقة لا تظهر في المرايا، والاعتماد على المرايا وحدها قد يعني **صدم سيارة** لم ترها."
+     }
     },
     {
      "en": "Then move. Keep it smooth.",
-     "ar": "ثم تحرّك. بهدوء وسلاسة."
+     "ar": "ثم تحرّك. بهدوء وسلاسة.",
+     "why": {
+      "en": "A smooth, gentle move lets others **see what you are doing** and react calmly.",
+      "ar": "الحركة الهادئة السلسة تجعل الآخرين **يفهمون ما تفعله** ويتصرفون بهدوء."
+     }
     },
     {
      "en": "Check the signal has switched off after the move.",
-     "ar": "تأكد أن الإشارة انطفأت بعد الحركة."
+     "ar": "تأكد أن الإشارة انطفأت بعد الحركة.",
+     "why": {
+      "en": "A signal left on **confuses other drivers** — they may think you will turn.",
+      "ar": "الإشارة المنسية **تربك السائقين** فقد يظنون أنك ستنعطف."
+     }
     },
     {
      "en": "Stay away from solid lines. Never cross them.",
-     "ar": "ابتعد عن الخطوط المتصلة. لا تتجاوزها أبدًا."
+     "ar": "ابتعد عن الخطوط المتصلة. لا تتجاوزها أبدًا.",
+     "why": {
+      "en": "Solid and double solid lines **must never be crossed**. Broken lines may be crossed when safe.",
+      "ar": "الخطوط المتصلة والمزدوجة **يُمنع عبورها دائمًا**، أما المتقطعة فيجوز عبورها عند الأمان."
+     }
     }
    ],
    "check": [
@@ -832,40 +944,76 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Stop. Foot on the brake. Select R.",
-     "ar": "توقف. قدمك على الفرامل. اختر R."
+     "ar": "توقف. قدمك على الفرامل. اختر R.",
+     "why": {
+      "en": "Select R **only when the car has fully stopped**, with the brake pressed.",
+      "ar": "اختر R **فقط بعد توقف السيارة تمامًا** وقدمك على الفرامل."
+     }
     },
     {
      "en": "Look all around the car, both shoulders.",
-     "ar": "انظر حول السيارة كلها، من فوق الكتفين."
+     "ar": "انظر حول السيارة كلها، من فوق الكتفين.",
+     "why": {
+      "en": "Check every side, especially for **children**, who are small and hard to see.",
+      "ar": "افحص كل الجهات، وخاصة **الأطفال**، فهم صغار ويصعب رؤيتهم."
+     }
     },
     {
      "en": "Turn your body and look out of the back window.",
-     "ar": "استدر بجسمك وانظر من الزجاج الخلفي."
+     "ar": "استدر بجسمك وانظر من الزجاج الخلفي.",
+     "why": {
+      "en": "When reversing you should look **mainly through the rear window**, where you are going.",
+      "ar": "عند الرجوع للخلف انظر **أساسًا من الزجاج الخلفي**، في اتجاه حركتك."
+     }
     },
     {
      "en": "Ease off the brake. Let the car creep back slowly.",
-     "ar": "خفّف الضغط على الفرامل. دع السيارة ترجع ببطء."
+     "ar": "خفّف الضغط على الفرامل. دع السيارة ترجع ببطء.",
+     "why": {
+      "en": "**Creep** means letting the car roll slowly by itself. Control the speed with the brake, **not the gas**.",
+      "ar": "**الزحف** يعني ترك السيارة تتحرك ببطء وحدها. تحكّم بالسرعة بالفرامل **لا بالبنزين**."
+     }
     },
     {
      "en": "Glance at the camera and mirrors, then look back again.",
      "ar": "ألقِ نظرة على الكاميرا والمرايا، ثم انظر للخلف من جديد.",
-     "applies": "fronx"
+     "applies": "fronx",
+     "why": {
+      "en": "The camera helps, but its lines are **wider than the car**. Your own eyes come first.",
+      "ar": "الكاميرا تساعد، لكن خطوطها **أعرض من السيارة**، وعيناك أولًا."
+     }
     },
     {
      "en": "Turn the wheel a little at a time. Watch the front corner swing out.",
-     "ar": "أدِر المقود قليلًا قليلًا. انتبه لخروج زاوية السيارة الأمامية."
+     "ar": "أدِر المقود قليلًا قليلًا. انتبه لخروج زاوية السيارة الأمامية.",
+     "why": {
+      "en": "When you turn in reverse, **the front of the car swings out** to the side. Small turns keep it under control.",
+      "ar": "عند الانعطاف للخلف **تتأرجح مقدمة السيارة للخارج**، والحركات الصغيرة تُبقيها تحت السيطرة."
+     }
     },
     {
      "en": "Figure 8 and S-bend: go slowly forward first, keep the wheels inside the lines.",
-     "ar": "مسار 8 والمسار المتعرج: تقدّم ببطء أولًا وأبقِ العجلات داخل الخطوط."
+     "ar": "مسار 8 والمسار المتعرج: تقدّم ببطء أولًا وأبقِ العجلات داخل الخطوط.",
+     "why": {
+      "en": "Going forward first lets you **learn the shape** of the course before the harder part.",
+      "ar": "التقدم للأمام أولًا يعلّمك **شكل المسار** قبل الجزء الأصعب."
+     }
     },
     {
      "en": "Then do the same course backwards, very slowly.",
-     "ar": "ثم نفّذ المسار نفسه للخلف ببطء شديد."
+     "ar": "ثم نفّذ المسار نفسه للخلف ببطء شديد.",
+     "why": {
+      "en": "Going backwards is harder. **Very slow** gives you time to fix small mistakes.",
+      "ar": "الرجوع للخلف أصعب، و**البطء الشديد** يعطيك وقتًا لتصحيح الأخطاء الصغيرة."
+     }
     },
     {
      "en": "Someone walks behind? Stop at once.",
-     "ar": "شخص يمشي خلفك؟ توقف فورًا."
+     "ar": "شخص يمشي خلفك؟ توقف فورًا.",
+     "why": {
+      "en": "People, especially children, can step behind you. **Stopping at once** is always right.",
+      "ar": "قد يمر أشخاص، وخاصة الأطفال، خلفك، و**التوقف فورًا** هو الصحيح دائمًا."
+     }
     }
    ],
    "check": [
@@ -1059,35 +1207,67 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Look far ahead. Find the turn early.",
-     "ar": "انظر بعيدًا للأمام. حدّد مكان الانعطاف مبكرًا."
+     "ar": "انظر بعيدًا للأمام. حدّد مكان الانعطاف مبكرًا.",
+     "why": {
+      "en": "Seeing the turn early gives you **time to slow down** and get ready calmly.",
+      "ar": "رؤية المنعطف مبكرًا تعطيك **وقتًا للتهدئة** والاستعداد بهدوء."
+     }
     },
     {
      "en": "Mirrors, then signal.",
-     "ar": "المرايا، ثم الإشارة."
+     "ar": "المرايا، ثم الإشارة.",
+     "why": {
+      "en": "Mirrors show who is behind. Then the signal **tells them early** that you will turn.",
+      "ar": "المرايا تُريك من خلفك، ثم الإشارة **تخبرهم مبكرًا** أنك ستنعطف."
+     }
     },
     {
      "en": "Slow down to walking speed before the corner.",
-     "ar": "خفّف إلى سرعة المشي قبل المنعطف."
+     "ar": "خفّف إلى سرعة المشي قبل المنعطف.",
+     "why": {
+      "en": "Do all your braking **before** the turn, so the car stays steady in it.",
+      "ar": "أنهِ الفرملة **قبل** المنعطف، لتبقى السيارة ثابتة أثناءه."
+     }
     },
     {
      "en": "Look left, right, then left again.",
-     "ar": "انظر يسارًا ثم يمينًا ثم يسارًا مرة أخرى."
+     "ar": "انظر يسارًا ثم يمينًا ثم يسارًا مرة أخرى.",
+     "why": {
+      "en": "At every junction, **look in every direction**. The second look catches anything that came close.",
+      "ar": "عند كل تقاطع **انظر في كل الاتجاهات**، والنظرة الثانية تكشف ما اقترب."
+     }
     },
     {
      "en": "Not sure who goes first? Wait.",
-     "ar": "لست متأكدًا من صاحب الأولوية؟ انتظر."
+     "ar": "لست متأكدًا من صاحب الأولوية؟ انتظر.",
+     "why": {
+      "en": "Waiting is never wrong. If you're unsure, **make eye contact** with the other driver.",
+      "ar": "الانتظار ليس خطأ أبدًا، وإن لم تكن متأكدًا **تواصل بالنظر** مع السائق الآخر."
+     }
     },
     {
      "en": "Turn right tight. Turn left wide.",
-     "ar": "انعطف لليمين بمنحنى ضيق، ولليسار بمنحنى واسع."
+     "ar": "انعطف لليمين بمنحنى ضيق، ولليسار بمنحنى واسع.",
+     "why": {
+      "en": "Turning right, stay at the far right in a **tight curve**. Turning left, make a **wide curve** into the right side of the new road.",
+      "ar": "عند الانعطاف يمينًا ابقَ في أقصى اليمين **بمنحنى ضيق**، وعند الانعطاف يسارًا خذ **منحنى واسعًا** إلى يمين الطريق الجديد."
+     }
     },
     {
      "en": "Straighten the wheel. Check the signal is off.",
-     "ar": "أعِد المقود مستقيمًا. تأكد أن الإشارة انطفأت."
+     "ar": "أعِد المقود مستقيمًا. تأكد أن الإشارة انطفأت.",
+     "why": {
+      "en": "After a small turn the signal may **not switch itself off**. A signal left on confuses others.",
+      "ar": "بعد انعطاف صغير قد **لا تنطفئ الإشارة وحدها**، والإشارة المنسية تربك الآخرين."
+     }
     },
     {
      "en": "Do it again until it feels calm.",
-     "ar": "كرر حتى تشعر بالهدوء."
+     "ar": "كرر حتى تشعر بالهدوء.",
+     "why": {
+      "en": "Doing it again and again makes it **feel normal**, so you stay calm.",
+      "ar": "التكرار يجعل الأمر **مألوفًا**، فتبقى هادئًا."
+     }
     }
    ],
    "check": [
@@ -1229,40 +1409,76 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Drive past the bay slowly. Choose your bay.",
-     "ar": "مُرّ بجانب الموقف ببطء. اختر موقفك."
+     "ar": "مُرّ بجانب الموقف ببطء. اختر موقفك.",
+     "why": {
+      "en": "Going slowly gives you time to pick a bay **where parking is allowed**.",
+      "ar": "السير ببطء يعطيك وقتًا لاختيار موقف **مسموح الوقوف فيه**."
+     }
     },
     {
      "en": "Forward park: signal, slow to walking pace.",
-     "ar": "الوقوف الأمامي: أعطِ الإشارة وخفّف إلى سرعة المشي."
+     "ar": "الوقوف الأمامي: أعطِ الإشارة وخفّف إلى سرعة المشي.",
+     "why": {
+      "en": "The signal tells others **you are turning in**. Walking pace keeps you in control.",
+      "ar": "الإشارة تخبر الآخرين **أنك ستدخل الموقف**، وسرعة المشي تُبقيك متحكمًا."
+     }
     },
     {
      "en": "Turn in when your mirror lines up with the first bay line.",
-     "ar": "ادخل عندما تتساوى مرآتك مع أول خط في الموقف."
+     "ar": "ادخل عندما تتساوى مرآتك مع أول خط في الموقف.",
+     "why": {
+      "en": "This is a simple **marker** that tells you when to start turning.",
+      "ar": "هذه **علامة** بسيطة تخبرك متى تبدأ الانعطاف."
+     }
     },
     {
      "en": "Straighten up in the middle. Stop before the end line.",
-     "ar": "استقم في المنتصف. توقف قبل الخط الأخير."
+     "ar": "استقم في المنتصف. توقف قبل الخط الأخير.",
+     "why": {
+      "en": "Parking **inside the marked bay** leaves space for others to open their doors.",
+      "ar": "الوقوف **داخل خطوط الموقف** يترك مساحة للآخرين لفتح أبوابهم."
+     }
     },
     {
      "en": "Reverse park: stop a little past the bay. Select R.",
-     "ar": "الوقوف الخلفي: توقف بعد الموقف بقليل. اختر R."
+     "ar": "الوقوف الخلفي: توقف بعد الموقف بقليل. اختر R.",
+     "why": {
+      "en": "Stopping in the right place makes it **easier to reverse in**.",
+      "ar": "التوقف في المكان الصحيح يجعل **الرجوع للموقف أسهل**."
+     }
     },
     {
      "en": "Look all round. Then turn the wheel fully towards the bay.",
-     "ar": "انظر حولك. ثم أدِر المقود كاملًا نحو الموقف."
+     "ar": "انظر حولك. ثم أدِر المقود كاملًا نحو الموقف.",
+     "why": {
+      "en": "Check all mirrors and the **blind spot** (the area mirrors can't show), especially for children.",
+      "ar": "افحص كل المرايا و**النقطة العمياء** (المنطقة التي لا تظهر في المرايا)، وخاصة بحثًا عن الأطفال."
+     }
     },
     {
      "en": "Creep back. Check both side mirrors for the lines.",
-     "ar": "ارجع ببطء. راقب الخطوط في المرآتين الجانبيتين."
+     "ar": "ارجع ببطء. راقب الخطوط في المرآتين الجانبيتين.",
+     "why": {
+      "en": "**Creep** means rolling back slowly. The mirrors show you the lines on both sides.",
+      "ar": "**الزحف** يعني الرجوع ببطء، والمرايا تُريك الخطوط على الجانبين."
+     }
     },
     {
      "en": "When the car is straight, straighten the wheel and go back slowly.",
-     "ar": "عندما تستقيم السيارة، أعِد المقود مستقيمًا وارجع ببطء."
+     "ar": "عندما تستقيم السيارة، أعِد المقود مستقيمًا وارجع ببطء.",
+     "why": {
+      "en": "Straight wheels keep the car **straight in the bay**.",
+      "ar": "العجلات المستقيمة تُبقي السيارة **مستقيمة داخل الموقف**."
+     }
     },
     {
      "en": "Stop. P, handbrake, engine off.",
      "ar": "توقف. P، فرامل اليد، أطفئ المحرك.",
-     "applies": "fronx"
+     "applies": "fronx",
+     "why": {
+      "en": "Before leaving the car, **switch off the engine and apply the handbrake**.",
+      "ar": "قبل مغادرة السيارة **أطفئ المحرك وارفع فرامل اليد**."
+     }
     }
    ],
    "check": [
@@ -1410,27 +1626,51 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Reverse into a bay on the left. Then on the right.",
-     "ar": "ارجع إلى موقف على اليسار، ثم على اليمين."
+     "ar": "ارجع إلى موقف على اليسار، ثم على اليمين.",
+     "why": {
+      "en": "Practising both sides makes you **ready for any bay** you find.",
+      "ar": "التمرين على الجهتين يجعلك **مستعدًا لأي موقف** تجده."
+     }
     },
     {
      "en": "Same order each time: stop, R, look, creep, turn.",
-     "ar": "الترتيب نفسه كل مرة: توقف، R، انظر، ازحف، أدِر."
+     "ar": "الترتيب نفسه كل مرة: توقف، R، انظر، ازحف، أدِر.",
+     "why": {
+      "en": "The same steps every time become a **habit**, so you won't forget one when nervous.",
+      "ar": "تكرار الخطوات نفسها يجعلها **عادة**، فلا تنسى واحدة منها حين تتوتر."
+     }
     },
     {
      "en": "Watch the line in your side mirror.",
-     "ar": "راقب الخط في المرآة الجانبية."
+     "ar": "راقب الخط في المرآة الجانبية.",
+     "why": {
+      "en": "The side mirror shows **where the car is** compared to the bay line.",
+      "ar": "المرآة الجانبية تُريك **موقع السيارة** بالنسبة لخط الموقف."
+     }
     },
     {
      "en": "Too close to one side? Stop. Go forward a little and try again.",
-     "ar": "قريب جدًا من جهة؟ توقف. تقدّم قليلًا وحاول مجددًا."
+     "ar": "قريب جدًا من جهة؟ توقف. تقدّم قليلًا وحاول مجددًا.",
+     "why": {
+      "en": "Fixing early is **easy and safe**. Pushing on can hit the car next to you.",
+      "ar": "التصحيح المبكر **سهل وآمن**، والاستمرار قد يصدم السيارة المجاورة."
+     }
     },
     {
      "en": "Do five in a row.",
-     "ar": "كرّرها خمس مرات متتالية."
+     "ar": "كرّرها خمس مرات متتالية.",
+     "why": {
+      "en": "Repeating it builds **confidence**.",
+      "ar": "التكرار يبني **الثقة**."
+     }
     },
     {
      "en": "Walk the car park with your instructor. Point to places you must not park.",
-     "ar": "تجوّل في الموقف مع مدربك. أشِر إلى الأماكن الممنوع الوقوف فيها."
+     "ar": "تجوّل في الموقف مع مدربك. أشِر إلى الأماكن الممنوع الوقوف فيها.",
+     "why": {
+      "en": "You must not park on crossings, near junctions, by **fire hydrants** or in front of entrances.",
+      "ar": "يُمنع الوقوف على ممرات المشاة، وقرب التقاطعات، وعند **صنابير الإطفاء**، وأمام المداخل."
+     }
     }
    ],
    "check": [
@@ -1585,39 +1825,75 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Parallel: stop next to the car in front of the space, about a door's width away.",
-     "ar": "الوقوف الموازي: توقف بجانب السيارة أمام المكان، على بعد عرض باب تقريبًا."
+     "ar": "الوقوف الموازي: توقف بجانب السيارة أمام المكان، على بعد عرض باب تقريبًا.",
+     "why": {
+      "en": "Being about a **door's width** away gives you room to swing back into the space.",
+      "ar": "ترك مسافة **بعرض باب** يعطيك مجالًا للرجوع إلى المكان."
+     }
     },
     {
      "en": "Select R. Look all round.",
-     "ar": "اختر R. انظر حولك."
+     "ar": "اختر R. انظر حولك.",
+     "why": {
+      "en": "Check all around, especially for **children**, before you reverse.",
+      "ar": "انظر حولك جيدًا، وخاصة بحثًا عن **الأطفال**، قبل الرجوع."
+     }
     },
     {
      "en": "Back slowly until your back wheel is level with its back bumper.",
-     "ar": "ارجع ببطء حتى تحاذي عجلتك الخلفية صدّامها الخلفي."
+     "ar": "ارجع ببطء حتى تحاذي عجلتك الخلفية صدّامها الخلفي.",
+     "why": {
+      "en": "This is a **marker** that tells you when to start turning.",
+      "ar": "هذه **علامة** تخبرك متى تبدأ الانعطاف."
+     }
     },
     {
      "en": "Turn the wheel fully towards the kerb. Creep back.",
-     "ar": "أدِر المقود كاملًا نحو الرصيف. ارجع ببطء."
+     "ar": "أدِر المقود كاملًا نحو الرصيف. ارجع ببطء.",
+     "why": {
+      "en": "Turning towards the kerb brings the **back of the car into the space**.",
+      "ar": "الانعطاف نحو الرصيف يُدخل **مؤخرة السيارة في المكان**."
+     }
     },
     {
      "en": "When you are at about 45 degrees, straighten the wheel.",
-     "ar": "عندما تصل إلى زاوية 45 درجة تقريبًا، أعِد المقود مستقيمًا."
+     "ar": "عندما تصل إلى زاوية 45 درجة تقريبًا، أعِد المقود مستقيمًا.",
+     "why": {
+      "en": "Straightening here lets the car **slide back in** without hitting the kerb.",
+      "ar": "استقامة المقود هنا تجعل السيارة **تدخل للخلف** دون أن تلمس الرصيف."
+     }
     },
     {
      "en": "Then turn fully away from the kerb to bring the front in.",
-     "ar": "ثم أدِر المقود كاملًا بعيدًا عن الرصيف لتُدخل المقدمة."
+     "ar": "ثم أدِر المقود كاملًا بعيدًا عن الرصيف لتُدخل المقدمة.",
+     "why": {
+      "en": "This brings the **front of the car** into the space.",
+      "ar": "هذا يُدخل **مقدمة السيارة** في المكان."
+     }
     },
     {
      "en": "Stop close to the kerb and straight. Straighten the wheels.",
-     "ar": "توقف قريبًا من الرصيف ومستقيمًا. أعِد العجلات مستقيمة."
+     "ar": "توقف قريبًا من الرصيف ومستقيمًا. أعِد العجلات مستقيمة.",
+     "why": {
+      "en": "Park **parallel to the kerb**. Hitting it hard can damage the tyre.",
+      "ar": "قف **موازيًا للرصيف**، فالاصطدام القوي به قد يتلف الإطار."
+     }
     },
     {
      "en": "Three-point turn: in a quiet street, pull over, look all round.",
-     "ar": "الدوران بثلاث حركات: في شارع هادئ، اقترب من الجانب وانظر حولك."
+     "ar": "الدوران بثلاث حركات: في شارع هادئ، اقترب من الجانب وانظر حولك.",
+     "why": {
+      "en": "Turn around in a **quiet side road**, not a busy one, so you block no one.",
+      "ar": "استدر في **شارع جانبي هادئ** لا مزدحم، حتى لا تعطل أحدًا."
+     }
     },
     {
      "en": "Forward across, full lock. Stop before the kerb. Back, full lock other way. Forward and away.",
-     "ar": "تقدّم بالعرض والمقود كامل. توقف قبل الرصيف. ارجع والمقود كامل للجهة الأخرى. ثم تقدّم وانطلق."
+     "ar": "تقدّم بالعرض والمقود كامل. توقف قبل الرصيف. ارجع والمقود كامل للجهة الأخرى. ثم تقدّم وانطلق.",
+     "why": {
+      "en": "**Full lock** means turning the wheel as far as it goes. Stop fully before every change between D and R.",
+      "ar": "**أقصى دوران** يعني إدارة المقود إلى آخره. توقف تمامًا قبل كل تبديل بين D وR."
+     }
     }
    ],
    "check": [
@@ -1786,39 +2062,75 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Slope: stop on the slope with the foot brake.",
-     "ar": "المنحدر: توقف على المنحدر بالفرامل."
+     "ar": "المنحدر: توقف على المنحدر بالفرامل.",
+     "why": {
+      "en": "The foot brake **holds the car** so it does not roll back.",
+      "ar": "فرامل القدم **تثبّت السيارة** حتى لا ترجع للخلف."
+     }
     },
     {
      "en": "Handbrake up. Foot off the brake. The car stays still.",
-     "ar": "ارفع فرامل اليد. ارفع قدمك عن الفرامل. السيارة ثابتة."
+     "ar": "ارفع فرامل اليد. ارفع قدمك عن الفرامل. السيارة ثابتة.",
+     "why": {
+      "en": "The handbrake now **holds the car** on its own, so your foot is free.",
+      "ar": "فرامل اليد الآن **تثبّت السيارة** وحدها، فتصبح قدمك حرة."
+     }
     },
     {
      "en": "Foot back on the brake. Handbrake down.",
-     "ar": "أعِد قدمك على الفرامل. أنزل فرامل اليد."
+     "ar": "أعِد قدمك على الفرامل. أنزل فرامل اليد.",
+     "why": {
+      "en": "**Hill hold** keeps the brakes on for about ==2 seconds== while you move your foot to the gas.",
+      "ar": "**مساعد صعود التل** يُبقي الفرامل نحو ==ثانيتين== وأنت تنقل قدمك إلى البنزين."
+     }
     },
     {
      "en": "Move your foot to the gas and press gently. The car goes up, not back.",
-     "ar": "انقل قدمك إلى البنزين واضغط بلطف. تصعد السيارة ولا ترجع."
+     "ar": "انقل قدمك إلى البنزين واضغط بلطف. تصعد السيارة ولا ترجع.",
+     "why": {
+      "en": "Gentle gas moves you up smoothly. **Never hold the car on a slope with the gas** — use the brake.",
+      "ar": "البنزين الخفيف يرفعك بسلاسة. **لا تثبّت السيارة على المنحدر بالبنزين أبدًا**؛ استخدم الفرامل."
+     }
     },
     {
      "en": "Emergency stop: drive at a steady speed. Wait for the instructor's signal.",
-     "ar": "التوقف الاضطراري: قُد بسرعة ثابتة. انتظر إشارة المدرب."
+     "ar": "التوقف الاضطراري: قُد بسرعة ثابتة. انتظر إشارة المدرب.",
+     "why": {
+      "en": "The instructor checks it is safe behind first. You **only brake hard on the signal**.",
+      "ar": "المدرب يتأكد أولًا من الأمان خلفك، و**لا تفرمل بقوة إلا عند إشارته**."
+     }
     },
     {
      "en": "On the signal, press the brake hard and fast. Hold the wheel straight.",
-     "ar": "عند الإشارة، اضغط الفرامل بقوة وسرعة. أمسك المقود مستقيمًا."
+     "ar": "عند الإشارة، اضغط الفرامل بقوة وسرعة. أمسك المقود مستقيمًا.",
+     "why": {
+      "en": "In an emergency, **brake immediately**. With ABS you can still steer, but keep the wheel straight.",
+      "ar": "في الطوارئ **افرمل فورًا**. مع ABS يمكنك التوجيه، لكن أبقِ المقود مستقيمًا."
+     }
     },
     {
      "en": "Keep pressing until the car stops. Then handbrake and P.",
-     "ar": "استمر بالضغط حتى تتوقف السيارة. ثم فرامل اليد وP."
+     "ar": "استمر بالضغط حتى تتوقف السيارة. ثم فرامل اليد وP.",
+     "why": {
+      "en": "Keep pressing until you stop. A **buzzing pedal is normal** — it is ABS working.",
+      "ar": "واصل الضغط حتى تتوقف، و**اهتزاز الدواسة طبيعي**؛ فهذا عمل نظام ABS."
+     }
     },
     {
      "en": "Look all round before you move off again.",
-     "ar": "انظر حولك قبل أن تنطلق من جديد."
+     "ar": "انظر حولك قبل أن تنطلق من جديد.",
+     "why": {
+      "en": "Other cars may be close after a sudden stop. **Look first**, then move.",
+      "ar": "قد تكون سيارات قريبة بعد التوقف المفاجئ، **فانظر أولًا** ثم تحرك."
+     }
     },
     {
      "en": "T and X tracks: drive in slowly, stop, reverse out the other way.",
-     "ar": "مسارا T وX: ادخل ببطء، توقف، ثم اخرج للخلف إلى الجهة الأخرى."
+     "ar": "مسارا T وX: ادخل ببطء، توقف، ثم اخرج للخلف إلى الجهة الأخرى.",
+     "why": {
+      "en": "These tracks train **slow control** in tight spaces, forward and back.",
+      "ar": "هذه المسارات تدرّبك على **التحكم البطيء** في الأماكن الضيقة للأمام والخلف."
+     }
     }
    ],
    "check": [
@@ -1985,31 +2297,59 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "The instructor names a manoeuvre. Do it without help.",
-     "ar": "يذكر المدرب مناورة. نفّذها دون مساعدة."
+     "ar": "يذكر المدرب مناورة. نفّذها دون مساعدة.",
+     "why": {
+      "en": "Doing it alone shows **what you really know**.",
+      "ar": "أداؤها وحدك يُظهر **ما تعرفه فعلًا**."
+     }
     },
     {
      "en": "Do all of them: reverse, bay park, parallel, turn, slope, emergency stop.",
-     "ar": "نفّذها كلها: الرجوع، الوقوف في الموقف، الموازي، الدوران، المنحدر، التوقف الاضطراري."
+     "ar": "نفّذها كلها: الرجوع، الوقوف في الموقف، الموازي، الدوران، المنحدر، التوقف الاضطراري.",
+     "why": {
+      "en": "Doing every manoeuvre shows **which ones are strong** and which need work.",
+      "ar": "أداء كل المناورات يوضح **أيها قوي** وأيها يحتاج تمرينًا."
+     }
     },
     {
      "en": "The instructor marks each one.",
-     "ar": "يقيّم المدرب كل واحدة."
+     "ar": "يقيّم المدرب كل واحدة.",
+     "why": {
+      "en": "The marks show your progress **clearly and fairly**.",
+      "ar": "الدرجات تُظهر تقدمك **بوضوح وإنصاف**."
+     }
     },
     {
      "en": "Pick the two weakest.",
-     "ar": "اختر أضعف اثنتين."
+     "ar": "اختر أضعف اثنتين.",
+     "why": {
+      "en": "Working on the weakest **improves you fastest**.",
+      "ar": "التركيز على الأضعف **يحسّنك أسرع**."
+     }
     },
     {
      "en": "Practise those two, slowly, five times each.",
-     "ar": "تدرّب عليهما ببطء، خمس مرات لكل واحدة."
+     "ar": "تدرّب عليهما ببطء، خمس مرات لكل واحدة.",
+     "why": {
+      "en": "Slow is safe. Control every manoeuvre **with the brake**.",
+      "ar": "البطء أمان، فتحكّم في كل مناورة **بالفرامل**."
+     }
     },
     {
      "en": "Answer the vehicle questions: show the lights, the tyres, the warning lights.",
-     "ar": "أجب عن أسئلة السيارة: أرِ المدرب الأنوار والإطارات ولمبات التحذير."
+     "ar": "أجب عن أسئلة السيارة: أرِ المدرب الأنوار والإطارات ولمبات التحذير.",
+     "why": {
+      "en": "Lights, tyres and warning lights must be **clean and working**. A green light means everything is normal.",
+      "ar": "الأنوار والإطارات ولمبات التحذير يجب أن تكون **نظيفة وتعمل**، واللمبة الخضراء تعني أن كل شيء طبيعي."
+     }
     },
     {
      "en": "Do the full check once more.",
-     "ar": "أعِد الاختبار كاملًا مرة أخرى."
+     "ar": "أعِد الاختبار كاملًا مرة أخرى.",
+     "why": {
+      "en": "A second try shows **how much you improved**.",
+      "ar": "المحاولة الثانية تُظهر **مقدار تحسّنك**."
+     }
     }
    ],
    "check": [
@@ -2195,31 +2535,59 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Drive slowly in the street. Look between parked cars.",
-     "ar": "قُد ببطء في الشارع. انظر بين السيارات المتوقفة."
+     "ar": "قُد ببطء في الشارع. انظر بين السيارات المتوقفة.",
+     "why": {
+      "en": "Children may **run out** from between parked cars, and doors may open.",
+      "ar": "قد **يركض أطفال** من بين السيارات المتوقفة، وقد تُفتح أبواب."
+     }
     },
     {
      "en": "See a hump? Brake before it, not on it.",
-     "ar": "ترى مطبًا؟ اضغط الفرامل قبله، لا فوقه."
+     "ar": "ترى مطبًا؟ اضغط الفرامل قبله، لا فوقه.",
+     "why": {
+      "en": "Slow down **before** the hump, so the car goes over gently.",
+      "ar": "خفف السرعة **قبل** المطب، لتعبره السيارة بلطف."
+     }
     },
     {
      "en": "Roll over the hump slowly. Then speed up gently.",
-     "ar": "مرّ على المطب ببطء. ثم زد السرعة بلطف."
+     "ar": "مرّ على المطب ببطء. ثم زد السرعة بلطف.",
+     "why": {
+      "en": "Slow and smooth protects the car. Keep a **low speed** all along the street.",
+      "ar": "البطء والسلاسة يحميان السيارة. حافظ على **سرعة منخفضة** طوال الشارع."
+     }
     },
     {
      "en": "Read every sign. Say it out loud.",
-     "ar": "اقرأ كل لوحة. قلها بصوت عالٍ."
+     "ar": "اقرأ كل لوحة. قلها بصوت عالٍ.",
+     "why": {
+      "en": "Saying it out loud makes sure you **really noticed** it. A speed sign shows the **maximum**, not a target.",
+      "ar": "قولها بصوت عالٍ يؤكد أنك **انتبهت لها فعلًا**. لوحة السرعة تُظهر **الحد الأعلى** لا السرعة المطلوبة."
+     }
     },
     {
      "en": "Keep at least two seconds behind the car in front.",
-     "ar": "ابقَ على بعد ثانيتين على الأقل خلف السيارة الأمامية."
+     "ar": "ابقَ على بعد ثانيتين على الأقل خلف السيارة الأمامية.",
+     "why": {
+      "en": "A gap of ==two seconds== gives you **time to stop** if the car ahead brakes.",
+      "ar": "مسافة ==ثانيتين== تعطيك **وقتًا للتوقف** إذا فرملت السيارة الأمامية."
+     }
     },
     {
      "en": "Near schools and mosques, slow down more.",
-     "ar": "قرب المدارس والمساجد، خفّف أكثر."
+     "ar": "قرب المدارس والمساجد، خفّف أكثر.",
+     "why": {
+      "en": "Many people walk there, and **children** may run out without looking.",
+      "ar": "يمشي هناك كثير من الناس، وقد يركض **الأطفال** دون أن ينظروا."
+     }
     },
     {
      "en": "Ball in the road? Expect a child. Stop.",
-     "ar": "كرة في الطريق؟ توقّع طفلًا. توقف."
+     "ar": "كرة في الطريق؟ توقّع طفلًا. توقف.",
+     "why": {
+      "en": "A **child** often chases a ball without looking at cars.",
+      "ar": "**الطفل** غالبًا يركض خلف الكرة دون أن ينظر إلى السيارات."
+     }
     }
    ],
    "check": [
@@ -2415,35 +2783,67 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Look far ahead at the lights. Guess when they will change.",
-     "ar": "انظر بعيدًا إلى الإشارة. توقّع متى ستتغير."
+     "ar": "انظر بعيدًا إلى الإشارة. توقّع متى ستتغير.",
+     "why": {
+      "en": "Seeing the lights early lets you **slow down smoothly** instead of braking hard.",
+      "ar": "رؤية الإشارة مبكرًا تتيح لك **التهدئة بسلاسة** بدل الفرملة القوية."
+     }
     },
     {
      "en": "Red: stop at the line, not on the crossing.",
-     "ar": "الأحمر: توقف عند الخط، لا فوق ممر المشاة."
+     "ar": "الأحمر: توقف عند الخط، لا فوق ممر المشاة.",
+     "why": {
+      "en": "Stop at the line so you **don't block** the people crossing.",
+      "ar": "توقف عند الخط حتى **لا تسد** ممر المشاة."
+     }
     },
     {
      "en": "Green: look both ways anyway. Then go.",
-     "ar": "الأخضر: انظر في الاتجاهين رغم ذلك. ثم انطلق."
+     "ar": "الأخضر: انظر في الاتجاهين رغم ذلك. ثم انطلق.",
+     "why": {
+      "en": "Someone may still be crossing, or a car may **run the red light**.",
+      "ar": "قد يكون أحد ما زال يعبر، أو قد **تقطع سيارة الإشارة الحمراء**."
+     }
     },
     {
      "en": "Amber and you can stop safely? Stop.",
-     "ar": "الأصفر وتستطيع التوقف بأمان؟ توقف."
+     "ar": "الأصفر وتستطيع التوقف بأمان؟ توقف.",
+     "why": {
+      "en": "Amber means the light is about to turn red. **Stop if you can do it safely.**",
+      "ar": "الأصفر يعني أن الإشارة ستصبح حمراء، **فتوقف إن أمكنك ذلك بأمان**."
+     }
     },
     {
      "en": "STOP sign: stop fully. Count three. Look. Then go.",
-     "ar": "لوحة «قف»: توقف تمامًا. عُدّ ثلاثًا. انظر. ثم انطلق."
+     "ar": "لوحة «قف»: توقف تمامًا. عُدّ ثلاثًا. انظر. ثم انطلق.",
+     "why": {
+      "en": "At a STOP sign, **stop completely** for about ==3 seconds== and look all ways.",
+      "ar": "عند لوحة قف **توقف تمامًا** نحو ==3 ثوانٍ== وانظر في كل الاتجاهات."
+     }
     },
     {
      "en": "Turning? Watch for people crossing the road you turn into.",
-     "ar": "تنعطف؟ انتبه للمشاة الذين يعبرون الطريق الذي تدخله."
+     "ar": "تنعطف؟ انتبه للمشاة الذين يعبرون الطريق الذي تدخله.",
+     "why": {
+      "en": "People already crossing the road you turn into **go first**.",
+      "ar": "المشاة الذين يعبرون الطريق الذي تنعطف إليه **لهم الأولوية**."
+     }
     },
     {
      "en": "Someone on the crossing? Stop and wait. Don't wave them on.",
-     "ar": "شخص على الممر؟ توقف وانتظر. لا تُشِر له بالعبور."
+     "ar": "شخص على الممر؟ توقف وانتظر. لا تُشِر له بالعبور.",
+     "why": {
+      "en": "**Waving** someone on is risky: another car may not stop for them.",
+      "ar": "**التلويح** للمشاة خطر، فقد لا تتوقف لهم سيارة أخرى."
+     }
     },
     {
      "en": "Can't clear the junction? Wait before it, even on green.",
-     "ar": "لا تستطيع الخروج من التقاطع؟ انتظر قبله ولو كانت خضراء."
+     "ar": "لا تستطيع الخروج من التقاطع؟ انتظر قبله ولو كانت خضراء.",
+     "why": {
+      "en": "**Don't enter a junction on green** if you can't clear it — you would block it.",
+      "ar": "**لا تدخل التقاطع والإشارة خضراء** إن لم تستطع تجاوزه، لأنك ستسده."
+     }
     }
    ],
    "check": [
@@ -2600,35 +3000,67 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Read the sign before the roundabout. Choose your exit.",
-     "ar": "اقرأ اللوحة قبل الدوار. حدّد مخرجك."
+     "ar": "اقرأ اللوحة قبل الدوار. حدّد مخرجك.",
+     "why": {
+      "en": "Deciding your exit **early** lets you get into the right lane in time.",
+      "ar": "تحديد مخرجك **مبكرًا** يتيح لك دخول المسار الصحيح في الوقت المناسب."
+     }
     },
     {
      "en": "Pick the lane for that exit.",
-     "ar": "اختر المسار المناسب لذلك المخرج."
+     "ar": "اختر المسار المناسب لذلك المخرج.",
+     "why": {
+      "en": "Lane 1 for the first exit, **lane 2 to go straight**, lane 3 for later exits or going back.",
+      "ar": "المسار 1 للمخرج الأول، و**المسار 2 للاستمرار مستقيمًا**، والمسار 3 للمخارج البعيدة أو الرجوع."
+     }
     },
     {
      "en": "Signal the right way for your exit.",
-     "ar": "أعطِ الإشارة الصحيحة لمخرجك."
+     "ar": "أعطِ الإشارة الصحيحة لمخرجك.",
+     "why": {
+      "en": "The signal **tells others where you are going** on the roundabout.",
+      "ar": "الإشارة **تخبر الآخرين بوجهتك** في الدوار."
+     }
     },
     {
      "en": "Slow down. Look at the cars already on the roundabout.",
-     "ar": "خفّف السرعة. انظر إلى السيارات الموجودة في الدوار."
+     "ar": "خفّف السرعة. انظر إلى السيارات الموجودة في الدوار.",
+     "why": {
+      "en": "Brake on the straight approach, **not in the curve**.",
+      "ar": "افرمل في الاقتراب المستقيم، **لا داخل المنحنى**."
+     }
     },
     {
      "en": "They go first. Wait for a safe gap.",
-     "ar": "هم أولًا. انتظر فرصة آمنة."
+     "ar": "هم أولًا. انتظر فرصة آمنة.",
+     "why": {
+      "en": "**Give way** means let them go first. Cars already on the roundabout have priority.",
+      "ar": "**إعطاء الأولوية** يعني أن تتركهم يمرون أولًا، فالسيارات داخل الدوار لها الأولوية."
+     }
     },
     {
      "en": "Go in. Stay in your lane.",
-     "ar": "ادخل. ابقَ في مسارك."
+     "ar": "ادخل. ابقَ في مسارك.",
+     "why": {
+      "en": "Changing lanes on the roundabout can **surprise others**. Give long vehicles room.",
+      "ar": "تغيير المسار داخل الدوار قد **يفاجئ الآخرين**، واترك مساحة للمركبات الطويلة."
+     }
     },
     {
      "en": "After the exit before yours, signal right.",
-     "ar": "بعد المخرج الذي يسبق مخرجك، أعطِ إشارة يمين."
+     "ar": "بعد المخرج الذي يسبق مخرجك، أعطِ إشارة يمين.",
+     "why": {
+      "en": "Signalling right **tells others you are leaving** at the next exit.",
+      "ar": "الإشارة لليمين **تخبر الآخرين أنك ستخرج** من المخرج التالي."
+     }
     },
     {
      "en": "Check the mirror and blind spot. Exit.",
-     "ar": "انظر في المرآة والنقطة العمياء. اخرج."
+     "ar": "انظر في المرآة والنقطة العمياء. اخرج.",
+     "why": {
+      "en": "The **blind spot** (the area mirrors can't show) may hide a car or person. Watch for pedestrians at the exit.",
+      "ar": "**النقطة العمياء** (المنطقة التي لا تظهر في المرايا) قد تخفي سيارة أو شخصًا، وانتبه للمشاة عند المخرج."
+     }
     }
    ],
    "check": [
@@ -2776,35 +3208,67 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Find the U-turn slot early. Move to the far-left lane in good time.",
-     "ar": "حدّد فتحة الدوران مبكرًا. انتقل إلى المسار الأيسر في وقت كافٍ."
+     "ar": "حدّد فتحة الدوران مبكرًا. انتقل إلى المسار الأيسر في وقت كافٍ.",
+     "why": {
+      "en": "Getting into the far-left lane **in good time** means no rushed lane change.",
+      "ar": "دخول المسار الأيسر **مبكرًا** يعني ألا تغيّر المسار على عجل."
+     }
     },
     {
      "en": "Signal left. Slow down.",
-     "ar": "أعطِ إشارة يسار. خفّف السرعة."
+     "ar": "أعطِ إشارة يسار. خفّف السرعة.",
+     "why": {
+      "en": "The signal **tells others** you are about to turn.",
+      "ar": "الإشارة **تخبر الآخرين** أنك ستستدير."
+     }
     },
     {
      "en": "Stop in the slot if you need to.",
-     "ar": "توقف في الفتحة إن احتجت."
+     "ar": "توقف في الفتحة إن احتجت.",
+     "why": {
+      "en": "Stopping is fine. A U-turning driver **gives way** to everyone else.",
+      "ar": "التوقف مقبول، فالسائق الذي يستدير **يعطي الأولوية** للجميع."
+     }
     },
     {
      "en": "Look at the cars coming. They go first.",
-     "ar": "انظر إلى السيارات القادمة. لهم الأولوية."
+     "ar": "انظر إلى السيارات القادمة. لهم الأولوية.",
+     "why": {
+      "en": "**Give way** means you let them go first.",
+      "ar": "**إعطاء الأولوية** يعني أن تتركهم يمرون أولًا."
+     }
     },
     {
      "en": "Wait for a big gap. Then turn into the correct lane.",
-     "ar": "انتظر فرصة واسعة. ثم ادخل إلى المسار الصحيح."
+     "ar": "انتظر فرصة واسعة. ثم ادخل إلى المسار الصحيح.",
+     "why": {
+      "en": "This car needs **a wide space** to turn. If the slot is tight, don't force it — go on to the next one.",
+      "ar": "تحتاج هذه السيارة **مساحة واسعة** للدوران؛ إن كانت الفتحة ضيقة فلا تُجبرها وتابع للتالية."
+     }
     },
     {
      "en": "Service road: signal early, slow down, then turn in.",
-     "ar": "طريق الخدمة: أعطِ الإشارة مبكرًا، خفّف السرعة، ثم ادخل."
+     "ar": "طريق الخدمة: أعطِ الإشارة مبكرًا، خفّف السرعة، ثم ادخل.",
+     "why": {
+      "en": "A **service road** is the side road next to the buildings. Early signals warn others.",
+      "ar": "**الطريق الخدمي** هو الطريق الجانبي بجوار المباني، والإشارة المبكرة تنبه الآخرين."
+     }
     },
     {
      "en": "Watch for cars coming out of shops and houses.",
-     "ar": "انتبه للسيارات الخارجة من المحلات والبيوت."
+     "ar": "انتبه للسيارات الخارجة من المحلات والبيوت.",
+     "why": {
+      "en": "Cars may come out of shops and houses onto the service road **at any time**.",
+      "ar": "قد تخرج سيارات من المحلات والبيوت إلى الطريق الخدمي **في أي لحظة**."
+     }
     },
     {
      "en": "To join the main road, stop if needed and give way.",
-     "ar": "للدخول إلى الطريق الرئيسي، توقف إن لزم وأعطِ الأولوية."
+     "ar": "للدخول إلى الطريق الرئيسي، توقف إن لزم وأعطِ الأولوية.",
+     "why": {
+      "en": "When joining, **give way** to traffic already on the main road.",
+      "ar": "عند الدخول **أعطِ الأولوية** للسيارات الموجودة في الطريق الرئيسي."
+     }
     }
    ],
    "check": [
@@ -3000,39 +3464,75 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Choose your lane early from the arrows on the road.",
-     "ar": "اختر مسارك مبكرًا من الأسهم على الطريق."
+     "ar": "اختر مسارك مبكرًا من الأسهم على الطريق.",
+     "why": {
+      "en": "Turn only from the lane **whose arrow** shows your direction.",
+      "ar": "انعطف فقط من المسار **الذي يشير سهمه** إلى اتجاهك."
+     }
     },
     {
      "en": "Need to change lane? Middle mirror, then side mirror.",
-     "ar": "تحتاج لتغيير المسار؟ المرآة الوسطى ثم الجانبية."
+     "ar": "تحتاج لتغيير المسار؟ المرآة الوسطى ثم الجانبية.",
+     "why": {
+      "en": "The mirrors show **who is coming** before you move.",
+      "ar": "المرايا تُريك **من يقترب** قبل أن تتحرك."
+     }
     },
     {
      "en": "Signal.",
-     "ar": "أعطِ الإشارة."
+     "ar": "أعطِ الإشارة.",
+     "why": {
+      "en": "Signal **before** you change lanes, so others know your plan.",
+      "ar": "أعطِ الإشارة **قبل** تغيير المسار، ليعرف الآخرون ما تنوي فعله."
+     }
     },
     {
      "en": "Quick look over your shoulder.",
-     "ar": "التفاتة سريعة فوق الكتف."
+     "ar": "التفاتة سريعة فوق الكتف.",
+     "why": {
+      "en": "Mirrors don't show the **blind spot** by the rear door — **only a look over your shoulder** does.",
+      "ar": "المرايا لا تُظهر **النقطة العمياء** عند الباب الخلفي، **ولا تراها إلا بالالتفات فوق كتفك**."
+     }
     },
     {
      "en": "Gap is safe? Move over slowly. Keep your speed.",
-     "ar": "الفراغ آمن؟ انتقل بهدوء. حافظ على سرعتك."
+     "ar": "الفراغ آمن؟ انتقل بهدوء. حافظ على سرعتك.",
+     "why": {
+      "en": "A slow, steady move lets others **see and react**. Change lanes only when needed.",
+      "ar": "الحركة البطيئة الثابتة تتيح للآخرين **الرؤية والتصرف**، ولا تغيّر المسار إلا عند الحاجة."
+     }
     },
     {
      "en": "Parked car ahead? Leave a door's width when passing.",
-     "ar": "سيارة متوقفة أمامك؟ اترك عرض باب عند مرورك."
+     "ar": "سيارة متوقفة أمامك؟ اترك عرض باب عند مرورك.",
+     "why": {
+      "en": "A door may open suddenly. A **door's width** is about ==1 metre==.",
+      "ar": "قد يُفتح باب فجأة، و**عرض الباب** نحو ==متر واحد==."
+     }
     },
     {
      "en": "Oncoming car and the gap is on their side? Wait for them.",
-     "ar": "سيارة قادمة والطريق مفتوح من جهتها؟ انتظرها."
+     "ar": "سيارة قادمة والطريق مفتوح من جهتها؟ انتظرها.",
+     "why": {
+      "en": "At an obstacle, **the driver whose side is clear** goes first.",
+      "ar": "عند وجود عائق، **السائق الذي جهته خالية** يمر أولًا."
+     }
     },
     {
      "en": "Overtaking with your instructor: only on a clear straight, on the left, then back to the right.",
-     "ar": "التجاوز مع المدرب: فقط في طريق مستقيم وواضح، من اليسار، ثم العودة لليمين."
+     "ar": "التجاوز مع المدرب: فقط في طريق مستقيم وواضح، من اليسار، ثم العودة لليمين.",
+     "why": {
+      "en": "**Overtake on the left**, never near junctions, crossings, bends or solid lines, and leave space to return.",
+      "ar": "**التجاوز من اليسار**، لا قرب التقاطعات أو الممرات أو المنعطفات أو الخطوط المتصلة، واترك مساحة للعودة."
+     }
     },
     {
      "en": "Someone overtaking you? Keep right. Don't speed up.",
-     "ar": "أحد يتجاوزك؟ ابقَ يمينًا. لا تزد سرعتك."
+     "ar": "أحد يتجاوزك؟ ابقَ يمينًا. لا تزد سرعتك.",
+     "why": {
+      "en": "When being overtaken, **don't speed up**. It lets them pass safely.",
+      "ar": "عندما يتجاوزك أحد **لا تسرّع**، ليمر بأمان."
+     }
     }
    ],
    "check": [
@@ -3225,35 +3725,67 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Phone away and silent before you start.",
-     "ar": "الجوال بعيد وصامت قبل الانطلاق."
+     "ar": "الجوال بعيد وصامت قبل الانطلاق.",
+     "why": {
+      "en": "Phones are a big **distraction** and a main cause of crashes.",
+      "ar": "الجوال من أكبر **مشتتات الانتباه** وسبب رئيسي للحوادث."
+     }
     },
     {
      "en": "Look far ahead. Find dangers early.",
-     "ar": "انظر بعيدًا للأمام. اكتشف الخطر مبكرًا."
+     "ar": "انظر بعيدًا للأمام. اكتشف الخطر مبكرًا.",
+     "why": {
+      "en": "Spotting dangers early gives you **time to act calmly**.",
+      "ar": "رؤية الخطر مبكرًا تعطيك **وقتًا للتصرف بهدوء**."
+     }
     },
     {
      "en": "Leave space all round you. Plan an escape gap.",
-     "ar": "اترك مسافة حولك. خطّط لمخرج آمن."
+     "ar": "اترك مسافة حولك. خطّط لمخرج آمن.",
+     "why": {
+      "en": "An **escape gap** is a free space you can move into if something goes wrong.",
+      "ar": "**مخرج الطوارئ** مساحة فارغة تتحرك إليها إذا حدث شيء مفاجئ."
+     }
     },
     {
      "en": "Hear a siren? Find where it is. Move right and slow down or stop.",
-     "ar": "تسمع صفارة؟ حدّد مكانها. انتقل يمينًا وخفّف أو توقف."
+     "ar": "تسمع صفارة؟ حدّد مكانها. انتقل يمينًا وخفّف أو توقف.",
+     "why": {
+      "en": "**Emergency vehicles always go first.** Clear the lane, and keep at least ==50 metres== behind them.",
+      "ar": "**مركبات الطوارئ لها الأولوية دائمًا**. أفسح المسار وابقَ خلفها ==50 مترًا== على الأقل."
+     }
     },
     {
      "en": "School bus stopped with children? Stop too.",
-     "ar": "حافلة مدرسية متوقفة مع أطفال؟ توقف أنت أيضًا."
+     "ar": "حافلة مدرسية متوقفة مع أطفال؟ توقف أنت أيضًا.",
+     "why": {
+      "en": "**Never overtake a school bus** stopped for pupils — children may cross.",
+      "ar": "**لا تتجاوز حافلة مدرسية** متوقفة للطلاب، فقد يعبر الأطفال."
+     }
     },
     {
      "en": "Someone flashes lights at you? Decide for yourself.",
-     "ar": "أحد يومض لك بالأنوار؟ قرّر بنفسك."
+     "ar": "أحد يومض لك بالأنوار؟ قرّر بنفسك.",
+     "why": {
+      "en": "Flashing lights **may not mean** \"go ahead\". Use your own judgement.",
+      "ar": "وميض الأنوار **قد لا يعني** «تفضل». احكم بنفسك."
+     }
     },
     {
      "en": "Someone drives badly? Let them go. Stay calm.",
-     "ar": "أحد يقود بتهور؟ دعه يمضي. ابقَ هادئًا."
+     "ar": "أحد يقود بتهور؟ دعه يمضي. ابقَ هادئًا.",
+     "why": {
+      "en": "Racing a bad driver is dangerous. **Staying calm** keeps you safe.",
+      "ar": "مجاراة السائق المتهور خطر، و**الهدوء** يحميك."
+     }
     },
     {
      "en": "Roadworks? Slow down and follow the yellow signs.",
-     "ar": "أعمال طرق؟ خفّف واتبع اللوحات الصفراء."
+     "ar": "أعمال طرق؟ خفّف واتبع اللوحات الصفراء.",
+     "why": {
+      "en": "**Yellow signs with a red border** mark temporary work zones.",
+      "ar": "**اللوحات الصفراء ذات الإطار الأحمر** تدل على مناطق أعمال مؤقتة."
+     }
     }
    ],
    "check": [
@@ -3446,39 +3978,75 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "On the slip road, speed up to match the traffic.",
-     "ar": "على مسار الدخول، زد سرعتك لتوافق سرعة السير."
+     "ar": "على مسار الدخول، زد سرعتك لتوافق سرعة السير.",
+     "why": {
+      "en": "The **slip road** (the merging lane) lets you build speed so you join smoothly.",
+      "ar": "**مسار الدخول** يتيح لك زيادة السرعة لتنضم بسلاسة."
+     }
     },
     {
      "en": "Mirror. Signal left. Look over your shoulder.",
-     "ar": "المرآة. إشارة يسار. التفاتة فوق الكتف."
+     "ar": "المرآة. إشارة يسار. التفاتة فوق الكتف.",
+     "why": {
+      "en": "Traffic is fast, so **check mirrors early**. Give way to cars already on the highway.",
+      "ar": "السير سريع، **فانظر في المرايا مبكرًا**، وأعطِ الأولوية للسيارات الموجودة في الطريق السريع."
+     }
     },
     {
      "en": "Find a gap and slide in. Don't stop on the slip road unless you must.",
-     "ar": "جد فراغًا وادخل بهدوء. لا تتوقف على مسار الدخول إلا للضرورة."
+     "ar": "جد فراغًا وادخل بهدوء. لا تتوقف على مسار الدخول إلا للضرورة.",
+     "why": {
+      "en": "Stopping on the slip road is dangerous because **cars behind are speeding up**.",
+      "ar": "التوقف في مسار الدخول خطر لأن **السيارات خلفك تزيد سرعتها**."
+     }
     },
     {
      "en": "Stay in the right lane. Keep a gap of at least two seconds — more at speed.",
-     "ar": "ابقَ في المسار الأيمن. حافظ على ثانيتين على الأقل، وأكثر مع السرعة."
+     "ar": "ابقَ في المسار الأيمن. حافظ على ثانيتين على الأقل، وأكثر مع السرعة.",
+     "why": {
+      "en": "Keep at least a ==2-second== gap, and **more in rain or fog**.",
+      "ar": "حافظ على مسافة ==ثانيتين== على الأقل، و**أكثر في المطر أو الضباب**."
+     }
     },
     {
      "en": "Check mirrors often. Things come fast.",
-     "ar": "انظر في المرايا كثيرًا. الأمور تأتي بسرعة."
+     "ar": "انظر في المرايا كثيرًا. الأمور تأتي بسرعة.",
+     "why": {
+      "en": "Cars **come up fast** on the highway, so look often.",
+      "ar": "السيارات **تقترب بسرعة** في الطريق السريع، فانظر كثيرًا."
+     }
     },
     {
      "en": "Overtake, then move back right.",
-     "ar": "تجاوز، ثم عُد إلى اليمين."
+     "ar": "تجاوز، ثم عُد إلى اليمين.",
+     "why": {
+      "en": "Use the overtaking lane **only to overtake**, and don't weave between lanes.",
+      "ar": "استخدم مسار التجاوز **للتجاوز فقط**، ولا تتنقل بين المسارات."
+     }
     },
     {
      "en": "See your exit sign? Move to the exit lane early.",
-     "ar": "رأيت لوحة مخرجك؟ انتقل إلى مسار الخروج مبكرًا."
+     "ar": "رأيت لوحة مخرجك؟ انتقل إلى مسار الخروج مبكرًا.",
+     "why": {
+      "en": "Change lanes **well before your exit**, not at the last moment.",
+      "ar": "غيّر المسار **قبل المخرج بوقت كافٍ**، لا في آخر لحظة."
+     }
     },
     {
      "en": "Slow down on the exit ramp, not on the highway.",
-     "ar": "خفّف السرعة على منحدر الخروج، لا على الطريق السريع."
+     "ar": "خفّف السرعة على منحدر الخروج، لا على الطريق السريع.",
+     "why": {
+      "en": "Braking on the highway surprises fast cars behind. After leaving, **check the speedometer** — you may be faster than it feels.",
+      "ar": "الفرملة في الطريق السريع تفاجئ من خلفك. بعد الخروج **انظر إلى العداد**، فقد تكون أسرع مما تشعر."
+     }
     },
     {
      "en": "Missed the exit? Go on to the next one.",
-     "ar": "فاتك المخرج؟ تابع إلى المخرج التالي."
+     "ar": "فاتك المخرج؟ تابع إلى المخرج التالي.",
+     "why": {
+      "en": "**Never reverse** or turn back on a highway. The next exit is safe.",
+      "ar": "**لا ترجع للخلف أبدًا** ولا تستدر في الطريق السريع، فالمخرج التالي آمن."
+     }
     }
    ],
    "check": [
@@ -3674,32 +4242,60 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Before a bend, slow down on the straight.",
-     "ar": "قبل المنعطف، خفّف السرعة في الجزء المستقيم."
+     "ar": "قبل المنعطف، خفّف السرعة في الجزء المستقيم.",
+     "why": {
+      "en": "Bends can be **sharper than they look**. Slow down on the straight before them.",
+      "ar": "المنعطفات قد تكون **أحدّ مما تبدو**، فخفف السرعة في الجزء المستقيم قبلها."
+     }
     },
     {
      "en": "Watch for camels, sand and slow trucks.",
-     "ar": "انتبه للجمال والرمال والشاحنات البطيئة."
+     "ar": "انتبه للجمال والرمال والشاحنات البطيئة.",
+     "why": {
+      "en": "Pass **animals slowly** and widely, without the horn.",
+      "ar": "مُرّ **بالحيوانات ببطء** وبمسافة واسعة، دون استخدام البوق."
+     }
     },
     {
      "en": "Lift off the gas early when you see a stop ahead.",
-     "ar": "ارفع قدمك عن البنزين مبكرًا عندما ترى توقفًا أمامك."
+     "ar": "ارفع قدمك عن البنزين مبكرًا عندما ترى توقفًا أمامك.",
+     "why": {
+      "en": "Lifting off early lets the car **slow down by itself**, saving fuel and brakes.",
+      "ar": "رفع القدم مبكرًا يجعل السيارة **تبطئ وحدها**، فيوفر الوقود والفرامل."
+     }
     },
     {
      "en": "Keep a steady speed. Use cruise control on an empty straight.",
      "ar": "حافظ على سرعة ثابتة. استخدم المثبّت في طريق مستقيم خالٍ.",
-     "applies": "fronx"
+     "applies": "fronx",
+     "why": {
+      "en": "A steady speed **saves fuel**. Cruise control keeps the speed but **does not brake** for you.",
+      "ar": "السرعة الثابتة **توفر الوقود**، ومثبت السرعة يحافظ عليها لكنه **لا يفرمل** عنك."
+     }
     },
     {
      "en": "Want to overtake? Is the road clear and long enough? Not sure? Don't.",
-     "ar": "تريد التجاوز؟ هل الطريق خالٍ وطويل بما يكفي؟ لست متأكدًا؟ لا تتجاوز."
+     "ar": "تريد التجاوز؟ هل الطريق خالٍ وطويل بما يكفي؟ لست متأكدًا؟ لا تتجاوز.",
+     "why": {
+      "en": "**If in doubt, don't overtake.** You need a clear, long road.",
+      "ar": "**إن شككت فلا تتجاوز**؛ تحتاج طريقًا خاليًا وطويلًا."
+     }
     },
     {
      "en": "Overtake quickly, then come back right with space.",
-     "ar": "تجاوز بسرعة، ثم عُد يمينًا مع ترك مسافة."
+     "ar": "تجاوز بسرعة، ثم عُد يمينًا مع ترك مسافة.",
+     "why": {
+      "en": "Check there is **space to return** to the right lane before you overtake.",
+      "ar": "تأكد من وجود **مساحة للعودة** إلى المسار الأيمن قبل التجاوز."
+     }
     },
     {
      "en": "Windows up above 60 km/h. AC not too cold.",
-     "ar": "أغلق النوافذ فوق 60 كم/س. لا تجعل المكيف باردًا جدًا."
+     "ar": "أغلق النوافذ فوق 60 كم/س. لا تجعل المكيف باردًا جدًا.",
+     "why": {
+      "en": "Open windows above ==60 km/h== **use more fuel** because of the wind.",
+      "ar": "النوافذ المفتوحة فوق ==60 كم/س== **تستهلك وقودًا أكثر** بسبب الهواء."
+     }
     }
    ],
    "check": [
@@ -3881,35 +4477,67 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Before you go: clean the windscreen, lights and mirrors.",
-     "ar": "قبل الانطلاق: نظّف الزجاج الأمامي والأنوار والمرايا."
+     "ar": "قبل الانطلاق: نظّف الزجاج الأمامي والأنوار والمرايا.",
+     "why": {
+      "en": "**Clean glass and lights** help you see and be seen at night.",
+      "ar": "**الزجاج والأنوار النظيفة** تساعدك على الرؤية وأن يراك الآخرون ليلًا."
+     }
     },
     {
      "en": "Lights on. Check the green light on the dash.",
-     "ar": "شغّل الأنوار. تأكد من اللمبة الخضراء في العدادات."
+     "ar": "شغّل الأنوار. تأكد من اللمبة الخضراء في العدادات.",
+     "why": {
+      "en": "At night, **always use your lights**, even on lit streets.",
+      "ar": "في الليل **شغّل الأنوار دائمًا** حتى في الشوارع المضاءة."
+     }
     },
     {
      "en": "Turn the dash brightness down if it is too bright.",
-     "ar": "خفّف إضاءة العدادات إن كانت قوية."
+     "ar": "خفّف إضاءة العدادات إن كانت قوية.",
+     "why": {
+      "en": "A bright screen makes it **harder for your eyes** to see the dark road.",
+      "ar": "الشاشة الساطعة تجعل **رؤية الطريق المظلم أصعب** على عينيك."
+     }
     },
     {
      "en": "In the city: normal low lights only.",
-     "ar": "داخل المدينة: الأنوار المنخفضة فقط."
+     "ar": "داخل المدينة: الأنوار المنخفضة فقط.",
+     "why": {
+      "en": "**Never use high beams inside cities.**",
+      "ar": "**لا تستخدم الضوء العالي داخل المدن أبدًا.**"
+     }
     },
     {
      "en": "Dark open road and nobody ahead? High beam.",
-     "ar": "طريق مظلم خارج المدينة ولا أحد أمامك؟ الضوء العالي."
+     "ar": "طريق مظلم خارج المدينة ولا أحد أمامك؟ الضوء العالي.",
+     "why": {
+      "en": "High beam lets you **see much further** on a dark road. The blue light shows it is on.",
+      "ar": "الضوء العالي يتيح لك **رؤية أبعد بكثير** في الطريق المظلم، واللمبة الزرقاء تدل على تشغيله."
+     }
     },
     {
      "en": "Car coming or car ahead? Dip at once.",
-     "ar": "سيارة قادمة أو أمامك؟ اخفض الضوء فورًا."
+     "ar": "سيارة قادمة أو أمامك؟ اخفض الضوء فورًا.",
+     "why": {
+      "en": "**Dip** means switching back to low beam, so you **don't dazzle** (blind) other drivers.",
+      "ar": "**التخفيض** يعني العودة للضوء المنخفض حتى **لا تُبهر** (تعمي) السائقين الآخرين."
+     }
     },
     {
      "en": "Dazzled? Look at the right edge of the road. Slow down.",
-     "ar": "انبهرت؟ انظر إلى الحافة اليمنى للطريق. خفّف السرعة."
+     "ar": "انبهرت؟ انظر إلى الحافة اليمنى للطريق. خفّف السرعة.",
+     "why": {
+      "en": "**Dazzled** means blinded by bright lights. Looking away from them and **slowing down** keeps you safe.",
+      "ar": "**الانبهار** يعني أن الضوء القوي أعماك مؤقتًا. أبعد نظرك عنه و**خفف السرعة** لتبقى آمنًا."
+     }
     },
     {
      "en": "Drive a bit slower than by day. Watch for people in dark clothes.",
-     "ar": "قُد أبطأ قليلًا من النهار. انتبه للمشاة بملابس داكنة."
+     "ar": "قُد أبطأ قليلًا من النهار. انتبه للمشاة بملابس داكنة.",
+     "why": {
+      "en": "You see less at night. People in dark clothes are **very hard to see**.",
+      "ar": "ترى أقل في الليل، والأشخاص بملابس داكنة **يصعب جدًا رؤيتهم**."
+     }
     }
    ],
    "check": [
@@ -4102,35 +4730,67 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Set the sat nav before you move. Sound on, screen still.",
-     "ar": "اضبط الملاحة قبل التحرك. الصوت مفعّل والشاشة ثابتة."
+     "ar": "اضبط الملاحة قبل التحرك. الصوت مفعّل والشاشة ثابتة.",
+     "why": {
+      "en": "Setting it before you move means **no looking at the screen** while driving.",
+      "ar": "ضبطها قبل التحرك يعني **عدم النظر للشاشة** أثناء القيادة."
+     }
     },
     {
      "en": "Instructor gives the destination. You choose the way.",
-     "ar": "يحدد المدرب الوجهة. أنت تختار الطريق."
+     "ar": "يحدد المدرب الوجهة. أنت تختار الطريق.",
+     "why": {
+      "en": "Choosing your own way builds **real driving skill**.",
+      "ar": "اختيار طريقك بنفسك يبني **مهارة قيادة حقيقية**."
+     }
     },
     {
      "en": "Read the blue and green direction signs early.",
-     "ar": "اقرأ لوحات الاتجاهات الزرقاء والخضراء مبكرًا."
+     "ar": "اقرأ لوحات الاتجاهات الزرقاء والخضراء مبكرًا.",
+     "why": {
+      "en": "Guide signs are **blue outside cities and green inside**. Reading early gives you time to choose your lane.",
+      "ar": "لوحات الإرشاد **زرقاء خارج المدن وخضراء داخلها**، وقراءتها مبكرًا تعطيك وقتًا لاختيار المسار."
+     }
     },
     {
      "en": "Wrong turn? No problem. Carry on and find a safe way back.",
-     "ar": "انعطاف خاطئ؟ لا مشكلة. تابع وجد طريق عودة آمنًا."
+     "ar": "انعطاف خاطئ؟ لا مشكلة. تابع وجد طريق عودة آمنًا.",
+     "why": {
+      "en": "Sudden turns are dangerous. **A wrong turn is easy to fix** later.",
+      "ar": "الانعطاف المفاجئ خطر، و**الخطأ في الطريق يسهل إصلاحه** لاحقًا."
+     }
     },
     {
      "en": "Before you drive with passengers: everyone belted.",
-     "ar": "قبل القيادة بالركاب: الجميع يربط الحزام."
+     "ar": "قبل القيادة بالركاب: الجميع يربط الحزام.",
+     "why": {
+      "en": "The driver and **all passengers** must wear belts, and you must remind them.",
+      "ar": "يجب أن يربط السائق و**كل الركاب** الأحزمة، وعليك تذكيرهم."
+     }
     },
     {
      "en": "Children under 10 in the back, in the right seat.",
-     "ar": "الأطفال تحت 10 سنوات في الخلف، في المقعد المناسب لهم."
+     "ar": "الأطفال تحت 10 سنوات في الخلف، في المقعد المناسب لهم.",
+     "why": {
+      "en": "**Never seat children under ==10==** in the front. Under ==12== they need a booster seat.",
+      "ar": "**لا تُجلس الأطفال دون ==10== سنوات** في الأمام، ومن هم دون ==12== يحتاجون مقعدًا رافعًا."
+     }
     },
     {
      "en": "Passengers get out on the pavement side.",
-     "ar": "ينزل الركاب من جهة الرصيف."
+     "ar": "ينزل الركاب من جهة الرصيف.",
+     "why": {
+      "en": "Getting out **on the pavement side** keeps passengers away from traffic.",
+      "ar": "النزول **من جهة الرصيف** يُبعد الركاب عن السيارات المارة."
+     }
     },
     {
      "en": "Heavy load? Brake earlier and drive gently.",
-     "ar": "حمولة ثقيلة؟ فرمل أبكر وقُد بلطف."
+     "ar": "حمولة ثقيلة؟ فرمل أبكر وقُد بلطف.",
+     "why": {
+      "en": "A heavy car **takes longer to stop**. Keep a bigger gap.",
+      "ar": "السيارة الثقيلة **تحتاج مسافة أطول للتوقف**، فاترك مسافة أكبر."
+     }
     }
    ],
    "check": [
@@ -4311,31 +4971,59 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Do the checks and cockpit drill as in lesson 1.",
-     "ar": "قم بالفحوص وتجهيز المقعد كما في الدرس الأول."
+     "ar": "قم بالفحوص وتجهيز المقعد كما في الدرس الأول.",
+     "why": {
+      "en": "The test starts with **seat, belt, head rest and mirrors**, like lesson 1.",
+      "ar": "يبدأ الاختبار **بالمقعد والحزام ومسند الرأس والمرايا** كما في الدرس الأول."
+     }
     },
     {
      "en": "Drive the route the instructor gives. Follow every instruction.",
-     "ar": "قُد المسار الذي يحدده المدرب. نفّذ كل تعليمة."
+     "ar": "قُد المسار الذي يحدده المدرب. نفّذ كل تعليمة.",
+     "why": {
+      "en": "Following directions safely is **what the test checks**.",
+      "ar": "اتباع التعليمات بأمان هو **ما يقيسه الاختبار**."
+     }
     },
     {
      "en": "Do the manoeuvres you are asked for.",
-     "ar": "نفّذ المناورات المطلوبة."
+     "ar": "نفّذ المناورات المطلوبة.",
+     "why": {
+      "en": "The manoeuvres show your **control of the car**.",
+      "ar": "المناورات تُظهر **تحكمك في السيارة**."
+     }
     },
     {
      "en": "The instructor marks faults but does not help.",
-     "ar": "يسجّل المدرب الأخطاء ولا يساعد."
+     "ar": "يسجّل المدرب الأخطاء ولا يساعد.",
+     "why": {
+      "en": "This is **like the real test**, so you know what to expect.",
+      "ar": "هذا **مثل الاختبار الحقيقي**، فتعرف ما تتوقعه."
+     }
     },
     {
      "en": "Made a mistake? Stay calm and keep driving safely.",
-     "ar": "أخطأت؟ ابقَ هادئًا وواصل القيادة بأمان."
+     "ar": "أخطأت؟ ابقَ هادئًا وواصل القيادة بأمان.",
+     "why": {
+      "en": "One mistake is not the end. **Staying calm** stops one mistake becoming more.",
+      "ar": "خطأ واحد ليس النهاية، و**الهدوء** يمنع الخطأ من أن يتكرر."
+     }
     },
     {
      "en": "Park and finish. Then go through the marks together.",
-     "ar": "قف وأنهِ. ثم راجع التقييم معًا."
+     "ar": "قف وأنهِ. ثم راجع التقييم معًا.",
+     "why": {
+      "en": "Finish routine: **stop, P, handbrake, engine off**. Talking it through helps you learn.",
+      "ar": "روتين الإنهاء: **توقف، P، فرامل اليد، أطفئ المحرك**. ومراجعة الأخطاء معًا تساعدك على التعلم."
+     }
     },
     {
      "en": "Choose the faults to work on next.",
-     "ar": "اختر الأخطاء التي ستعمل عليها لاحقًا."
+     "ar": "اختر الأخطاء التي ستعمل عليها لاحقًا.",
+     "why": {
+      "en": "Knowing your faults tells you **what to practise next**.",
+      "ar": "معرفة أخطائك تخبرك **بما تتمرن عليه بعد ذلك**."
+     }
     }
    ],
    "check": [
@@ -4508,36 +5196,68 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Something feels wrong? Signal and pull off the road.",
-     "ar": "تشعر بخلل؟ أعطِ الإشارة واخرج من الطريق."
+     "ar": "تشعر بخلل؟ أعطِ الإشارة واخرج من الطريق.",
+     "why": {
+      "en": "If you break down, **clear the road**. Stopping on the road is dangerous.",
+      "ar": "عند العطل **ابتعد عن الطريق**، فالوقوف فيه خطر."
+     }
     },
     {
      "en": "Hazards on. Handbrake up. P.",
-     "ar": "شغّل أنوار الطوارئ. ارفع فرامل اليد. P."
+     "ar": "شغّل أنوار الطوارئ. ارفع فرامل اليد. P.",
+     "why": {
+      "en": "**Hazards** are the flashing warning lights. Put them on **before you get out**.",
+      "ar": "**أنوار الطوارئ** هي الأنوار الوامضة للتحذير، شغّلها **قبل أن تنزل**."
+     }
     },
     {
      "en": "Get everyone out on the side away from traffic.",
-     "ar": "أنزل الجميع من الجهة البعيدة عن السير."
+     "ar": "أنزل الجميع من الجهة البعيدة عن السير.",
+     "why": {
+      "en": "Getting out away from traffic keeps everyone **safe from passing cars**.",
+      "ar": "النزول بعيدًا عن السير يحمي الجميع **من السيارات المارة**."
+     }
     },
     {
      "en": "Put the triangle well behind the car.",
-     "ar": "ضع المثلث خلف السيارة بمسافة كافية."
+     "ar": "ضع المثلث خلف السيارة بمسافة كافية.",
+     "why": {
+      "en": "The triangle **warns drivers early**. Place it **at least ==45 metres==** behind the car.",
+      "ar": "المثلث **ينبّه السائقين مبكرًا**، ضعه **على بعد ==45 مترًا== على الأقل** خلف السيارة."
+     }
     },
     {
      "en": "Practise now: find the triangle, spare or kit, and jack.",
      "ar": "تدرّب الآن: جد المثلث والإطار الاحتياطي أو العدة والرافعة.",
-     "applies": "fronx"
+     "applies": "fronx",
+     "why": {
+      "en": "Knowing where things are **now** saves time and stress later.",
+      "ar": "معرفة مكان الأدوات **الآن** توفر الوقت والقلق لاحقًا."
+     }
     },
     {
      "en": "Crash with injuries? Call 997 and 911/993. Don't move the injured.",
-     "ar": "حادث بإصابات؟ اتصل بـ 997 و911/993. لا تحرّك المصابين."
+     "ar": "حادث بإصابات؟ اتصل بـ 997 و911/993. لا تحرّك المصابين.",
+     "why": {
+      "en": "Call Traffic ==911 / 993== and the Red Crescent ==997==. **Don't move injured people** unless they're in danger.",
+      "ar": "اتصل بالمرور ==911 / 993== والهلال الأحمر ==997==، و**لا تحرك المصابين** إلا إن كانوا في خطر."
+     }
     },
     {
      "en": "Damage only? Take photos from all sides. Report in the Najm app.",
-     "ar": "أضرار فقط؟ صوّر من كل الجهات. أبلغ عبر تطبيق نجم."
+     "ar": "أضرار فقط؟ صوّر من كل الجهات. أبلغ عبر تطبيق نجم.",
+     "why": {
+      "en": "For damage only, **report via the Najm app** and take photos from all angles.",
+      "ar": "عند الأضرار فقط **أبلغ عبر تطبيق نجم** وصوّر من كل الزوايا."
+     }
     },
     {
      "en": "Never drive away from a crash.",
-     "ar": "لا تغادر مكان الحادث أبدًا."
+     "ar": "لا تغادر مكان الحادث أبدًا.",
+     "why": {
+      "en": "**Leaving the scene** makes you a fugitive in the eyes of the law.",
+      "ar": "**مغادرة موقع الحادث** تجعلك هاربًا في نظر القانون."
+     }
     }
    ],
    "check": [
@@ -4739,36 +5459,68 @@ window.DC_DATA.lessons2 = {
    "steps": [
     {
      "en": "Check the weather before you leave.",
-     "ar": "اطّلع على حالة الطقس قبل الخروج."
+     "ar": "اطّلع على حالة الطقس قبل الخروج.",
+     "why": {
+      "en": "Knowing about dust, rain or fog **before** you go helps you plan.",
+      "ar": "معرفة الغبار أو المطر أو الضباب **قبل** الخروج تساعدك على التخطيط."
+     }
     },
     {
      "en": "Rain or dust: lights on, slow down.",
-     "ar": "مطر أو غبار: شغّل الأنوار وخفّف السرعة."
+     "ar": "مطر أو غبار: شغّل الأنوار وخفّف السرعة.",
+     "why": {
+      "en": "Lights help others **see you**. Drive **slower than the limit** when you can't see far.",
+      "ar": "الأنوار تجعل الآخرين **يرونك**، وقُد **أبطأ من الحد** عندما لا ترى بعيدًا."
+     }
     },
     {
      "en": "Leave double the gap.",
-     "ar": "ضاعف المسافة."
+     "ar": "ضاعف المسافة.",
+     "why": {
+      "en": "In rain, stopping distances are **at least ==double==**.",
+      "ar": "في المطر مسافة التوقف **ضعف المعتاد على الأقل**."
+     }
     },
     {
      "en": "Wipers on. Spray first if the glass is dusty.",
-     "ar": "شغّل المساحات. رشّ الماء أولًا إن كان الزجاج مغبرًا."
+     "ar": "شغّل المساحات. رشّ الماء أولًا إن كان الزجاج مغبرًا.",
+     "why": {
+      "en": "**Never wipe dry or dusty glass** — spray first so you don't scratch it.",
+      "ar": "**لا تمسح زجاجًا جافًا أو مغبرًا**؛ رشّ الماء أولًا حتى لا تخدشه."
+     }
     },
     {
      "en": "Brake early and gently. No sudden turns.",
-     "ar": "فرمل مبكرًا وبلطف. لا انعطافات مفاجئة."
+     "ar": "فرمل مبكرًا وبلطف. لا انعطافات مفاجئة.",
+     "why": {
+      "en": "Wet roads are **slippery**, especially after a dry spell.",
+      "ar": "الطرق المبللة **زلقة**، خاصة بعد فترة جفاف."
+     }
     },
     {
      "en": "Windscreen misting? Press demist.",
      "ar": "الزجاج يتغبّش؟ اضغط زر إزالة الضباب.",
-     "applies": "fronx"
+     "applies": "fronx",
+     "why": {
+      "en": "The **demist button** clears the glass so you can see.",
+      "ar": "**زر إزالة الضباب** ينظّف الزجاج لترى جيدًا."
+     }
     },
     {
      "en": "Can't see the road? Pull right off the road and wait. Lights on.",
-     "ar": "لا ترى الطريق؟ اخرج من الطريق تمامًا وانتظر. الأنوار مضاءة."
+     "ar": "لا ترى الطريق؟ اخرج من الطريق تمامًا وانتظر. الأنوار مضاءة.",
+     "why": {
+      "en": "**Don't stop on the shoulder** unless it's an emergency. Lights help others see you.",
+      "ar": "**لا تقف على كتف الطريق** إلا في الطوارئ، والأنوار تجعل الآخرين يرونك."
+     }
     },
     {
      "en": "Hot day: cool the car first, drink water, take breaks.",
-     "ar": "يوم حار: برّد السيارة أولًا، واشرب الماء، وخذ استراحات."
+     "ar": "يوم حار: برّد السيارة أولًا، واشرب الماء، وخذ استراحات.",
+     "why": {
+      "en": "Heat makes you **sleepy**. Watch the temperature light.",
+      "ar": "الحر يسبب **النعاس**، وراقب لمبة الحرارة."
+     }
     }
    ],
    "check": [
