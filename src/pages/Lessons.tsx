@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { Check, ArrowLeft, ArrowRight, NotebookPen, BookOpen, Car, Footprints, Target, ParkingSquare, Route, Milestone, GraduationCap } from "lucide-react";
 import { useStore, setSkill } from "../lib/store";
-import { LESSONS, LES, SK, THEORY_ONLY, FIG, FIGURES, DIAGRAMS, HC, hcImg, CAR } from "../lib/data";
+import { LESSONS, LES, SK, THEORY_ONLY, FIG, FIGURES, DIAGRAMS, HC, hcImg, CAR, SIGN_PLAN, SIGN, META } from "../lib/data";
 import { TOPICS, topicTitle } from "../lib/progress";
 import { Checklist, LevelPicker, Md, NextPrev, SrcTag, StageHead, ColourKey } from "../components/ui";
 import { firstLessonPack } from "../lib/lesson0";
@@ -97,6 +97,32 @@ export function LessonsPage() {
   );
 }
 
+/** The signs this lesson introduces, large, with where to find each in the Signs tab. */
+function LessonSigns({ id }: { id: string }) {
+  const { L, ar, p } = useStore();
+  const plan = SIGN_PLAN[id];
+  if (!plan?.signs.length) return null;
+  const list = plan.signs.map((s) => SIGN[s]).filter(Boolean);
+  const before = LESSONS.slice(0, LESSONS.findIndex((l) => l.id === id)).reduce((n, l) => n + (SIGN_PLAN[l.id]?.signs.length || 0), 0);
+  const total = Object.values(SIGN_PLAN).reduce((n, v) => n + v.signs.length, 0);
+  return (
+    <div className="lesson-signs">
+      <h3>🚦 {ar ? `إشارات هذا الدرس (${list.length})` : `Signs in this lesson (${list.length})`}</h3>
+      <p className="muted small">{L(plan.why)} · <bdi>{before + list.length}/{total}</bdi> {ar ? "إشارة بنهاية هذا الدرس" : "signs met by the end of this lesson"}</p>
+      <ul className="ls-grid">
+        {list.map((x) => (
+          <li key={x.id} className={p.known[x.id] ? "known" : ""}>
+            <span className="ls-imgs">{x.imgs.map((im: any) => <span key={im.src} className="ls-img"><img src={im.src} alt="" loading="lazy" /><SrcTag src={im.o === "ksa" ? "moroor" : "dvsa"} /></span>)}</span>
+            <b>{L(x)}</b>
+            {x.mEn ? <span className="ls-mean">{ar ? x.mAr : x.mEn}</span> : null}
+            <Link className="ls-where" to={"/theory/signs?cat=" + x.cat + "&sign=" + x.id}>📍 {ar ? "في تبويب الإشارات: " : "Signs tab: "}{L(META.cats[x.cat])}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function Points({ points }: { points: any[] }) {
   const { L, ar } = useStore();
   const sorted = [...points].sort((a, b) => ORDER.indexOf(a.kind) - ORDER.indexOf(b.kind));
@@ -187,6 +213,7 @@ export function LessonPage() {
         <ColourKey />
         <Points points={l.before} />
         <Pictures points={l.before} dg={l.dg} />
+        <LessonSigns id={l.id} />
         {topics.length ? <p className="row"><span className="muted">{ar ? "للمزيد:" : "Read more:"}</span> {topics.map((t) => <Link key={t.id} className="chip" to={"/theory/" + t.id}>{p.read[t.id] ? <Check size={13} strokeWidth={3} /> : null}{topicTitle(t, L)}</Link>)}</p> : null}
       </section>
 

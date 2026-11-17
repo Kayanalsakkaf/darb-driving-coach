@@ -10,6 +10,7 @@ import "../data/lessons.js";
 import "../data/bank.js";
 /* Optional gap-fill content (DVSA syllabus): merged into lessons and the question bank when present. */
 const _gap = import.meta.glob("../data/gapfill.js", { eager: true }); void _gap;
+const _sp = import.meta.glob("../data/signplan.js", { eager: true }); void _sp;
 import car from "../data/car.js";
 import figures, { points as figPoints } from "../data/figures.js";
 
@@ -70,3 +71,7 @@ export const hcImg = (key: string) => {
 };
 export const chaptersForLesson = (l: any) => (l.ch || []).map((c: string) => CH[c]).filter(Boolean);
 export const lessonsForChapter = (cid: string) => LESSONS.filter((l) => (l.ch || []).includes(cid));
+
+/** Signs introduced in each lesson, and the lesson that introduces each sign. */
+export const SIGN_PLAN: Record<string, { why: Bi; signs: string[] }> = D.signplan || {};
+export const SIGN_LESSON: Record<string, string> = Object.fromEntries(Object.entries(SIGN_PLAN).flatMap(([l, v]) => v.signs.map((id) => [id, l])));

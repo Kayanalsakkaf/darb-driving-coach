@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Check, ArrowLeft, ArrowRight } from "lucide-react";
 import { useStore } from "../lib/store";
+import { SIGN_PLAN, SIGN_LESSON } from "../lib/data";
 import { COURSE, CHAPTERS, LESSONS, LES, SIGNS, SK, DIAGRAMS, META, HBU, FIGURES, FIG_POINTS } from "../lib/data";
 import { TOPICS, topicTitle, figCount, firstLessonOf, topicNo } from "../lib/progress";
 import { Checklist, ColourKey, Md, NextPrev, SrcTag, StageHead } from "../components/ui";
@@ -80,25 +81,34 @@ export function TheoryIndex() {
 
 export function SignGallery({ cats }: { cats?: string[] }) {
   const { L, ar, p, set, user } = useStore();
-  const [cat, setCat] = useState<string>(cats ? "all" : "regulatory");
-  const list = SIGNS.filter((x) => (cats ? cats.includes(x.cat) : cat === "all" || x.cat === cat));
+  const [qs] = useSearchParams();
+  const focus = qs.get("sign");
+  const [cat, setCat] = useState<string>(cats ? "all" : qs.get("cat") || "regulatory");
+  const [byLesson, setByLesson] = useState<string>("");
+  useEffect(() => { if (focus) setTimeout(() => document.getElementById("sg-" + focus)?.scrollIntoView({ behavior: "smooth", block: "center" }), 150); }, [focus]);
+  const list = SIGNS.filter((x) => (byLesson ? SIGN_LESSON[x.id] === byLesson : cats ? cats.includes(x.cat) : cat === "all" || x.cat === cat));
   const known = list.filter((x) => p.known[x.id]).length;
   return (
     <section className="signs">
       {!cats ? (
-        <div className="seg" role="tablist">
-          {Object.entries<any>(META.cats).map(([k, v]) => <button key={k} role="tab" aria-selected={cat === k} onClick={() => setCat(k)}>{L(v)}</button>)}
+        <div className="sign-filters">
+          <div className="seg" role="tablist">
+            {Object.entries<any>(META.cats).map(([k, v]) => <button key={k} role="tab" aria-selected={!byLesson && cat === k} onClick={() => { setByLesson(""); setCat(k); }}>{L(v)}</button>)}
+          </div>
+          {Object.keys(SIGN_PLAN).length ? <label className="by-lesson">{ar ? "حسب الدرس" : "By lesson"}<select value={byLesson} onChange={(e) => setByLesson(e.target.value)}><option value="">{ar ? "الكل" : "—"}</option>{LESSONS.filter((l) => SIGN_PLAN[l.id]).map((l) => <option key={l.id} value={l.id}>{l.id} · {L(l)} ({SIGN_PLAN[l.id].signs.length})</option>)}</select></label> : null}
         </div>
       ) : null}
-      <p className="muted">{known} / {list.length} {ar ? "معروفة" : "known"} · {ar ? "اضغط على الإشارة عندما تعرفها" : "Tap a sign once you know it"}</p>
+      <p className="muted"><bdi>{known} / {list.length}</bdi> {ar ? "معروفة" : "known"} · {ar ? "اضغط على الإشارة عندما تعرفها" : "Tap a sign once you know it"}</p>
       <ul className="sign-grid">
         {list.map((x) => {
           const on = !!p.known[x.id];
+          const les = SIGN_LESSON[x.id];
           return (
-            <li key={x.id}>
+            <li key={x.id} id={"sg-" + x.id} className={focus === x.id ? "focus" : ""}>
               <button className={"sign-card" + (on ? " on" : "")} aria-pressed={on} onClick={() => set((n) => { const pp = (n.progress[user.id] ||= { lessons: {}, theory: {}, checks: {}, skills: {}, known: {}, read: {}, steps: {} } as any); pp.known ||= {}; if (pp.known[x.id]) delete pp.known[x.id]; else pp.known[x.id] = true; })}>
                 <span className="sign-imgs">{x.imgs.map((im: any) => <span key={im.src} className="sign-img"><img src={im.src} alt="" loading="lazy" /><SrcTag src={im.o === "ksa" ? "moroor" : "dvsa"} /></span>)}</span>
                 <span className="sign-name">{L(x)}</span>
+                {les ? <span className="sign-les">{ar ? "يُقدَّم في" : "Introduced in"} {les}</span> : null}
                 {on ? <span className="sign-known"><Check size={13} strokeWidth={3} /></span> : null}
               </button>
             </li>

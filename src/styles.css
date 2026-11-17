@@ -789,3 +789,18 @@ kbd.gear { display: inline-grid; place-items: center; min-width: 1.45em; height:
 .ev-no { display: inline-grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--darb); color: #fff; font-size: 0.78rem; flex: none; }
 .car-item, .light { scroll-margin-top: 5rem; }
 .tc-pic img[src*="img/ksa"], .tc-pic img[src*="img/uk/"] { object-fit: contain; padding: 0.75rem; background: #fff; }
+.lesson-signs { margin-top: 1.75rem; }
+.ls-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); gap: 0.75rem; }
+.ls-grid li { display: grid; gap: 0.35rem; justify-items: center; text-align: center; background: var(--paper); border: 1.5px solid var(--rule); border-radius: 10px; padding: 0.9rem 0.75rem; }
+.ls-grid li.known { border-color: var(--prio); background: #f3faf6; }
+.ls-imgs { display: flex; gap: 0.75rem; justify-content: center; }
+.ls-img { display: grid; justify-items: center; gap: 0.25rem; }
+.ls-img img { width: 6.5rem; height: 6.5rem; object-fit: contain; }
+.ls-img .src-tag { font-size: 0.62rem; }
+.ls-mean { font-size: 0.88rem; color: var(--ink-2); }
+.ls-where { font: 700 0.78rem var(--f-sign); text-decoration: none; }
+.sign-filters { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 0.75rem; }
+.by-lesson { display: flex; align-items: center; gap: 0.5rem; }
+.by-lesson select { width: auto; min-width: 14rem; }
+.sign-les { font: 700 0.72rem var(--f-sign); color: #13703f; background: #dff2e7; border-radius: 4px; padding: 0.1rem 0.4rem; }
+.sign-grid li.focus .sign-card { border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber); }
