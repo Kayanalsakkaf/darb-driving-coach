@@ -6,6 +6,7 @@ import "../data/questions.js";
 import "../data/diagrams.js";
 import "../data/hb.js";
 import "../data/hc.js";
+import "../data/lessons.js";
 import car from "../data/car.js";
 import figures, { points as figPoints } from "../data/figures.js";
 
@@ -28,7 +29,9 @@ export const FIGURES: { id: string; page: number; src: string; ar: string; en: s
 export const FIG_POINTS: { page: number; topic: string; ar: string; en: string }[] = ((figPoints as any[]) || []).map((f) => ({ ...f, page: pp(f) }));
 
 export const CHAPTERS: any[] = COURSE.chapters;
-export const LESSONS: any[] = COURSE.lessons;
+export const LESSONS: any[] = D.lessons2.lessons;
+export const THEORY_ONLY: { id: string; en: string; ar: string; points: any[] }[] = D.lessons2.theoryOnly;
+export const FIG = Object.fromEntries((figures as any[]).map((f) => [f.id, { ...f, page: f.printedPage ?? f.page - 1, src: "img/hbf/" + f.src }]));
 export const CHECKLISTS: Record<string, { en: string; ar: string; items: [string, string][] }> = COURSE.checklists;
 export const LEVELS: { n: number; en: string; ar: string; dEn: string; dAr: string }[] = COURSE.levels;
 export const SKILL_GROUPS: Record<string, Bi> = COURSE.skillGroups;

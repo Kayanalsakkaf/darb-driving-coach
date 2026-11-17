@@ -72,7 +72,7 @@ export function Masthead() {
   const { L, ar, s, set, user } = useStore();
   const st = stageStatus();
   const loc = useLocation();
-  const current = STAGES.find((x) => loc.pathname.startsWith(x.path));
+  const current = STAGES.find((x) => (loc.pathname === x.path || loc.pathname.startsWith(x.path + "/")));
   const [menu, setMenu] = useState(false);
   useEffect(() => { setMenu(false); }, [loc.pathname]);
   return (

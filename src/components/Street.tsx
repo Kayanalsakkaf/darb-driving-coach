@@ -19,7 +19,7 @@ export function Street() {
   const nav = useNavigate();
   const loc = useLocation();
   const box = useRef<HTMLDivElement>(null);
-  const current = STAGES.find((x) => loc.pathname.startsWith(x.path));
+  const current = STAGES.find((x) => (loc.pathname === x.path || loc.pathname.startsWith(x.path + "/")));
   // car position: finished stages + fraction of the first unfinished one
   const idx = STAGES.findIndex((x) => x.id === st.next);
   const doneAll = STAGES.every((x) => st[x.id].done);

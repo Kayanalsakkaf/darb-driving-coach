@@ -17,9 +17,9 @@ export function useStageStatus(): Record<StageId, StageState> & { next: StageId 
   const theory = f(TOPICS.filter((t) => p.read[t.id]).length, TOPICS.length, "topics read", "موضوعات مقروءة");
   const carKeys = CAR.sections.map((c: any) => "car:" + c.id);
   const car = f(carKeys.filter((k: string) => p.read[k]).length, carKeys.length, "sections read", "أقسام مقروءة");
-  const mocks = s.attempts.filter((a) => a.userId === user.id && a.kind === "mock");
+  const mocks = s.attempts.filter((a) => a.userId === user.id && a.kind === "mock" && a.total >= 40);
   const last3 = mocks.slice(-3);
-  const streak = last3.length === 3 && last3.every((a) => a.score / a.total >= 0.9);
+  const streak = last3.length === 3 && last3.every((a) => a.score >= 43);
   const best = mocks.reduce((m, a) => Math.max(m, Math.round((a.score / a.total) * 100)), 0);
   const tt: StageState = { pct: streak ? 100 : best, done: streak, label: mocks.length ? (ar ? `أفضل نتيجة ${best}%` : `Best mock ${best}%`) : ar ? "لا اختبارات بعد" : "No mocks yet" };
   const lessons = f(LESSONS.filter((l) => p.lessons[l.id]).length, LESSONS.length, "lessons done", "دروس منجزة");

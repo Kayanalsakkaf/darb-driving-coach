@@ -14,7 +14,7 @@ import { LogPage, SettingsPage } from "./pages/Log";
 
 function Main({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
-  const st = STAGES.find((x) => pathname.startsWith(x.path));
+  const st = STAGES.find((x) => (pathname === x.path || pathname.startsWith(x.path + "/")));
   return <div id="main" data-stage={st?.id || "home"} style={{ ["--hue" as any]: st ? STAGE_HUE[st.id] : "#00663d" }}>{children}</div>;
 }
 
