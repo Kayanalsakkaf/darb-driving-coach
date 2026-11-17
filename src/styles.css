@@ -755,3 +755,29 @@ kbd.gear { display: inline-grid; place-items: center; min-width: 1.45em; height:
 .lt-row { grid-template-columns: 1fr; gap: 0.1rem; }
 .lt-row > span:last-child { color: #e9eef0; font: 400 0.93rem/1.5 var(--f-body); padding: 0; }
 .light-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); }
+/* theory list: numbered picture cards in road order */
+.lede-sm { font-size: 1.05rem; }
+.topic-cards { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 0.75rem; }
+.topic-cards a { display: grid; grid-template-rows: auto 1fr; height: 100%; background: var(--paper); border: 1.5px solid var(--rule); border-radius: 10px; overflow: hidden; color: var(--ink); text-decoration: none; position: relative; transition: border-color 0.2s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.topic-cards a:hover { border-color: var(--hue); transform: translateY(-2px); }
+.tc-pic { position: relative; aspect-ratio: 16 / 9; background: #eef1ef; display: block; }
+.tc-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tc-nopic { position: absolute; inset: 0; background: repeating-linear-gradient(45deg, #e7ebe8 0 10px, #eef1ef 10px 20px); }
+.tc-no { position: absolute; top: 0.5rem; inset-inline-start: 0.5rem; min-width: 2.2rem; height: 2.2rem; padding: 0 0.4rem; display: grid; place-items: center; border-radius: 6px; background: var(--hue); color: #fff; font: 800 1.05rem var(--f-sign); box-shadow: 0 0 0 2px #fff; }
+.tc-body { display: grid; gap: 0.35rem; align-content: start; padding: 0.7rem 0.85rem 0.85rem; }
+.tc-body .t-name { font: 700 1.05rem/1.3 var(--f-sign); }
+.tc-meta { display: flex; flex-wrap: wrap; gap: 0.3rem 0.7rem; font-size: 0.82rem; color: var(--ink-3); }
+.first-l b { color: var(--hue); }
+.tc-done { position: absolute; top: 0.5rem; inset-inline-end: 0.5rem; width: 1.8rem; height: 1.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--prio); color: #fff; box-shadow: 0 0 0 2px #fff; }
+.topic-cards .read .t-name { color: var(--ink-3); }
+.plate-no a { color: inherit; }
+/* bigger signs */
+.sign-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 12.5rem), 1fr)); gap: 0.75rem; }
+.sign-card { padding: 1rem 0.75rem; font-size: 0.98rem; gap: 0.6rem; }
+.sign-img img { width: 6.5rem; height: 6.5rem; }
+.sign-imgs { gap: 0.75rem; }
+.sign-img .src-tag { font-size: 0.65rem; }
+.q-img { max-height: 13rem; }
+.bp-body .hbfig, .lesson-pics .hbfig { max-width: 26rem; }
+.num-chip { gap: 0.4rem; }
+.chip-no { display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; border-radius: 50%; background: var(--hue); color: #fff; font: 800 0.72rem var(--f-sign); }

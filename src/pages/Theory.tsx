@@ -2,39 +2,60 @@ import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Check, ArrowLeft, ArrowRight } from "lucide-react";
 import { useStore } from "../lib/store";
-import { COURSE, CHAPTERS, LESSONS, SIGNS, SK, DIAGRAMS, META, HBU, FIGURES, FIG_POINTS } from "../lib/data";
-import { TOPICS, topicTitle, figCount } from "../lib/progress";
+import { COURSE, CHAPTERS, LESSONS, LES, SIGNS, SK, DIAGRAMS, META, HBU, FIGURES, FIG_POINTS } from "../lib/data";
+import { TOPICS, topicTitle, figCount, firstLessonOf, topicNo } from "../lib/progress";
 import { Checklist, ColourKey, Md, NextPrev, SrcTag, StageHead } from "../components/ui";
 import { MoroorPane, DvsaPane, Diagram, HbFigure } from "../components/sources";
 import { RuleCards, SUMMARIES } from "../components/rules";
 
 const GROUPS: any[] = COURSE.groups;
 
+/** First picture for a topic: a Moroor handbook figure, else a Highway Code diagram. */
+function topicThumb(t: any): string | null {
+  for (const h of t.hb) {
+    const u = HBU[Array.isArray(h) ? h[0] : h]; if (!u) continue;
+    const a = Array.isArray(h) ? h[1] : u.from, b = Array.isArray(h) ? h[2] : u.to;
+    const f = FIGURES.find((f) => f.page >= a && f.page <= b); if (f) return f.src;
+  }
+  const r = t.hc.find((x: any) => Array.isArray(x));
+  const d = r && DIAGRAMS.find((d) => typeof d.rule === "number" && d.rule >= r[0] && d.rule <= r[1]);
+  return d ? d.uk : null;
+}
+
+const SETTINGS: [string, { en: string; ar: string }][] = [
+  ["quiet", { en: "First lessons: quiet roads and car parks", ar: "الدروس الأولى: طرق هادئة ومواقف" }],
+  ["road", { en: "Town and city roads", ar: "طرق المدينة" }],
+  ["highway", { en: "Highways", ar: "الطرق السريعة" }],
+  ["none", { en: "Know it for the test", ar: "اعرفه للاختبار" }],
+];
+
 export function TheoryIndex() {
   const { L, ar, p } = useStore();
+  const settingOf = (t: any) => (firstLessonOf[t.id] ? LES[firstLessonOf[t.id]]?.where || "road" : "none");
   return (
     <main className="page">
       <StageHead id="theory" />
-      <p className="measure">{ar ? "اقرأ الموضوعات بالترتيب. كل موضوع يبدأ بما يجب معرفته، ثم نص دليل المرور مع صوره، ثم قواعد نظام الطرق البريطاني المقابلة." : "Read the topics in order. Each one opens with what to know, then the Moroor handbook text with its pictures, then the matching Highway Code rules."}</p>
-      <div className="legend"><SrcTag src="moroor" /> {ar ? "المصدر الأساسي، بالعربية" : "primary source, in Arabic"} <SrcTag src="dvsa" /> {ar ? "مرجع داعم، بالإنجليزية" : "supporting reference, in English"} <SrcTag src="darb" /> {ar ? "ملخص المدرب" : "coaching summary"}</div>
-      {GROUPS.map((g) => {
-        const list = TOPICS.filter((t) => t.g === g.id);
+      <p className="measure lede-sm">{ar ? "الموضوعات مرتبة حسب ما ستواجهه أولا على الطريق، بنفس ترتيب الدروس العملية. ابدأ من رقم 1." : "Topics are in the order you meet them on the road, matching the practical lessons. Start at number 1."}</p>
+      <div className="legend"><SrcTag src="moroor" /> {ar ? "المصدر الأساسي" : "primary source"} <SrcTag src="dvsa" /> {ar ? "مرجع داعم" : "supporting reference"}</div>
+      {SETTINGS.map(([w, label]) => {
+        const list = TOPICS.filter((t) => settingOf(t) === w);
         if (!list.length) return null;
         return (
-          <section key={g.id} className="topic-group">
-            <h2>{L(g)}</h2>
-            <ol className="topic-list">
+          <section key={w} className="topic-group">
+            <h2>{L(label)}</h2>
+            <ol className="topic-cards">
               {list.map((t) => {
-                const figs = figCount(t);
+                const thumb = topicThumb(t), first = firstLessonOf[t.id], n = topicNo(t.id);
+                const rules = SUMMARIES[t.id]?.length || 0;
                 return (
                   <li key={t.id} className={p.read[t.id] ? "read" : ""}>
                     <Link to={"/theory/" + t.id}>
-                      <span className="t-name">{topicTitle(t, L)}</span>
-                      <span className="t-meta">
-                        {t.hb.length ? <SrcTag src="moroor" /> : null}{t.hc.length ? <SrcTag src="dvsa" /> : null}
-                        {figs ? <span className="pill">{figs} {ar ? "صورة" : "figures"}</span> : null}
+                      <span className="tc-pic">{thumb ? <img src={thumb} alt="" loading="lazy" /> : <span className="tc-nopic" />}<span className="tc-no">{n}</span></span>
+                      <span className="tc-body">
+                        <span className="t-name">{topicTitle(t, L)}</span>
+                        <span className="tc-meta">{first ? <span className="first-l">{ar ? "أول مرة في" : "First in"} <b>{first}</b></span> : null}{rules ? <span>{rules} {ar ? "قاعدة" : "rules"}</span> : null}{figCount(t) ? <span>{figCount(t)} {ar ? "صورة" : "pictures"}</span> : null}</span>
                       </span>
-                      <span className="t-state">{p.read[t.id] ? <><Check size={14} strokeWidth={3} /> {ar ? "مقروء" : "Read"}</> : null}</span>
+                      {p.read[t.id] ? <span className="tc-done"><Check size={16} strokeWidth={3} /></span> : null}
                     </Link>
                   </li>
                 );
@@ -125,7 +146,7 @@ export function TopicPage() {
     <main className="page topic">
       <nav className="crumbs"><Link to="/theory">{ar ? "النظري" : "Theory"}</Link> <span>/</span> {L(group)}</nav>
       <header className="topic-head">
-        <span className="plate-no"><bdi>{i + 1}/{TOPICS.length}</bdi></span>
+        <span className="plate-no"><bdi>{ar ? "الموضوع" : "Topic"} {i + 1}/{TOPICS.length}</bdi>{firstLessonOf[t.id] ? <> · <Link to={"/lessons/" + firstLessonOf[t.id]}>{ar ? "يُطبَّق في" : "Practised in"} {firstLessonOf[t.id]}</Link></> : null}</span>
         <h1>{topicTitle(t, L)}</h1>
         {sk ? <p className="lede"><Md text={ar ? sk.tAr : sk.tEn} /></p> : null}
         <ColourKey />

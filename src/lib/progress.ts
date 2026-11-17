@@ -3,7 +3,16 @@ import { COURSE, LESSONS, SKILLS, CAR, SK } from "./data";
 import { READY_STEPS, BOOK_STEPS, STAGES, type StageId } from "./journey";
 
 /** Theory topics: the course sections that carry source reading (Moroor or Highway Code). */
-export const TOPICS: any[] = COURSE.sections.filter((s: any) => s.hb.length || s.hc.length);
+/** Theory topics, ordered by priority: the order a learner meets them on the road (first practical lesson that uses them). */
+const _topics: any[] = COURSE.sections.filter((s: any) => s.hb.length || s.hc.length);
+export const firstLessonOf: Record<string, string> = {};
+LESSONS.forEach((l: any) => {
+  const ids = [...(l.before || []).map((b: any) => b.topic).filter(Boolean), ...l.skills.map((k: number) => "k" + k)];
+  ids.forEach((id: string) => { if (!firstLessonOf[id]) firstLessonOf[id] = l.id; });
+});
+const lessonIndex = (id?: string) => (id ? LESSONS.findIndex((l: any) => l.id === id) : 999);
+export const TOPICS: any[] = _topics.map((t, i) => ({ t, i })).sort((a, b) => lessonIndex(firstLessonOf[a.t.id]) - lessonIndex(firstLessonOf[b.t.id]) || a.i - b.i).map(({ t }) => t);
+export const topicNo = (id: string) => TOPICS.findIndex((t) => t.id === id) + 1;
 export const topicTitle = (sec: any, L: (x: any) => string) => (sec.skill ? L(SK[String(sec.skill)]) : L(sec));
 export const CORE_SKILLS = SKILLS.filter((s) => s.g !== "M");
 export const LICENCE_STEPS = ["lic-fee", "lic-collect"];

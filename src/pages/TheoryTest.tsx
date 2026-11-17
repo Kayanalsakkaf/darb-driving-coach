@@ -11,6 +11,8 @@ import { THEORY_BOOK } from "../lib/journey";
 type Q = { id: string; topic: string; q: any; o: any[]; a: number[]; x?: any; src?: "moroor" | "dvsa"; ref?: string; img?: string; caseId?: string };
 const BANK: { topics: Record<string, { en: string; ar: string }>; questions: Q[]; cases: { id: string; story: any; qs: Q[] }[] } = (window as any).DC_DATA.bank;
 export const MOCK = { n: 50, minutes: 57, pass: 43 };
+/** Practice order: what a learner meets first on the road comes first. */
+const PRIORITY = ["safety-vehicle", "alertness", "attitude", "rules", "signs", "vulnerable", "hazard", "safety-margins", "vehicle-handling", "other-vehicles", "highway", "incidents", "loading", "documents"];
 const shuffle = <T,>(a: T[]) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const norm = (q: any): Q => ({ ...q, a: Array.isArray(q.a) ? q.a : [q.a] });
 function shuffleOpts(q: Q): Q { const order = shuffle(q.o.map((_, i) => i)); return { ...q, o: order.map((i) => q.o[i]), a: q.a.map((x) => order.indexOf(x)) }; }
@@ -164,9 +166,9 @@ export function TheoryTestPage({ embedded = false }: { embedded?: boolean }) {
       ) : null}
       <section>
         <h2>{ar ? "تدرّب حسب الموضوع" : "Practise by topic"}</h2>
-        <p className="muted">{ar ? "15 سؤالا مع الشرح بعد كل إجابة." : "15 questions, with the explanation after each answer."}</p>
+        <p className="muted">{ar ? "15 سؤالا مع الشرح بعد كل إجابة. مرتبة حسب ما تواجهه أولا على الطريق." : "15 questions, with the explanation after each answer. In the order you meet them on the road."}</p>
         <div className="topic-buttons">
-          {Object.entries(BANK.topics).map(([k, v]) => <button key={k} className="chip" onClick={() => start("practice", k)}>{L(v)} <bdi className="muted">{BANK.questions.filter((q) => q.topic === k).length}</bdi></button>)}
+          {PRIORITY.filter((k) => BANK.topics[k]).map((k, i) => <button key={k} className="chip num-chip" onClick={() => start("practice", k)}><span className="chip-no">{i + 1}</span>{L(BANK.topics[k])} <bdi className="muted">{BANK.questions.filter((q) => q.topic === k).length}</bdi></button>)}
         </div>
       </section>
       <section>
