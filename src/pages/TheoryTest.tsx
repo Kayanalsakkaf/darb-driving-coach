@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Check, X, Timer, Flag, ListChecks, Eye, TriangleAlert } from "lucide-react";
 import "../data/bank.js";
 import { useStore, today, uid } from "../lib/store";
-import { NextPrev, SrcTag, StageHead, StepList } from "../components/ui";
+import type React from "react";
+import { SrcTag, StepList } from "../components/ui";
 import { THEORY_BOOK } from "../lib/journey";
 
 type Q = { id: string; topic: string; q: any; o: any[]; a: number[]; x?: any; src?: "moroor" | "dvsa"; ref?: string; img?: string; caseId?: string };
@@ -26,7 +27,7 @@ function buildMock(): Q[] {
 }
 const same = (a: number[] = [], b: number[]) => a.length === b.length && a.every((x) => b.includes(x));
 
-export function TheoryTestPage() {
+export function TheoryTestPage({ embedded = false }: { embedded?: boolean }) {
   const { L, ar, s, set, user } = useStore();
   const [run, setRun] = useState<null | { kind: "mock" | "practice"; qs: Q[]; i: number; picks: number[][]; flags: boolean[]; end?: number; review?: boolean; finished?: boolean }>(null);
   const [now, setNow] = useState(Date.now());
@@ -132,8 +133,7 @@ export function TheoryTestPage() {
   const mine = s.attempts.filter((a) => a.userId === user.id);
   const mocks = mine.filter((a) => a.kind === "mock" && a.total >= 40);
   return (
-    <main className="page">
-      <StageHead id="theory-test" />
+    <Wrap embedded={embedded}>
       <div className="test-cards">
         <section className="test-card">
           <ListChecks size={28} aria-hidden="true" />
@@ -168,7 +168,10 @@ export function TheoryTestPage() {
         <h2>{ar ? "حجز الاختبار النظري" : "Booking the theory test"}</h2>
         <StepList steps={THEORY_BOOK} />
       </section>
-      <NextPrev id="theory-test" />
-    </main>
+    </Wrap>
   );
+}
+
+function Wrap({ embedded, children }: { embedded: boolean; children: React.ReactNode }) {
+  return embedded ? <div className="tt-embed">{children}</div> : <main className="page">{children}</main>;
 }

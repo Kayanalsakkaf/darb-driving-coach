@@ -4,14 +4,12 @@ export type Src = "moroor" | "dvsa" | "fronx" | "darb";
 export type Step = { id: string; en: string; ar: string; dEn: string; dAr: string; src: Src; ref?: string; href?: string };
 
 export const STAGES = [
-  { n: 1, id: "theory", sEn: "Theory", sAr: "النظري", path: "/theory", en: "Learn the theory", ar: "تعلم النظري", dEn: "Every topic: rules in brief, pictures, and the Moroor handbook and Highway Code in full.", dAr: "كل موضوع: القواعد باختصار والصور ونص دليل المرور ونظام الطرق البريطاني كاملا." },
-  { n: 2, id: "car", sEn: "Your car", sAr: "سيارتك", path: "/car", en: "Know your car", ar: "اعرف سيارتك", dEn: "Your Fronx: controls, gears, warning lights, checks, emergencies.", dAr: "فرونكس: أدوات التحكم وناقل الحركة وأضواء التحذير والفحوص والطوارئ." },
-  { n: 3, id: "lessons", sEn: "Lessons", sAr: "الدروس", path: "/lessons", en: "Practical lessons", ar: "الدروس العملية", dEn: "On the road with a qualified instructor. Each lesson starts with the theory it uses.", dAr: "على الطريق مع مدرب مؤهل. كل درس يبدأ بالنظري الذي يحتاجه." },
-  { n: 4, id: "skills", sEn: "Skills", sAr: "المهارات", path: "/skills", en: "Check your skills", ar: "قيّم مهاراتك", dEn: "Rate yourself on every skill and work the checklists.", dAr: "قيّم نفسك في كل مهارة واعمل على قوائم التحقق." },
-  { n: 5, id: "ready", sEn: "Paperwork", sAr: "الأوراق", path: "/ready", en: "Get ready for the tests", ar: "الاستعداد للاختبارات", dEn: "Absher, medical and eye test, open a file at a Moroor-approved school.", dAr: "أبشر، الفحص الطبي والنظر، فتح ملف في مدرسة معتمدة من المرور." },
-  { n: 6, id: "theory-test", sEn: "Theory test", sAr: "الاختبار النظري", path: "/theory-test", en: "Pass the theory test", ar: "اجتز الاختبار النظري", dEn: "UK-style mocks (50 questions, 57 minutes) and hazard perception.", dAr: "اختبارات تجريبية بالنمط البريطاني (50 سؤالا في 57 دقيقة) وإدراك المخاطر." },
-  { n: 7, id: "tests", sEn: "Practical test", sAr: "الاختبار العملي", path: "/tests", en: "Book and sit the practical test", ar: "احجز الاختبار العملي وأدّه", dEn: "Booking, the week before, and the day itself.", dAr: "الحجز والأسبوع السابق ويوم الاختبار." },
-  { n: 8, id: "licence", sEn: "Licence", sAr: "الرخصة", path: "/licence", en: "Licence and the law", ar: "الرخصة والنظام", dEn: "Issue the licence; violations, fines and points.", dAr: "إصدار الرخصة؛ المخالفات والغرامات والنقاط." },
+  { n: 1, id: "theory", alias: [] as string[], sEn: "Theory", sAr: "النظري", path: "/theory", en: "Learn the theory", ar: "تعلم النظري", dEn: "Every topic: rules in brief, pictures, and the Moroor handbook and Highway Code in full.", dAr: "كل موضوع: القواعد باختصار والصور ونص دليل المرور ونظام الطرق البريطاني كاملا." },
+  { n: 2, id: "car", alias: [] as string[], sEn: "Your car", sAr: "سيارتك", path: "/car", en: "Know your car", ar: "اعرف سيارتك", dEn: "Your Fronx: controls, gears, warning lights, checks, emergencies.", dAr: "فرونكس: أدوات التحكم وناقل الحركة وأضواء التحذير والفحوص والطوارئ." },
+  { n: 3, id: "lessons", alias: [] as string[], sEn: "Lessons", sAr: "الدروس", path: "/lessons", en: "Practical lessons", ar: "الدروس العملية", dEn: "On the road with a qualified instructor. Each lesson starts with the theory it uses.", dAr: "على الطريق مع مدرب مؤهل. كل درس يبدأ بالنظري الذي يحتاجه." },
+  { n: 4, id: "skills", alias: [] as string[], sEn: "Skills", sAr: "المهارات", path: "/skills", en: "Check your skills", ar: "قيّم مهاراتك", dEn: "Rate yourself on every skill and work the checklists.", dAr: "قيّم نفسك في كل مهارة واعمل على قوائم التحقق." },
+  { n: 5, id: "tests", sEn: "Tests", sAr: "الاختبارات", path: "/tests", alias: ["/ready", "/theory-test"], en: "Paperwork, tests and licence", ar: "الأوراق والاختبارات والرخصة", dEn: "Absher and medical, the theory test, the practical test, then collecting the licence.", dAr: "أبشر والفحص الطبي، الاختبار النظري، الاختبار العملي، ثم استلام الرخصة." },
+  { n: 6, id: "licence", sEn: "After the licence", sAr: "بعد الرخصة", path: "/licence", alias: [], en: "After your licence", ar: "بعد الرخصة", dEn: "Traffic law, fines and points, and looking after the car.", dAr: "نظام المرور والمخالفات والنقاط، والعناية بالسيارة." },
 ] as const;
 export type StageId = (typeof STAGES)[number]["id"];
 
@@ -45,3 +43,6 @@ export const SRC_LABEL: Record<Src, { en: string; ar: string; long: { en: string
   fronx: { en: "Fronx manual", ar: "دليل فرونكس", long: { en: "Suzuki Fronx Owner's Manual", ar: "دليل مالك سوزوكي فرونكس" } },
   darb: { en: "Darb", ar: "درب", long: { en: "Coaching notes written for Darb from school and public sources", ar: "ملاحظات تدريبية كتبت لدرب من المدارس والمصادر العامة" } },
 };
+
+/** The stage a route belongs to (sub-routes and aliases included). */
+export const stageOf = (pathname: string) => STAGES.find((x) => [x.path, ...x.alias].some((p) => pathname === p || pathname.startsWith(p + "/")));

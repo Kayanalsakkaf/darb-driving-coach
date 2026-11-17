@@ -696,3 +696,34 @@ h2.plate { background: var(--hue); box-shadow: inset 0 0 0 2px var(--hue), inset
 .sk-trail small { margin-inline-start: 0.35rem; }
 .log-block .log-form { margin-top: 0.5rem; }
 @media (max-width: 720px) { .scale-road { grid-template-columns: 1fr; } .levels { width: 100%; } .lv { flex: 1; padding-inline: 0.3rem; font-size: 0.72rem; } }
+
+/* ---------- car tab ---------- */
+.car-sec { --sc: var(--hue); }
+.car-sec-head { align-items: flex-start; padding: 0.9rem 1rem; border-radius: 10px; background: color-mix(in oklab, var(--sc) 9%, white); box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--sc) 35%, transparent); }
+.car-sec-head > div { flex: 1; }
+.car-sec-head h2 { color: var(--sc); }
+.sec-emoji { font-size: 1.7rem; line-height: 1; }
+.sec-sub { margin: 0.25rem 0 0; color: var(--ink-2); font-size: 0.95rem; }
+.car-item { border: 1px solid var(--rule); }
+.car-item p { line-height: 1.6; }
+.ct-title { color: var(--sc); font-weight: 800; text-decoration: underline; text-decoration-color: color-mix(in oklab, var(--sc) 40%, transparent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.light .ct-title { color: #fff; text-decoration-color: rgb(255 255 255 / 0.35); }
+.light mark.k-must, .light mark.k-never, .light mark.k-prio, .light mark.k-num { box-shadow: none; }
+kbd.gear { display: inline-grid; place-items: center; min-width: 1.45em; height: 1.45em; padding: 0 0.2em; border-radius: 4px; background: #16201b; color: #fff; font: 800 0.85em var(--f-sign); box-shadow: 0 2px 0 #000; vertical-align: 0.05em; margin: 0 0.05em; }
+.ci-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-top: 0.45rem !important; }
+.pg { font: 700 0.78rem var(--f-sign); color: var(--ink-3); }
+.light .pg { color: #9aa7ad; }
+.vtag { font: 800 0.72rem var(--f-sign); border-radius: 4px; padding: 0.18rem 0.45rem; }
+.v-all { color: #8a3d00; background: #fff0e2; }
+.v-auto { color: #12507a; background: #e3f0fa; }
+.v-manual { color: #5b3a87; background: #f1e9fb; }
+.ci-steps { counter-reset: c; list-style: none; padding: 0; margin: 0.6rem 0 0; display: grid; gap: 0.35rem; }
+.ci-steps li { counter-increment: c; display: grid; grid-template-columns: 1.7rem 1fr; gap: 0.5rem; align-items: start; }
+.ci-steps li::before { content: counter(c); display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--sc); color: #fff; font: 800 0.8rem var(--f-sign); }
+.part-road { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; }
+.part-road a { display: flex; align-items: center; gap: 0.45rem; height: 100%; padding: 0.7rem 0.8rem; background: var(--paper); border: 1.5px solid var(--rule); border-radius: 8px; text-decoration: none; color: var(--ink); font: 700 0.92rem var(--f-sign); }
+.part-road a:hover { border-color: var(--hue); }
+.pr-no { display: inline-grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--hue); color: #fff; font-size: 0.8rem; flex: none; }
+.rule-flat { list-style: none; padding: 0; display: grid; gap: 0.4rem; }
+.rule-flat li { --c: var(--ink-3); background: var(--paper); border-radius: 8px; padding: 0.65rem 0.9rem; box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--c) 35%, transparent); line-height: 1.55; }
+@media (max-width: 720px) { .part-road { grid-template-columns: 1fr 1fr; } }

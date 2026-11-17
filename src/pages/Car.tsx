@@ -1,13 +1,28 @@
 import { Check } from "lucide-react";
 import { useStore } from "../lib/store";
 import { CAR, CH } from "../lib/data";
-import { Checklist, Md, NextPrev, SrcTag, StageHead } from "../components/ui";
+import { Checklist, Hl, Md, NextPrev, SrcTag, StageHead } from "../components/ui";
 
 const URG: Record<string, { en: string; ar: string }> = {
   stop: { en: "Stop safely now", ar: "توقف بأمان الآن" },
   soon: { en: "Check soon", ar: "افحص قريبا" },
   info: { en: "Information", ar: "معلومة" },
 };
+
+const SEC: Record<string, { emoji: string; c: string; en: string; ar: string }> = {
+  cockpit: { emoji: "🎛️", c: "#1f56b3", en: "Find every control before the car moves.", ar: "اعرف مكان كل أداة قبل أن تتحرك السيارة." },
+  gearbox: { emoji: "⚙️", c: "#7a3fb0", en: "How to start, select gears and park.", ar: "كيف تشغّل السيارة وتختار الوضع وتوقفها." },
+  "warning-lights": { emoji: "🚨", c: "#c4271c", en: "Red: stop safely now. Amber: check soon. Green or blue: information.", ar: "الأحمر: توقف بأمان الآن. الكهرماني: افحص قريبا. الأخضر أو الأزرق: معلومة." },
+  checks: { emoji: "🔧", c: "#0d7c86", en: "Quick checks before driving and every week.", ar: "فحوص سريعة قبل القيادة وكل أسبوع." },
+  emergencies: { emoji: "🆘", c: "#c75d0e", en: "What to do when something goes wrong.", ar: "ماذا تفعل عندما يحدث خطأ." },
+};
+
+/** "Brake system (red): parking brake on..." -> bold title + highlighted body. Selector letters P R N D M get key-cap styling. */
+function CarText({ text }: { text: string }) {
+  const m = text.match(/^([^:.؛:]{3,60})[:：]\s*(.*)$/s);
+  const body = (t: string) => t.split(/(\b[PRNDM]\b(?=[\s,./)]|$))/g).map((part, i) => /^[PRNDM]$/.test(part) ? <kbd key={i} className="gear">{part}</kbd> : <Hl key={i} text={part} />);
+  return m ? <><strong className="ct-title">{m[1]}</strong> {body(m[2])}</> : <>{body(text)}</>;
+}
 
 export function CarPage() {
   const { L, ar, s, set, p, toggle } = useStore();
@@ -33,9 +48,10 @@ export function CarPage() {
         const items = sec.items.filter((it: any) => fits(it.variant));
         const lights = sec.id === "warning-lights";
         return (
-          <section key={sec.id} id={"car-" + sec.id} className={"car-sec" + (lights ? " lights" : "")}>
+          <section key={sec.id} id={"car-" + sec.id} className={"car-sec" + (lights ? " lights" : "")} style={{ ["--sc" as any]: SEC[sec.id]?.c || "var(--hue)" }}>
             <header className="car-sec-head">
-              <h2>{L(sec)}</h2>
+              <span className="sec-emoji" aria-hidden="true">{SEC[sec.id]?.emoji}</span>
+              <div><h2>{L(sec)}</h2>{SEC[sec.id] ? <p className="sec-sub">{L(SEC[sec.id])}</p> : null}</div>
               <SrcTag src="fronx" />
             </header>
             {lights ? (
@@ -45,8 +61,8 @@ export function CarPage() {
                     {it.icon ? <img src={"car/" + it.icon} alt="" width={48} height={48} /> : <span className="light-noicon" />}
                     <div>
                       <span className="urg">{L(URG[it.urgency || "info"])}</span>
-                      <p>{L(it)}</p>
-                      <span className="muted">{pg(it.page)}</span>
+                      <p><CarText text={L(it)} /></p>
+                      <span className="pg">{pg(it.page)}</span>
                     </div>
                   </li>
                 ))}
@@ -57,8 +73,9 @@ export function CarPage() {
                   <article key={it.id} className="car-item">
                     {it.fig ? <img className="car-fig" src={"car/" + it.fig} alt="" loading="lazy" /> : null}
                     <div>
-                      <p><Md text={L(it)} /> <span className="muted">{pg(it.page)}</span>{it.variant && it.variant !== "both" ? <span className="pill">{it.variant === "manual" ? (ar ? "يدوي" : "Manual") : it.autoType || (ar ? "أوتوماتيك" : "Automatic")}</span> : null}</p>
-                      {it.steps?.length ? <ol>{it.steps.map((st: any, k: number) => <li key={k}>{L(st)}</li>)}</ol> : null}
+                      <p><CarText text={L(it)} /></p>
+                      <p className="ci-meta"><span className="pg">📖 {pg(it.page)}</span>{it.variant && it.variant !== "both" ? <span className={"vtag v-" + (it.variant === "manual" ? "manual" : "auto")}>{it.variant === "manual" ? (ar ? "يدوي فقط" : "Manual only") : it.autoType ? (it.autoType === "AT" ? (ar ? "أوتوماتيك (سيارتك)" : "Automatic (your car)") : "AGS") : ar ? "أوتوماتيك" : "Automatic"}</span> : <span className="vtag v-all">{ar ? "كل الفرونكس" : "All Fronx"}</span>}</p>
+                      {it.steps?.length ? <ol className="ci-steps">{it.steps.map((st: any, k: number) => <li key={k}><CarText text={L(st)} /></li>)}</ol> : null}
                     </div>
                   </article>
                 ))}

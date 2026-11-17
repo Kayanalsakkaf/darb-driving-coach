@@ -4,8 +4,8 @@ import { HashRouter, Navigate, Route, Routes, useLocation } from "react-router-d
 import { StoreProvider } from "./lib/store";
 import { Masthead } from "./components/ui";
 import { STAGE_HUE } from "./components/Street";
-import { STAGES } from "./lib/journey";
-import { JourneyPage, ReadyPage, SkillsPage, TestsPage, LicencePage } from "./pages/Stages";
+import { stageOf } from "./lib/journey";
+import { JourneyPage, SkillsPage, TestsPage, LicencePage } from "./pages/Stages";
 import { TheoryIndex, TopicPage, SignsPage } from "./pages/Theory";
 import { CarPage } from "./pages/Car";
 import { TheoryTestPage } from "./pages/TheoryTest";
@@ -15,7 +15,7 @@ import { SettingsPage } from "./pages/Log";
 
 function Main({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
-  const st = STAGES.find((x) => (pathname === x.path || pathname.startsWith(x.path + "/")));
+  const st = stageOf(pathname);
   return <div id="main" data-stage={st?.id || "home"} style={{ ["--hue" as any]: st ? STAGE_HUE[st.id] : "#00663d" }}>{children}</div>;
 }
 
@@ -35,7 +35,7 @@ export function App() {
         <Main>
           <Routes>
             <Route path="/" element={<JourneyPage />} />
-            <Route path="/ready" element={<ReadyPage />} />
+            <Route path="/ready" element={<Navigate to="/tests" replace />} />
             <Route path="/theory" element={<TheoryIndex />} />
             <Route path="/theory/signs" element={<SignsPage />} />
             <Route path="/theory/:id" element={<TopicPage />} />

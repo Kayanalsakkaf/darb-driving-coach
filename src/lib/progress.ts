@@ -26,7 +26,12 @@ export function useStageStatus(): Record<StageId, StageState> & { next: StageId 
   const skills = f(CORE_SKILLS.filter((k) => (p.skills[k.id]?.level || 0) >= 4).length, CORE_SKILLS.length, "skills at level 4+", "مهارات بالمستوى 4+");
   const tests = f(BOOK_STEPS.filter((x) => p.steps[x.id]).length, BOOK_STEPS.length, "steps", "خطوات");
   const licence = f(LICENCE_STEPS.filter((k) => p.steps[k]).length, LICENCE_STEPS.length, "steps", "خطوات");
-  const all = { ready, theory, car, "theory-test": tt, lessons, skills, tests, licence } as Record<StageId, StageState>;
+  const tAll = READY_STEPS.length + 1 + BOOK_STEPS.length + LICENCE_STEPS.length;
+  const tDone = READY_STEPS.filter((x) => p.steps[x.id]).length + (streak ? 1 : 0) + BOOK_STEPS.filter((x) => p.steps[x.id]).length + LICENCE_STEPS.filter((k) => p.steps[k]).length;
+  const testsAll = f(tDone, tAll, "steps", "خطوات");
+  const after = f(p.read.after ? 1 : 0, 1, "read", "مقروء");
+  void ready; void tests; void licence; void tt;
+  const all = { theory, car, lessons, skills, tests: testsAll, licence: after } as Record<StageId, StageState>;
   const next = (STAGES.find((x) => !all[x.id].done)?.id || "licence") as StageId;
   return Object.assign(all, { next });
 }

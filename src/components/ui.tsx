@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Check, ChevronDown, ExternalLink, FileImage, ArrowRight, ArrowLeft, BookOpen, Car, Route, Gauge, ClipboardCheck, ListChecks, Flag, IdCard } from "lucide-react";
-export const STAGE_ICON: Record<string, any> = { theory: BookOpen, car: Car, lessons: Route, skills: Gauge, ready: ClipboardCheck, "theory-test": ListChecks, tests: Flag, licence: IdCard };
+export const STAGE_ICON: Record<string, any> = { theory: BookOpen, car: Car, lessons: Route, skills: Gauge, tests: Flag, licence: IdCard };
 import { useStore } from "../lib/store";
-import { STAGES, SRC_LABEL, type Src } from "../lib/journey";
+import { STAGES, SRC_LABEL, stageOf, type Src } from "../lib/journey";
 import { CHECKLISTS, LEVELS } from "../lib/data";
 import { useStageStatus as stageStatus } from "../lib/progress";
 import { Street } from "./Street";
@@ -72,7 +72,7 @@ export function Masthead() {
   const { L, ar, s, set, user } = useStore();
   const st = stageStatus();
   const loc = useLocation();
-  const current = STAGES.find((x) => (loc.pathname === x.path || loc.pathname.startsWith(x.path + "/")));
+  const current = stageOf(loc.pathname);
   const [menu, setMenu] = useState(false);
   useEffect(() => { setMenu(false); }, [loc.pathname]);
   return (

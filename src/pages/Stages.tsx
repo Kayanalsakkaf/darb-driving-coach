@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { NotebookPen } from "lucide-react";
+import { NotebookPen, ClipboardCheck, ListChecks, Flag, IdCard } from "lucide-react";
+import { TheoryTestPage } from "./TheoryTest";
 import { LogPage } from "./Log";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useStore, setSkill } from "../lib/store";
-import { SKILLS, SKILL_GROUPS, LEVELS, CH, LESSONS } from "../lib/data";
+import { SKILLS, SKILL_GROUPS, LEVELS, CH, LESSONS, THEORY_ONLY, CAR } from "../lib/data";
 import { STAGES, READY_STEPS, BOOK_STEPS, DVSA_BOOKING } from "../lib/journey";
 import { useStageStatus, CORE_SKILLS, TOPICS, topicTitle } from "../lib/progress";
 import { Checklist, LevelPicker, Md, NextPrev, Shield, SrcTag, StageHead, StepList } from "../components/ui";
@@ -58,20 +59,6 @@ export function JourneyPage() {
         </ul>
         <p className="muted small">{ar ? "أداة دراسة خاصة غير رسمية، وليست صادرة عن الإدارة العامة للمرور أو تابعة لها." : "Unofficial private study tool. Not produced by or affiliated with the General Department of Traffic (Moroor)."}</p>
       </section>
-    </main>
-  );
-}
-
-export function ReadyPage() {
-  const { L, ar } = useStore();
-  return (
-    <main className="page">
-      <StageHead id="ready" />
-      <StepList steps={READY_STEPS} />
-      {CH["c-driver"] ? <section className="know"><h2>{L(CH["c-driver"])} <SrcTag src="darb" /></h2><ul>{CH["c-driver"].teach.map((x: any, k: number) => <li key={k}><Md text={L(x)} /></li>)}</ul></section> : null}
-      <Checklist id="school" />
-      <p className="muted">{ar ? "اقرأ أيضا:" : "Also read:"} <Link to="/theory/k1">{ar ? "المسؤوليات النظامية" : "Legal responsibilities"}</Link> · <Link to="/theory/k3">{ar ? "إعداد المقصورة" : "Cockpit checks"}</Link></p>
-      <NextPrev id="ready" />
     </main>
   );
 }
@@ -139,23 +126,51 @@ export function SkillsPage() {
 }
 
 export function TestsPage() {
-  const { ar } = useStore();
+  const { L, ar } = useStore();
   const tests = CH["c-tests"];
+  const licSteps = [
+    { id: "lic-fee", src: "darb" as const, en: "Pay the licence fee on Absher", ar: "ادفع رسوم الرخصة عبر أبشر", dEn: "After passing the practical test.", dAr: "بعد اجتياز الاختبار العملي." },
+    { id: "lic-collect", src: "darb" as const, en: "Collect the licence", ar: "استلم الرخصة", dEn: "A private licence is valid for up to 10 years, for up to 9 people including the driver, and vehicles up to 3500 kg.", dAr: "الرخصة الخاصة صالحة حتى 10 سنوات، لما يصل إلى 9 أشخاص مع السائق، ومركبات حتى 3500 كغ." },
+  ];
+  const parts: [string, string, string, any][] = [
+    ["paperwork", "📋", ar ? "الأوراق والتسجيل" : "Paperwork and enrolment", ClipboardCheck],
+    ["theory", "📝", ar ? "الاختبار النظري" : "The theory test", ListChecks],
+    ["practical", "🚗", ar ? "الاختبار العملي" : "The practical test", Flag],
+    ["licence", "🪪", ar ? "استلام الرخصة" : "Getting the licence", IdCard],
+  ];
   return (
     <main className="page">
       <StageHead id="tests" />
-      <h2 className="section-title">{ar ? "المسار السعودي" : "The Saudi route"}</h2>
-      <StepList steps={BOOK_STEPS} />
-      {tests ? <section className="know"><h2>{ar ? "صيغة الاختبارين" : "What the tests involve"} <SrcTag src="darb" /></h2><ul>{tests.teach.map((x: any, k: number) => <li key={k}><Md text={ar ? x.ar : x.en} /></li>)}</ul><Blocks blocks={tests.blocks} /></section> : null}
-      <div className="check-grid">
-        <Checklist id="week" />
-        <Checklist id="day" />
-      </div>
-      <Checklist id="mock" />
-      <section className="reference">
-        <h2>{ar ? "للمقارنة: الحجز في بريطانيا" : "For comparison: booking in the UK"} <SrcTag src="dvsa" /></h2>
-        <p className="muted measure">{ar ? "مرجع فقط. لا ينطبق على الرخصة السعودية." : "Reference only. Does not apply to the Saudi licence."}</p>
-        <StepList steps={DVSA_BOOKING} bucket={null} />
+      <ol className="part-road">{parts.map(([id, e, t], i) => <li key={id}><a href={"#" + id} onClick={(ev) => { ev.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); }}><span className="pr-no">{i + 1}</span><span aria-hidden="true">{e}</span> {t}</a></li>)}</ol>
+
+      <section id="paperwork" className="anchor">
+        <h2 className="plate"><span className="sec-no">1</span> {parts[0][2]}</h2>
+        <StepList steps={READY_STEPS} />
+        <Checklist id="school" />
+      </section>
+
+      <section id="theory" className="anchor">
+        <h2 className="plate"><span className="sec-no">2</span> {parts[1][2]}</h2>
+        <TheoryTestPage embedded />
+      </section>
+
+      <section id="practical" className="anchor">
+        <h2 className="plate"><span className="sec-no">3</span> {parts[2][2]}</h2>
+        <StepList steps={BOOK_STEPS} />
+        {tests ? <section className="know"><h3>{ar ? "ماذا يتضمن الاختبار" : "What the test involves"} <SrcTag src="darb" /></h3><ul>{tests.teach.map((x: any, k: number) => <li key={k}><Md text={ar ? x.ar : x.en} /></li>)}</ul><Blocks blocks={tests.blocks} /></section> : null}
+        <div className="check-grid"><Checklist id="week" /><Checklist id="day" /></div>
+        <Checklist id="mock" />
+        <section className="reference">
+          <h3>{ar ? "للمقارنة: الحجز في بريطانيا" : "For comparison: booking in the UK"} <SrcTag src="dvsa" /></h3>
+          <p className="muted measure">{ar ? "مرجع فقط. لا ينطبق على الرخصة السعودية." : "Reference only. Does not apply to the Saudi licence."}</p>
+          <StepList steps={DVSA_BOOKING} bucket={null} />
+        </section>
+      </section>
+
+      <section id="licence" className="anchor">
+        <h2 className="plate"><span className="sec-no">4</span> {parts[3][2]}</h2>
+        <StepList steps={licSteps} />
+        {CH["c-licence"] ? <section className="know"><h3>{L(CH["c-licence"])} <SrcTag src="darb" /></h3><ul>{CH["c-licence"].teach.map((x: any, k: number) => <li key={k}><Md text={L(x)} /></li>)}</ul><Blocks blocks={CH["c-licence"].blocks} /></section> : null}
       </section>
       <NextPrev id="tests" />
     </main>
@@ -163,20 +178,26 @@ export function TestsPage() {
 }
 
 export function LicencePage() {
-  const { L, ar, p } = useStore();
-  const steps = [
-    { id: "lic-fee", src: "darb" as const, en: "Pay the licence fee on Absher", ar: "ادفع رسوم الرخصة عبر أبشر", dEn: "After passing the practical test.", dAr: "بعد اجتياز الاختبار العملي." },
-    { id: "lic-collect", src: "darb" as const, en: "Collect the licence", ar: "استلم الرخصة", dEn: "A private licence is valid for up to 10 years, for up to 9 people including the driver, and vehicles up to 3500 kg.", dAr: "الرخصة الخاصة صالحة حتى 10 سنوات، لما يصل إلى 9 أشخاص مع السائق، ومركبات حتى 3500 كغ." },
-  ];
-  const lic = CH["c-licence"], law = CH["c-law"];
+  const { L, ar, p, toggle } = useStore();
+  const law = CH["c-law"];
+  const fines = THEORY_ONLY.find((t) => t.id === "T2");
+  const vehicleLaw = THEORY_ONLY.find((t) => t.id === "T4");
+  const checks = CAR.sections.find((x: any) => x.id === "checks");
   return (
     <main className="page">
       <StageHead id="licence" />
-      <StepList steps={steps} />
-      {[lic, law].filter(Boolean).map((c) => (
-        <section key={c.id} className="know"><h2>{L(c)} <SrcTag src="darb" /></h2><ul>{c.teach.map((x: any, k: number) => <li key={k}><Md text={L(x)} /></li>)}</ul><Blocks blocks={c.blocks} /></section>
-      ))}
-      <p><Link className="btn" to="/theory/k1">{ar ? "اقرأ المخالفات والنقاط في دليل المرور" : "Read violations and points in the Moroor handbook"}</Link> {p.read.k1 ? <span className="readmark"><Check size={14} /> {ar ? "مقروء" : "Read"}</span> : null}</p>
+      <h2 className="plate"><span aria-hidden="true">⚖️</span> {ar ? "المخالفات والغرامات والنقاط" : "Violations, fines and points"}</h2>
+      {law ? <section className="know"><h3>{L(law)} <SrcTag src="darb" /></h3><ul>{law.teach.map((x: any, k: number) => <li key={k}><Md text={L(x)} /></li>)}</ul><Blocks blocks={law.blocks} /></section> : null}
+      {fines ? <ul className="rule-flat">{fines.points.map((b: any, k: number) => <li key={k} className={"rk-" + b.kind}><Md text={L(b)} /> <SrcTag src={b.src} at={b.ref ? (ar ? "ص " : "p. ") + b.ref : undefined} /></li>)}</ul> : null}
+      <p><Link className="btn ghost" to="/theory/k1">{ar ? "النص الكامل في دليل المرور" : "Full text in the Moroor handbook"}</Link></p>
+      {vehicleLaw ? <><h2 className="plate"><span aria-hidden="true">🚘</span> {L(vehicleLaw)}</h2><ul className="rule-flat">{vehicleLaw.points.map((b: any, k: number) => <li key={k} className={"rk-" + b.kind}><Md text={L(b)} /> <SrcTag src={b.src} at={b.ref ? (ar ? "ص " : "p. ") + b.ref : undefined} /></li>)}</ul></> : null}
+      {checks ? (
+        <>
+          <h2 className="plate"><span aria-hidden="true">🔧</span> {ar ? "صيانة السيارة" : "Looking after the car"}</h2>
+          <ul className="rule-flat">{checks.items.filter((it: any) => it.variant !== "manual").map((it: any) => <li key={it.id} className="rk-tip"><Md text={L(it)} /> <SrcTag src="fronx" at={(ar ? "ص " : "p. ") + it.page} /></li>)}</ul>
+        </>
+      ) : null}
+      <p className="done-row"><button className={"btn" + (p.read.after ? " ghost" : "")} onClick={() => toggle("read", "after")}>{p.read.after ? <><Check size={16} strokeWidth={3} /> {ar ? "مقروء" : "Read"}</> : ar ? "علّم كمقروء" : "Mark as read"}</button></p>
       <NextPrev id="licence" />
     </main>
   );

@@ -3,14 +3,14 @@
 import { useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useStore } from "../lib/store";
-import { STAGES } from "../lib/journey";
+import { STAGES, stageOf } from "../lib/journey";
 import { LESSONS } from "../lib/data";
 import { useStageStatus } from "../lib/progress";
 
-const W = 1240, H = 150, X0 = 92, X1 = 1150, ROAD_Y = 92;
+const W = 1240, H = 150, X0 = 92, X1 = 1132, ROAD_Y = 92;
 const segW = (X1 - X0) / STAGES.length;
 export const STAGE_HUE: Record<string, string> = {
-  theory: "#1f56b3", car: "#c75d0e", lessons: "#13703f", skills: "#7a3fb0", ready: "#0d7c86", "theory-test": "#a86b00", tests: "#c4271c", licence: "#00663d",
+  theory: "#1f56b3", car: "#c75d0e", lessons: "#13703f", skills: "#7a3fb0", tests: "#c4271c", licence: "#0d7c86",
 };
 
 export function Street() {
@@ -19,12 +19,13 @@ export function Street() {
   const nav = useNavigate();
   const loc = useLocation();
   const box = useRef<HTMLDivElement>(null);
-  const current = STAGES.find((x) => (loc.pathname === x.path || loc.pathname.startsWith(x.path + "/")));
-  // car position: finished stages + fraction of the first unfinished one
+  const current = stageOf(loc.pathname);
+  // the car moves with lessons: one speed bump per lesson along the whole road; the car sits just past the last lesson done
   const idx = STAGES.findIndex((x) => x.id === st.next);
-  const doneAll = STAGES.every((x) => st[x.id].done);
-  const carX = doneAll ? X1 + 10 : X0 + segW * idx + segW * Math.min(0.92, st[st.next].pct / 100);
-  const lessonsStage = STAGES.findIndex((x) => x.id === "lessons");
+  const bumpX = (i: number) => X0 + 30 + (i * (X1 - X0 - 60)) / Math.max(1, LESSONS.length - 1);
+  const doneCount = LESSONS.filter((l) => p.lessons[l.id]).length;
+  const lastDone = LESSONS.reduce((m, l, i) => (p.lessons[l.id] ? i : m), -1);
+  const carX = doneCount === LESSONS.length ? X1 + 8 : lastDone < 0 ? X0 - 20 : bumpX(lastDone) + 26;
   useEffect(() => {
     const el = box.current; if (!el) return;
     const target = ((current ? STAGES.indexOf(current) + 0.5 : idx + 0.5) * segW + X0) / W * el.scrollWidth;
@@ -32,7 +33,7 @@ export function Street() {
   }, [current?.id, idx, ar]);
   return (
     <div className="street-wrap" ref={box}>
-      <svg className="street" viewBox={`0 0 ${W} ${H}`} role="group" aria-label={ar ? "الطريق من البيت إلى المرور" : "The road from home to Moroor"} style={{ direction: "ltr" }}>
+      <svg className="street" viewBox={`0 -22 ${W} ${H + 22}`} role="group" aria-label={ar ? "الطريق من البيت إلى المرور" : "The road from home to Moroor"} style={{ direction: "ltr" }}>
         <defs>
           <pattern id="bump" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="10" fill="#f2b705" /><rect x="5" width="5" height="10" fill="#1b1b1b" /></pattern>
         </defs>
@@ -48,17 +49,24 @@ export function Street() {
           <path d="M0 30 L28 6 L56 30 Z" fill="#c75d0e" /><rect x="7" y="28" width="42" height="30" fill="#f4e9da" stroke="#6b4a00" strokeWidth="1.5" /><rect x="22" y="38" width="12" height="20" fill="#6b4a00" />
           <text x="28" y="-2" textAnchor="middle" className="st-label">{ar ? "البيت" : "Home"}</text>
         </g>
-        {/* Moroor */}
-        <g transform={`translate(${X1 + 18} ${ROAD_Y - 80})`} className="moroor">
-          <rect x="0" y="10" width="64" height="44" fill="#00663d" rx="3" /><rect x="3" y="13" width="58" height="38" fill="none" stroke="#fff" strokeWidth="1.5" rx="2" />
-          <text x="32" y="38" textAnchor="middle" className="st-sign">{ar ? "المرور" : "MOROOR"}</text>
-          <rect x="29" y="54" width="6" height="14" fill="#8a9690" />
+        {/* Moroor: the traffic department building with its logo */}
+        <g transform={`translate(${X1 + 10} ${ROAD_Y - 92})`} className="moroor">
+          <rect x="-4" y="60" width="86" height="6" fill="#cfd5d1" />
+          <rect x="0" y="14" width="78" height="48" fill="#efe7d6" stroke="#8b7d62" strokeWidth="1.2" />
+          <rect x="-3" y="10" width="84" height="6" fill="#00663d" />
+          <rect x="22" y="0" width="34" height="12" fill="#efe7d6" stroke="#8b7d62" strokeWidth="1.2" />
+          {[6, 18, 54, 66].map((x) => <rect key={x} x={x} y="22" width="7" height="10" fill="#6c8aa3" />)}
+          {[6, 18, 54, 66].map((x) => <rect key={"b" + x} x={x} y="38" width="7" height="10" fill="#6c8aa3" />)}
+          <rect x="31" y="44" width="16" height="18" fill="#5a4630" />
+          <circle cx="39" cy="30" r="11" fill="#fff" stroke="#00663d" strokeWidth="1.2" />
+          <image href="img/brand/moroor.png" x="30" y="21" width="18" height="18" />
+          <text x="39" y="-4" textAnchor="middle" className="st-label">{ar ? "المرور" : "Moroor"}</text>
         </g>
-        {/* lesson speed bumps */}
+        {/* lesson speed bumps along the whole road */}
         {LESSONS.map((l, i) => {
-          const x = X0 + segW * lessonsStage + 10 + (i * (segW - 20)) / Math.max(1, LESSONS.length - 1);
+          const x = bumpX(i);
           const done = !!p.lessons[l.id];
-          return <rect key={l.id} x={x - 2.5} y={ROAD_Y - 24} width="5" height="48" rx="2" fill={done ? "url(#bump)" : "#596069"} opacity={done ? 1 : 0.8}><title>{l.id} · {L(l)}</title></rect>;
+          return <g key={l.id} className="bump" onClick={() => nav("/lessons/" + l.id)}><rect x={x - 3} y={ROAD_Y - 24} width="6" height="48" rx="2.5" fill={done ? "url(#bump)" : "#59606a"} /><title>{l.id} · {L(l)}{done ? " ✓" : ""}</title></g>;
         })}
         {/* stages: stretch label + traffic light at the end */}
         {STAGES.map((x, i) => {
@@ -84,14 +92,17 @@ export function Street() {
             </g>
           );
         })}
-        {/* the car */}
-        <g className="st-car" style={{ transform: `translate(${carX - 22}px, ${ROAD_Y + 2}px)` }} aria-hidden="true">
-          <rect x="0" y="0" width="44" height="20" rx="6" fill="#ffffff" stroke="#16201b" strokeWidth="1.5" />
-          <rect x="22" y="3" width="13" height="14" rx="3" fill="#9cc6e8" />
-          <rect x="41" y="3" width="3" height="5" rx="1" fill="#ffe27a" /><rect x="41" y="12" width="3" height="5" rx="1" fill="#ffe27a" />
-          <rect x="2" y="-3" width="9" height="4" rx="1.5" fill="#16201b" /><rect x="30" y="-3" width="9" height="4" rx="1.5" fill="#16201b" />
-          <rect x="2" y="19" width="9" height="4" rx="1.5" fill="#16201b" /><rect x="30" y="19" width="9" height="4" rx="1.5" fill="#16201b" />
-          <rect x="4" y="6" width="8" height="8" rx="1.5" fill="#f2b705" /><text x="8" y="12.5" textAnchor="middle" className="st-L">L</text>
+        {/* the car: a blue Suzuki Fronx, seen from above */}
+        <g className="st-car" style={{ transform: `translate(${carX - 24}px, ${ROAD_Y + 1}px)` }} aria-hidden="true">
+          <rect x="3" y="-3" width="9" height="4" rx="1.5" fill="#111" /><rect x="34" y="-3" width="9" height="4" rx="1.5" fill="#111" />
+          <rect x="3" y="20" width="9" height="4" rx="1.5" fill="#111" /><rect x="34" y="20" width="9" height="4" rx="1.5" fill="#111" />
+          <path d="M2 4 Q2 0 7 0 H40 Q48 1 48 7 V14 Q48 20 40 21 H7 Q2 21 2 17 Z" fill="#1e5fbf" stroke="#0d2f66" strokeWidth="1.2" />
+          <path d="M14 3 H31 Q35 3 36 6 V15 Q35 18 31 18 H14 Q11 18 11 15 V6 Q11 3 14 3 Z" fill="#163f7d" />
+          <path d="M31 4 Q36 4 38 10.5 Q36 17 31 17 Z" fill="#9cc6e8" />
+          <path d="M14 4.5 Q11 5 11 10.5 Q11 16 14 16.5 Z" fill="#9cc6e8" />
+          <rect x="44" y="2.5" width="4" height="4" rx="1" fill="#ffe27a" /><rect x="44" y="14.5" width="4" height="4" rx="1" fill="#ffe27a" />
+          <rect x="1.5" y="3" width="2" height="4" fill="#e5483d" /><rect x="1.5" y="14" width="2" height="4" fill="#e5483d" />
+          <rect x="18" y="8" width="9" height="5" rx="1" fill="#f2b705" /><text x="22.5" y="12.2" textAnchor="middle" className="st-L">L</text>
         </g>
       </svg>
     </div>
