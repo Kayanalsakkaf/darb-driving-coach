@@ -1,6 +1,6 @@
 import type React from "react";
 import { useEffect } from "react";
-import { HashRouter, Route, Routes, useLocation } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { StoreProvider } from "./lib/store";
 import { Masthead } from "./components/ui";
 import { STAGE_HUE } from "./components/Street";
@@ -10,7 +10,7 @@ import { TheoryIndex, TopicPage, SignsPage } from "./pages/Theory";
 import { CarPage } from "./pages/Car";
 import { TheoryTestPage } from "./pages/TheoryTest";
 import { LessonsPage, LessonPage } from "./pages/Lessons";
-import { LogPage, SettingsPage } from "./pages/Log";
+import { SettingsPage } from "./pages/Log";
 
 function Main({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
@@ -45,7 +45,7 @@ export function App() {
             <Route path="/skills" element={<SkillsPage />} />
             <Route path="/tests" element={<TestsPage />} />
             <Route path="/licence" element={<LicencePage />} />
-            <Route path="/log" element={<LogPage />} />
+            <Route path="/log" element={<Navigate to="/skills#log" replace />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<JourneyPage />} />
           </Routes>

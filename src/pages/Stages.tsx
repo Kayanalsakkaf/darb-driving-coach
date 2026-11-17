@@ -1,4 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { NotebookPen } from "lucide-react";
+import { LogPage } from "./Log";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useStore, setSkill } from "../lib/store";
 import { SKILLS, SKILL_GROUPS, LEVELS, CH, LESSONS } from "../lib/data";
@@ -74,13 +77,30 @@ export function ReadyPage() {
 }
 
 export function SkillsPage() {
-  const { L, ar, p, set, user } = useStore();
+  const { L, ar, p, set, user, s: st } = useStore();
+  const loc = useLocation();
+  useEffect(() => { if (loc.hash === "#log" || new URLSearchParams(loc.search).get("lesson")) setTimeout(() => document.getElementById("log")?.scrollIntoView({ behavior: "smooth" }), 50); }, [loc.key]);
   const groups = Object.entries(SKILL_GROUPS).filter(([g]) => g !== "M");
+  const logs = st.logs.filter((x) => x.userId === user.id).slice().sort((a, b) => (a.date < b.date ? -1 : 1));
+  const history = (id: string) => logs.flatMap((x) => x.skills.filter((k) => k.id === id).map((k) => ({ date: x.date, level: k.level, lessons: x.lessons, notes: x.notes })));
+  const counts = LEVELS.map((l) => CORE_SKILLS.filter((k) => (p.skills[k.id]?.level || 0) === l.n).length);
   return (
     <main className="page skills">
       <StageHead id="skills" />
-      <p className="measure">{ar ? "قيّم نفسك بصدق في كل مهارة على مقياس DVSA من 1 إلى 5. المستوى 4 يعني جاهز للاختبار." : "Rate yourself honestly on every skill using the DVSA 1 to 5 scale. Level 4 means test-ready."}</p>
-      <dl className="level-key">{LEVELS.map((l) => <div key={l.n}><dt><span className="lv fill cur"><span>{l.n}</span></span> {L(l)}</dt><dd>{ar ? l.dAr : l.dEn}</dd></div>)}</dl>
+      <section className="scale-explainer" aria-labelledby="scale-h">
+        <h2 id="scale-h">{ar ? `مقياس المهارات: أين ${user.name} الآن؟` : `The skill scale: where is ${user.name} now?`}</h2>
+        <ol className="scale-road">
+          {LEVELS.map((l, i) => (
+            <li key={l.n} className={"lv-" + l.n}>
+              <span className="scale-name">{L(l)}</span>
+              <span className="scale-desc">{ar ? l.dAr : l.dEn}</span>
+              <span className="scale-count"><bdi>{counts[i]}</bdi> {ar ? "مهارة" : counts[i] === 1 ? "skill" : "skills"}</span>
+            </li>
+          ))}
+        </ol>
+        <p className="muted small">{ar ? "التقييمات من صفحات الدروس والجلسات المسجلة تظهر هنا تلقائيا. «مستقل» يعني جاهز للاختبار." : "Ratings from lesson pages and logged sessions appear here automatically. Independent means test-ready."}</p>
+      </section>
+
       {groups.map(([g, gv]) => (
         <section key={g} className="skill-group">
           <h2>{L(gv)} {g === "I" ? <SrcTag src="moroor" /> : <SrcTag src="dvsa" at="Ready to Pass" />}</h2>
@@ -88,12 +108,13 @@ export function SkillsPage() {
             {SKILLS.filter((k) => k.g === g).map((k) => {
               const lv = p.skills[k.id]?.level || 0;
               const hasTopic = TOPICS.some((t) => t.id === "k" + k.id);
+              const h = history(k.id);
               return (
                 <li key={k.id} className={lv >= 4 ? "ready" : ""}>
                   <div className="sk-name">
                     <b>{k.id}.</b> {hasTopic ? <Link to={"/theory/k" + k.id}>{L(k)}</Link> : L(k)}
                     <small>{ar ? k.l4Ar : k.l4En}</small>
-                    {p.skills[k.id] ? <small className="stamp">{p.skills[k.id].at}</small> : null}
+                    {h.length ? <span className="sk-trail" aria-label={ar ? "التقدم عبر الجلسات" : "Progress across sessions"}>{h.slice(-6).map((x, i) => <span key={i} className={"trail-dot lv-" + x.level} title={x.date + " · " + L(LEVELS[x.level - 1]) + (x.lessons.length ? " · " + x.lessons.join(", ") : "")}>{L(LEVELS[x.level - 1]).slice(0, ar ? 3 : 1)}</span>)}<small><bdi>{h[h.length - 1].date}</bdi></small></span> : p.skills[k.id] ? <small className="stamp">{p.skills[k.id].at}</small> : null}
                   </div>
                   <LevelPicker value={lv} label={L(k)} onChange={(n) => setSkill(set, user.id, k.id, n)} />
                 </li>
@@ -102,11 +123,16 @@ export function SkillsPage() {
           </ul>
         </section>
       ))}
+
+      <section id="log" className="anchor log-block">
+        <h2 className="plate"><NotebookPen size={18} aria-hidden="true" /> {ar ? "سجل الجلسات والملاحظات" : "Session log and notes"}</h2>
+        <LogPage embedded />
+      </section>
+
       <h2 className="section-title">{ar ? "قوائم التحقق" : "Checklists"}</h2>
       <div className="check-grid">
         {["cockpit", "movingoff", "lanes", "junctions", "roundabouts", "parking"].map((c) => <Checklist key={c} id={c} />)}
       </div>
-      <p className="muted">{CORE_SKILLS.length} {ar ? "مهارة" : "skills"}</p>
       <NextPrev id="skills" />
     </main>
   );

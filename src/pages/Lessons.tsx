@@ -1,9 +1,10 @@
 import { Link, useParams } from "react-router-dom";
 import { Check, ArrowLeft, ArrowRight, NotebookPen, BookOpen, Car, Footprints, Target, ParkingSquare, Route, Milestone, GraduationCap } from "lucide-react";
 import { useStore, setSkill } from "../lib/store";
-import { LESSONS, LES, SK, THEORY_ONLY, FIG } from "../lib/data";
+import { LESSONS, LES, SK, THEORY_ONLY, FIG, FIGURES, DIAGRAMS, HC, hcImg, CAR } from "../lib/data";
 import { TOPICS, topicTitle } from "../lib/progress";
 import { Checklist, LevelPicker, Md, NextPrev, SrcTag, StageHead, ColourKey } from "../components/ui";
+import { firstLessonPack } from "../lib/lesson0";
 import { Diagram, HbFigure } from "../components/sources";
 import { KINDS } from "../components/rules";
 
@@ -18,6 +19,35 @@ const APPLIES: Record<string, { en: string; ar: string }> = {
   manual: { en: "Manual cars", ar: "السيارات اليدوية" },
 };
 const ORDER = ["never", "must", "priority", "number", "danger", "tip"];
+
+/** "130", "142–144", "38, 43" -> [130, 142, 143, 144, 38, 43] */
+export function pages(ref?: string) {
+  if (!ref) return [] as number[];
+  return String(ref).split(/[,،]/).flatMap((part) => { const m = part.match(/(\d+)\s*[–-]\s*(\d+)/); if (m) { const a = +m[1], b = +m[2]; return b - a < 40 ? Array.from({ length: b - a + 1 }, (_, i) => a + i) : [a, b]; } const n = part.match(/\d+/); return n ? [+n[0]] : []; });
+}
+/** Every Moroor figure and DVSA diagram/picture behind a set of theory points. */
+export function picturesFor(points: any[], dg: string[] = []) {
+  const mp = new Set(points.filter((b) => b.src === "moroor").flatMap((b) => pages(b.ref)));
+  const hr = new Set(points.filter((b) => b.src === "dvsa").flatMap((b) => pages(b.ref)));
+  const ids = new Set(points.map((b) => b.fig).filter(Boolean));
+  const moroor = FIGURES.filter((f) => mp.has(f.page) || ids.has(f.id));
+  const diagrams = DIAGRAMS.filter((d) => dg.includes(d.id) || (typeof d.rule === "number" && hr.has(d.rule)));
+  const hcPics = [...hr].flatMap((n) => (HC.rules[String(n)]?.b || []).filter((b: any) => b.k === "img").map((b: any) => ({ key: b.key, rule: n })));
+  return { moroor, diagrams, hcPics };
+}
+
+function Pictures({ points, dg }: { points: any[]; dg?: string[] }) {
+  const { ar } = useStore();
+  const { moroor, diagrams, hcPics } = picturesFor(points, dg);
+  if (!moroor.length && !diagrams.length && !hcPics.length) return null;
+  return (
+    <div className="lesson-pics">
+      <h3>{ar ? "الصور والرسوم" : "Pictures and diagrams"} <span className="count-note">{moroor.length + diagrams.length + hcPics.length}</span></h3>
+      {moroor.length ? <><p className="pics-src"><SrcTag src="moroor" /></p><div className="figs strip">{moroor.map((f, k) => <HbFigure key={f.id} f={f} n={k + 1} />)}</div></> : null}
+      {diagrams.length || hcPics.length ? <><p className="pics-src"><SrcTag src="dvsa" /></p><div className="figs strip">{diagrams.map((d) => <Diagram key={d.id} id={d.id} />)}{hcPics.map((h) => <figure key={h.key} className="hbfig"><img src={hcImg(h.key)} alt="" loading="lazy" /><figcaption><span className="fig-no">{ar ? "قاعدة" : "Rule"} {h.rule}</span></figcaption></figure>)}</div></> : null}
+    </div>
+  );
+}
 
 /** Theory topics a lesson relies on. */
 export function topicsForLesson(l: any) {
@@ -37,6 +67,9 @@ export function LessonsPage() {
         <div><Target size={22} /><b>{ar ? "تحقق" : "Check"}</b><span>{ar ? "هل أتقنته؟" : "Have you got it?"}</span></div>
         <div><NotebookPen size={22} /><b>{ar ? "سجّل" : "Log"}</b><span>{ar ? "سجّل الجلسة" : "Log the session"}</span></div>
       </div>
+      <ol className="lesson-list l0">
+        <li className={p.read["L0"] ? "done" : ""}><Link to="/lessons/L0"><span className="l-id">L0</span><span className="l-main"><span className="l-name">{ar ? "قبل الدرس الأول" : "Before your first lesson"}</span><span className="l-meta">{ar ? "كل ما لا تغطيه الدروس العملية من النظري ودليل السيارة" : "Everything from the theory and the car manual that the practical lessons don't cover"}</span></span><span className="l-state">{p.read["L0"] ? <Check size={18} strokeWidth={3} /> : null}</span></Link></li>
+      </ol>
       {Object.entries(WHERE).map(([w, info]) => {
         const list = LESSONS.filter((l) => l.where === w);
         if (!list.length) return null;
@@ -59,15 +92,6 @@ export function LessonsPage() {
           </section>
         );
       })}
-      <section className="lesson-group">
-        <h2><GraduationCap size={22} aria-hidden="true" /> {ar ? "نظري فقط" : "Theory only"}</h2>
-        <p className="muted">{ar ? "أشياء لا تُتدرب عليها في السيارة لكنها في الاختبار." : "Things you can't practise in the car but will be tested on."}</p>
-        <ol className="lesson-list">
-          {THEORY_ONLY.map((t) => (
-            <li key={t.id} className={p.read["to:" + t.id] ? "done" : ""}><Link to={"/lessons/" + t.id}><span className="l-id">{t.id}</span><span className="l-main"><span className="l-name">{L(t)}</span><span className="l-meta">{t.points.length} {ar ? "نقطة" : "points"}</span></span><span className="l-state">{p.read["to:" + t.id] ? <Check size={18} strokeWidth={3} /> : null}</span></Link></li>
-          ))}
-        </ol>
-      </section>
       <NextPrev id="lessons" />
     </main>
   );
@@ -99,6 +123,36 @@ export function LessonPage() {
   const { id = "" } = useParams();
   const { L, ar, p, toggle, set, user } = useStore();
   const Back = ar ? ArrowRight : ArrowLeft, Fwd = ar ? ArrowLeft : ArrowRight;
+  if (id === "L0") {
+    const pack = firstLessonPack();
+    return (
+      <main className="page lesson">
+        <nav className="crumbs"><Link to="/lessons">{ar ? "الدروس العملية" : "Practical lessons"}</Link></nav>
+        <div className="lesson-head"><span className="shield shield-lg"><span>L0</span></span><div><h1>{ar ? "قبل الدرس الأول" : "Before your first lesson"}</h1><p className="muted">{ar ? "ادرس هذا في البيت. لا يُتدرب عليه في السيارة، لكنه في الاختبار." : "Study this at home. You can't practise it in the car, but it is in the test."}</p></div></div>
+        <ColourKey />
+        {pack.theoryOnly.map((t, k) => (
+          <section key={t.id} className="anchor">
+            <h2 className="plate"><span className="sec-no">{k + 1}</span> <GraduationCap size={18} aria-hidden="true" /> {L(t)}</h2>
+            <Points points={t.points} />
+            <Pictures points={t.points} />
+          </section>
+        ))}
+        {pack.leftoverRules.length ? <section className="anchor"><h2 className="plate"><span className="sec-no">{pack.theoryOnly.length + 1}</span> <BookOpen size={18} aria-hidden="true" /> {ar ? "قواعد أخرى" : "Other rules"}</h2><Points points={pack.leftoverRules} /><Pictures points={pack.leftoverRules} /></section> : null}
+        {pack.carLeft.length ? (
+          <section className="anchor">
+            <h2 className="plate"><span className="sec-no">{pack.theoryOnly.length + 2}</span> <Car size={18} aria-hidden="true" /> {ar ? "من دليل السيارة" : "From the car manual"}</h2>
+            {pack.carLeft.map((sec: any) => (
+              <div key={sec.id}><h3>{L(sec)}</h3>
+                <ul className="car-notes">{sec.items.map((it: any) => <li key={it.id}><span className={"applies ap-" + (it.variant === "both" || !it.variant ? "fronx" : "fronx")}>{L(APPLIES.fronx)}</span><span><Md text={L(it)} /> <span className="muted">· {ar ? "ص" : "p."} {it.page}</span></span></li>)}</ul>
+              </div>
+            ))}
+          </section>
+        ) : null}
+        <p className="done-row"><button className={"btn" + (p.read.L0 ? " ghost" : "")} onClick={() => toggle("read", "L0")}>{p.read.L0 ? <><Check size={16} strokeWidth={3} /> {ar ? "تمت الدراسة" : "Studied"}</> : ar ? "علّم كمدروس" : "Mark as studied"}</button></p>
+        <nav className="pager"><span /><Link to={"/lessons/" + LESSONS[0].id} className="pager-next"><span><small>{LESSONS[0].id}</small>{L(LESSONS[0])}</span><Fwd size={16} /></Link></nav>
+      </main>
+    );
+  }
   const to = THEORY_ONLY.find((t) => t.id === id);
   if (to) {
     return (
@@ -126,22 +180,19 @@ export function LessonPage() {
         <span className="shield shield-lg"><span>{l.id}</span></span>
         <div><h1>{L(l)}</h1><p className="muted">{ar ? "الأسبوع" : "Week"} {l.wk} · <where.Icon size={15} aria-hidden="true" /> {L(where)}</p></div>
       </div>
-      <nav className="on-page" aria-label={ar ? "في هذه الصفحة" : "On this page"}>
-        {[["before", ar ? "١ قبل أن نبدأ" : "1 Before we start"], ["car", ar ? "٢ السيارة" : "2 The car"], ["steps", ar ? "٣ خطوة بخطوة" : "3 Step by step"], ["check", ar ? "٤ هل أتقنته؟" : "4 Got it?"], ["rate", ar ? "٥ قيّم وسجّل" : "5 Rate and log"]].map(([a, t]) => <a key={a} href={"#" + a} onClick={(e) => { e.preventDefault(); document.getElementById(a)?.scrollIntoView({ behavior: "smooth" }); }}>{t}</a>)}
-      </nav>
 
       <section id="before" className="anchor before-block">
-        <h2 className="plate"><BookOpen size={18} aria-hidden="true" /> {ar ? "قبل أن نبدأ" : "Before we start"}</h2>
+        <h2 className="plate"><span className="sec-no">1</span> <BookOpen size={18} aria-hidden="true" /> {ar ? "النظري: قبل أن نبدأ" : "Theory: before we start"}</h2>
         <p className="muted measure">{ar ? "النظري الذي ستحتاجه في هذا الدرس، من دليل المرور ونظام الطرق البريطاني. اقرأه قبل أن تجلس خلف المقود." : "The theory this lesson uses, from the Moroor handbook and the Highway Code. Read it before you get in the driving seat."}</p>
         <ColourKey />
         <Points points={l.before} />
+        <Pictures points={l.before} dg={l.dg} />
         {topics.length ? <p className="row"><span className="muted">{ar ? "للمزيد:" : "Read more:"}</span> {topics.map((t) => <Link key={t.id} className="chip" to={"/theory/" + t.id}>{p.read[t.id] ? <Check size={13} strokeWidth={3} /> : null}{topicTitle(t, L)}</Link>)}</p> : null}
-        {l.dg?.length ? <div className="dg-grid">{l.dg.map((d: string) => <Diagram key={d} id={d} />)}</div> : null}
       </section>
 
       {l.car?.length ? (
         <section id="car" className="anchor">
-          <h2 className="plate"><Car size={18} aria-hidden="true" /> {ar ? "السيارة في هذا الدرس" : "The car in this lesson"}</h2>
+          <h2 className="plate"><span className="sec-no">2</span> <Car size={18} aria-hidden="true" /> {ar ? "معرفة السيارة" : "Car know-how"}</h2>
           <ul className="car-notes">
             {l.car.map((c: any, k: number) => (
               <li key={k} className={"ap-" + c.applies}>
@@ -154,14 +205,14 @@ export function LessonPage() {
       ) : null}
 
       <section id="steps" className="anchor">
-        <h2 className="plate"><Footprints size={18} aria-hidden="true" /> {ar ? "خطوة بخطوة" : "Step by step"} <span className="plate-count"><bdi>{stepsDone}/{l.steps.length}</bdi></span></h2>
+        <h2 className="plate"><span className="sec-no">3</span> <Footprints size={18} aria-hidden="true" /> {ar ? "خطة التدريب العملي" : "Practical plan"} <span className="plate-count"><bdi>{stepsDone}/{l.steps.length}</bdi></span></h2>
         <ol className="steps-simple">
           {l.steps.map((st: any, k: number) => {
             const on = !!p.checks[stepKey(k)];
             return (
               <li key={k} className={on ? "on" : ""}>
                 <button className="step-tick" aria-pressed={on} aria-label={(ar ? "الخطوة " : "Step ") + (k + 1)} onClick={() => toggle("checks", stepKey(k))}>{on ? <Check size={18} strokeWidth={3} /> : k + 1}</button>
-                <p><Md text={L(st)} />{st.applies === "fronx" ? <span className="applies ap-fronx">{L(APPLIES.fronx)}</span> : null}</p>
+                <div className="step-body"><p><Md text={L(st)} />{st.applies === "fronx" ? <span className="applies ap-fronx">{L(APPLIES.fronx)}</span> : null}</p>{st.why ? <p className="why-line"><span>{ar ? "ماذا يعني هذا؟" : "What this means:"}</span> <Md text={L(st.why)} /></p> : null}</div>
               </li>
             );
           })}
@@ -169,20 +220,21 @@ export function LessonPage() {
       </section>
 
       <section id="check" className="anchor">
-        <h2 className="plate"><Target size={18} aria-hidden="true" /> {ar ? "أتقنته عندما…" : "You've got it when…"}</h2>
+        <h3 className="got-h"><Target size={18} aria-hidden="true" /> {ar ? "أتقنته عندما…" : "You've got it when…"}</h3>
         <ul className="got-it">{l.check.map((c: any, k: number) => <li key={k}><Check size={16} strokeWidth={3} aria-hidden="true" /> <Md text={L(c)} /></li>)}</ul>
       </section>
       {checks.map((c) => <Checklist key={c} id={c} />)}
 
       <section id="rate" className="anchor">
-        <h2 className="plate"><NotebookPen size={18} aria-hidden="true" /> {ar ? "قيّم نفسك وسجّل" : "Rate yourself and log"} <SrcTag src="dvsa" at="Ready to Pass" /></h2>
+        <h2 className="plate"><span className="sec-no">4</span> <NotebookPen size={18} aria-hidden="true" /> {ar ? `قيّم ${user.name}` : `Rate ${user.name}`} <SrcTag src="dvsa" at="Ready to Pass" /></h2>
+        <p className="muted measure">{ar ? "التقييم يظهر تلقائيا في صفحة المهارات، مع سجل الجلسات والملاحظات." : "Ratings show up automatically on the Skills page, with the session log and notes."}</p>
         <ul className="skill-rows">
           {l.skills.map((k: number) => { const sk = SK[String(k)]; if (!sk) return null; const lv = p.skills[sk.id]?.level || 0; return (
             <li key={k}><span className="sk-name"><b>{sk.id}.</b> {L(sk)}<small>{ar ? sk.l4Ar : sk.l4En}</small></span><LevelPicker value={lv} label={L(sk)} onChange={(n) => setSkill(set, user.id, sk.id, n)} /></li>
           ); })}
         </ul>
         <p className="done-row">
-          <Link className="btn ghost" to={"/log?lesson=" + l.id}><NotebookPen size={16} /> {ar ? "سجّل جلسة" : "Log a session"}</Link>
+          <Link className="btn ghost" to={"/skills?lesson=" + l.id + "#log"}><NotebookPen size={16} /> {ar ? "سجّل الجلسة وملاحظاتها" : "Log this session and notes"}</Link>
           <button className={"btn" + (p.lessons[l.id] ? " ghost" : "")} onClick={() => toggle("lessons", l.id)}>{p.lessons[l.id] ? <><Check size={16} strokeWidth={3} /> {ar ? "منجز " + p.lessons[l.id].at : "Done " + p.lessons[l.id].at}</> : ar ? "علّم الدرس كمنجز" : "Mark lesson done"}</button>
         </p>
       </section>

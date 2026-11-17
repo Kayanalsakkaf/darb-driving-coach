@@ -15,7 +15,7 @@ export function Md({ text }: { text: string }) {
   let last = 0, m: RegExpExecArray | null, i = 0;
   while ((m = re.exec(text))) {
     if (m.index > last) parts.push(text.slice(last, m.index));
-    if (m[1]) parts.push(<b key={i++}>{m[1]}</b>);
+    if (m[1]) parts.push(<b key={i++}><Md text={m[1]} /></b>);
     else if (m[2]) parts.push(<u key={i++}>{m[2]}</u>);
     else if (m[3]) parts.push(<mark key={i++} className="k-must">{m[3]}</mark>);
     else if (m[4]) parts.push(<mark key={i++} className="k-prio">{m[4]}</mark>);
@@ -91,7 +91,6 @@ export function Masthead() {
             </select>
           </label>
           <button className="lang" onClick={() => set((n) => { n.lang = n.lang === "ar" ? "en" : "ar"; })} lang={ar ? "en" : "ar"}>{ar ? "English" : "العربية"}</button>
-          <NavLink to="/log" className="tool-link">{ar ? "السجل" : "Log"}</NavLink>
           <NavLink to="/settings" className="tool-link">{ar ? "الإعدادات" : "Settings"}</NavLink>
         </div>
       </div>
@@ -193,11 +192,10 @@ export function LevelPicker({ value, onChange, label }: { value: number; onChang
   return (
     <div className="levels" role="radiogroup" aria-label={label}>
       {LEVELS.map((l) => (
-        <button key={l.n} role="radio" aria-checked={value === l.n} className={"lv" + (value >= l.n ? " fill" : "") + (value === l.n ? " cur" : "")} title={L({ en: l.en + ": " + l.dEn, ar: l.ar + ": " + l.dAr })} onClick={() => onChange(value === l.n ? 0 : l.n)}>
-          <span>{l.n}</span>
+        <button key={l.n} type="button" role="radio" aria-checked={value === l.n} className={"lv lv-" + l.n + (value >= l.n ? " fill" : "") + (value === l.n ? " cur" : "")} title={L({ en: l.dEn, ar: l.dAr })} onClick={() => onChange(value === l.n ? 0 : l.n)}>
+          {L(l)}
         </button>
       ))}
-      <span className="lv-name">{value ? L(LEVELS[value - 1]) : ""}</span>
     </div>
   );
 }

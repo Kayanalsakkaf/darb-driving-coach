@@ -14,7 +14,7 @@ function skillsFor(lessons: string[], prev: { id: string; level: number }[]) {
   return [...ids, ...extra].map((id) => ({ id, level: prev.find((p) => p.id === id)?.level || 0 }));
 }
 
-export function LogPage() {
+export function LogPage({ embedded = false }: { embedded?: boolean }) {
   const { L, ar, s, set, user } = useStore();
   const [qs] = useSearchParams();
   const start = qs.get("lesson");
@@ -48,8 +48,8 @@ export function LogPage() {
   const groups: [string, string, string][] = [...new Set(LESSONS.map((l) => l.where))].map((w) => [w, w, w]);
 
   return (
-    <main className="page log">
-      <h1>{ar ? `سجل ${user.name}` : `${user.name}'s log`}</h1>
+    <div className={embedded ? "log" : "page log"}>
+      {!embedded ? <h1>{ar ? `سجل ${user.name}` : `${user.name}'s log`}</h1> : null}
       <p className="lede"><bdi>{mine.length}</bdi> {ar ? "جلسة" : "sessions"} · <bdi>{hours}</bdi> {ar ? "ساعة" : "hours"}</p>
 
       <form ref={formRef} className={"log-form" + (d.id ? " editing" : "")} onSubmit={(e) => { e.preventDefault(); save(); }}>
@@ -76,7 +76,7 @@ export function LogPage() {
 
         {d.skills.length ? (
           <>
-            <h3>{ar ? "كيف كان أداؤك؟" : "How did it go?"}</h3>
+            <h3>{ar ? `كيف كان أداء ${user.name}؟` : `How did ${user.name} do?`}</h3>
             <ul className="skill-rows compact">
               {d.skills.map((x, k) => (
                 <li key={x.id}><span className="sk-name"><b>{x.id}.</b> {L(SK[x.id])}</span>
@@ -116,7 +116,7 @@ export function LogPage() {
           </ol>
         ) : <p className="empty">{ar ? "لا جلسات مسجلة بعد. سجّل أول جلسة أعلاه." : "No sessions logged yet. Log the first one above."}</p>}
       </section>
-    </main>
+    </div>
   );
 }
 
