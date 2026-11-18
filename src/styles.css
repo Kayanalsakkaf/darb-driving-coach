@@ -833,3 +833,5 @@ kbd.gear { display: inline-grid; place-items: center; min-width: 1.45em; height:
 .sg-cover { margin: 2.5rem 0 -1.6rem; border-radius: 12px 12px 0 0; overflow: hidden; }
 .sg-cover svg { display: block; width: 100%; height: auto; max-height: 150px; }
 .check-top { margin-bottom: 1.5rem; }
+.scenes { grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 30rem)); }
+.scene svg { max-height: 24rem; }
