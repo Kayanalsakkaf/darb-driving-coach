@@ -847,8 +847,8 @@ kbd.gear { display: inline-grid; place-items: center; min-width: 1.45em; height:
 .pt-count { background: rgb(255 255 255 / 0.22); color: #fff; }
 .rk-number .pt-head { background: #ffd94a; color: #2b2200; }
 .rk-number .pt-head svg { color: #2b2200; }
-.pt-group li { border-inline-start: 5px solid color-mix(in oklab, var(--c) 70%, white); }
-.pt-group li:nth-child(even) { background: color-mix(in oklab, var(--c) 4%, white); }
+.pt-group li { background: color-mix(in oklab, var(--c) 4%, white); }
+.pt-group li:nth-child(even) { background: color-mix(in oklab, var(--c) 8%, white); }
 .colour-key mark.k-watch { background: #ffe1c7; color: #7a3500; }
 .colour-key mark.k-tip { background: #d5f0f2; color: #064f56; }
 /* illustrations explained inside the point */
