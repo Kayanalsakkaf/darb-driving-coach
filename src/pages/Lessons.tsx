@@ -2,12 +2,13 @@ import { Link, useParams } from "react-router-dom";
 import { Check, ArrowLeft, ArrowRight, NotebookPen, BookOpen, Car, Footprints, Target, ParkingSquare, Route, Milestone, GraduationCap } from "lucide-react";
 import { useStore, setSkill } from "../lib/store";
 import { LESSONS, LES, SK, THEORY_ONLY, FIG, FIGURES, DIAGRAMS, DG, HC, hcImg, CAR, SIGN_PLAN, SIGN, META } from "../lib/data";
-import { TOPICS, topicTitle } from "../lib/progress";
+import { TOPICS, topicTitle, useSkillLevels } from "../lib/progress";
 import { Checklist, LevelPicker, Md, NextPrev, SrcTag, StageHead, ColourKey } from "../components/ui";
 import { firstLessonPack } from "../lib/lesson0";
 import { Diagram, HbFigure } from "../components/sources";
 import { KINDS } from "../components/rules";
 import { SCENES, LESSON_SCENES } from "../illustrations";
+import { SCENE_TEXT } from "../illustrations/sceneText";
 
 export const WHERE: Record<string, { en: string; ar: string; dEn: string; dAr: string; Icon: any }> = {
   quiet: { en: "Quiet roads and car parks", ar: "طرق هادئة ومواقف فارغة", dEn: "With your instructor, away from busy traffic: control, steering and the test manoeuvres.", dAr: "مع مدربك بعيدا عن الزحام: التحكم والتوجيه ومناورات الاختبار.", Icon: ParkingSquare },
@@ -128,11 +129,20 @@ function LessonSigns({ id }: { id: string }) {
 /** Theory points grouped by kind. Every picture sits under the point that explains it:
     a Moroor figure under the point citing its page, a Highway Code diagram or picture under the point citing its rule.
     Diagrams no point cites become points of their own, explained by their caption. Each picture appears once. */
-function Points({ points, dg = [] }: { points: any[]; dg?: string[] }) {
+/** The Highway Code paragraph a picture belongs to: the nearest paragraph above it in the rule. */
+function hcCap(rule: number, key: string) {
+  const b = HC.rules[String(rule)]?.b || [];
+  const i = b.findIndex((x: any) => x.key === key);
+  for (let j = i - 1; j >= 0; j--) if (b[j].k === "p") return b[j].t.replace(/\*\*/g, "").replace(/\s+/g, " ").slice(0, 260);
+  const after = b.slice(i + 1).find((x: any) => x.k === "p");
+  return after ? after.t.replace(/\*\*/g, "").slice(0, 260) : "";
+}
+
+function Points({ points, dg = [], scenes = [] }: { points: any[]; dg?: string[]; scenes?: string[] }) {
   const { L, ar } = useStore();
   const used = new Set<string>();
   const picsFor = (b: any) => {
-    const out: { kind: "fig" | "dg" | "hc"; key: string; f?: any; d?: any; rule?: number }[] = [];
+    const out: { kind: "fig" | "dg" | "hc" | "sc"; key: string; f?: any; d?: any; rule?: number; sid?: string; solo?: boolean }[] = [];
     const take = (key: string, item: any) => { if (!used.has(key)) { used.add(key); out.push(item); } };
     if (b.fig && FIG[b.fig]) take("f:" + b.fig, { kind: "fig", key: b.fig, f: FIG[b.fig] });
     if (b.src === "moroor") for (const pg of pages(b.ref)) FIGURES.filter((f) => f.page === pg).forEach((f) => take("f:" + f.id, { kind: "fig", key: f.id, f }));
@@ -145,7 +155,16 @@ function Points({ points, dg = [] }: { points: any[]; dg?: string[] }) {
   // pre-assign so every point claims its own pictures in order, then add uncited diagrams as captioned points
   const withPics = points.map((b) => ({ b, pics: picsFor(b) }));
   const extra = dg.filter((id) => !used.has("d:" + id) && DG[id]).map((id) => { used.add("d:" + id); const d = DG[id]; return { b: { kind: "tip", en: "**" + d.en + ":** " + d.capEn, ar: "**" + d.ar + ":** " + d.capAr, src: "dvsa", ref: typeof d.rule === "number" ? String(d.rule) : undefined }, pics: [{ kind: "dg" as const, key: id, d }] }; });
-  const all = [...withPics, ...extra];
+  // illustrations: under the first point that talks about the same thing, captioned with what they show
+  const sceneExtra: any[] = [];
+  scenes.filter((sid) => SCENES[sid] && SCENE_TEXT[sid]).forEach((sid) => {
+    const t = SCENE_TEXT[sid];
+    const host = withPics.find((x) => t.kw.test((x.b.en || "") + " " + (x.b.ar || "")));
+    const pic = { kind: "sc" as const, key: "s:" + sid, sid };
+    if (host) host.pics.unshift(pic as any);
+    else sceneExtra.push({ b: { kind: "tip", en: t.en, ar: t.ar, src: "darb" }, pics: [{ ...pic, solo: true }] });
+  });
+  const all = [...withPics, ...extra, ...sceneExtra];
   let n = 0;
   return (
     <div className="pt-groups">
@@ -162,9 +181,10 @@ function Points({ points, dg = [] }: { points: any[]; dg?: string[] }) {
                   <p><Md text={L(b)} /> <SrcTag src={b.src} at={b.ref ? (b.src === "moroor" ? (ar ? "ص " : "p. ") : b.src === "dvsa" ? (ar ? "قاعدة " : "Rule ") : "") + b.ref : undefined} /></p>
                   {pics.length ? (
                     <div className="pt-pics">
-                      {pics.map((x) => x.kind === "fig" ? <HbFigure key={x.key} f={x.f} n={++n} />
-                        : x.kind === "dg" ? <figure key={x.key} className="hbfig"><img src={x.d.uk} alt={L(x.d)} loading="lazy" /><figcaption><span className="fig-no">{ar ? "شكل" : "Fig."} {++n}</span> {ar ? x.d.capAr : x.d.capEn}</figcaption></figure>
-                        : <figure key={x.key} className="hbfig"><img src={hcImg(x.key)} alt="" loading="lazy" /><figcaption><span className="fig-no">{ar ? "شكل" : "Fig."} {++n}</span> {ar ? "من نظام الطرق البريطاني، القاعدة " : "Highway Code, rule "}{x.rule}</figcaption></figure>)}
+                      {pics.map((x: any) => x.kind === "sc" ? (() => { const S = SCENES[x.sid]; return <figure key={x.key} className="scene in-point"><S.C ar={ar} /><figcaption><span className="fig-no">{ar ? "شكل" : "Fig."} {++n}</span> {x.solo ? L(S) : (ar ? SCENE_TEXT[x.sid].ar : SCENE_TEXT[x.sid].en)}</figcaption></figure>; })()
+                        : x.kind === "fig" ? <HbFigure key={x.key} f={x.f} n={++n} />
+                        : x.kind === "dg" ? <figure key={x.key} className="hbfig"><img src={x.d.uk} alt={L(x.d)} loading="lazy" /><figcaption><span className="fig-no">{ar ? "شكل" : "Fig."} {++n}</span> {(ar ? x.d.capAr : x.d.capEn) || L(x.d)}</figcaption></figure>
+                        : <figure key={x.key} className="hbfig"><img src={hcImg(x.key)} alt="" loading="lazy" /><figcaption><span className="fig-no">{ar ? "شكل" : "Fig."} {++n}</span> {hcCap(x.rule, x.key)} <span className="muted">({ar ? "نظام الطرق البريطاني، القاعدة " : "Highway Code, rule "}{x.rule})</span></figcaption></figure>)}
                     </div>
                   ) : null}
                 </li>
@@ -199,6 +219,7 @@ function Glance({ l }: { l: any }) {
 
 export function LessonPage() {
   const { id = "" } = useParams();
+  const auto = useSkillLevels();
   const { L, ar, p, toggle, set, user } = useStore();
   const Back = ar ? ArrowRight : ArrowLeft, Fwd = ar ? ArrowLeft : ArrowRight;
   if (id === "L0") {
@@ -214,7 +235,7 @@ export function LessonPage() {
             <Points points={t.points} />
           </section>
         ))}
-        {pack.leftoverRules.length ? <section className="anchor"><h2 className="plate"><span className="sec-no">{pack.theoryOnly.length + 1}</span> <BookOpen size={18} aria-hidden="true" /> {ar ? "قواعد أخرى" : "Other rules"}</h2><Points points={pack.leftoverRules} /></section> : null}
+        {pack.leftoverRules.length ? <section className="anchor"><h2 className="plate"><span className="sec-no">{pack.theoryOnly.length + 1}</span> <BookOpen size={18} aria-hidden="true" /> {ar ? "قواعد أخرى" : "Other rules"}</h2><Points points={pack.leftoverRules} scenes={LESSON_SCENES.L0 || []} /></section> : null}
         {pack.carLeft.length ? (
           <section className="anchor">
             <h2 className="plate"><span className="sec-no">{pack.theoryOnly.length + 2}</span> <Car size={18} aria-hidden="true" /> {ar ? "من دليل السيارة" : "From the car manual"}</h2>
@@ -258,13 +279,12 @@ export function LessonPage() {
         <div><h1>{L(l)}</h1><p className="muted">{ar ? "الأسبوع" : "Week"} {l.wk}</p></div>
       </div>
       <Glance l={l} />
-      {LESSON_SCENES[l.id]?.length ? <div className="scenes">{LESSON_SCENES[l.id].map((sid) => { const S = SCENES[sid]; return S ? <figure key={sid} className="scene"><S.C ar={ar} /><figcaption>{L(S)}</figcaption></figure> : null; })}</div> : null}
 
       <section id="before" className="anchor before-block">
         <h2 className="plate"><span className="sec-no">1</span> <BookOpen size={18} aria-hidden="true" /> {ar ? "النظري: قبل أن نبدأ" : "Theory: before we start"}</h2>
         <p className="muted measure">{ar ? "النظري الذي ستحتاجه في هذا الدرس، من دليل المرور ونظام الطرق البريطاني. اقرأه قبل أن تجلس خلف المقود." : "The theory this lesson uses, from the Moroor handbook and the Highway Code. Read it before you get in the driving seat."}</p>
         <ColourKey />
-        <Points points={l.before} dg={l.dg} />
+        <Points points={l.before} dg={l.dg} scenes={LESSON_SCENES[l.id] || []} />
         <LessonSigns id={l.id} />
         {topics.length ? <p className="row"><span className="muted">{ar ? "للمزيد:" : "Read more:"}</span> {topics.map((t) => <Link key={t.id} className="chip" to={"/theory/" + t.id}>{p.read[t.id] ? <Check size={13} strokeWidth={3} /> : null}{topicTitle(t, L)}</Link>)}</p> : null}
       </section>
@@ -300,16 +320,18 @@ export function LessonPage() {
 
       <section id="check" className="anchor">
         <h3 className="got-h"><Target size={18} aria-hidden="true" /> {ar ? "أتقنته عندما…" : "You've got it when…"}</h3>
-        <ul className="got-it">{l.check.map((c: any, k: number) => <li key={k}><Check size={16} strokeWidth={3} aria-hidden="true" /> <Md text={L(c)} /></li>)}</ul>
+        <p className="muted small">{ar ? "علّم كل ما يستطيع فعله دون مساعدة. هذه المربعات ترفع مستوى المهارة تلقائيا." : "Tick each one once it happens without help. These boxes raise the skill level automatically."}</p>
+        <ul className="got-it">{l.check.map((c: any, k: number) => { const on = !!p.checks[`got:${l.id}:${k}`]; return <li key={k} className={on ? "on" : ""}><button className="got-tick" aria-pressed={on} onClick={() => toggle("checks", `got:${l.id}:${k}`)}><Check size={16} strokeWidth={3} aria-hidden="true" /></button> <Md text={L(c)} /></li>; })}</ul>
       </section>
       {checks.map((c) => <Checklist key={c} id={c} />)}
 
       <section id="rate" className="anchor">
         <h2 className="plate"><span className="sec-no">4</span> <NotebookPen size={18} aria-hidden="true" /> {ar ? `قيّم ${user.name}` : `Rate ${user.name}`} <SrcTag src="dvsa" at="Ready to Pass" /></h2>
-        <p className="muted measure">{ar ? "التقييم يظهر تلقائيا في صفحة المهارات، مع سجل الجلسات والملاحظات." : "Ratings show up automatically on the Skills page, with the session log and notes."}</p>
+        <p className="muted measure">{ar ? "تمتلئ المستويات تلقائيا من الخطوات ومربعات «أتقنته» والدروس المنجزة. قيّم يدويا للتعديل فقط؛ «التأمل» تمنحه أنت دائما." : "Levels fill in on their own from the steps, the “got it” boxes and finished lessons. Rate by hand only to override; Reflection is always yours to give."}</p>
         <ul className="skill-rows">
           {l.skills.map((k: number) => { const sk = SK[String(k)]; if (!sk) return null; const lv = p.skills[sk.id]?.level || 0; return (
-            <li key={k}><span className="sk-name"><b>{sk.id}.</b> {L(sk)}<small>{ar ? sk.l4Ar : sk.l4En}</small></span><LevelPicker value={lv} label={L(sk)} onChange={(n) => setSkill(set, user.id, sk.id, n)} /></li>
+            
+            <li key={k}><span className="sk-name"><b>{sk.id}.</b> {L(sk)}<small>{ar ? sk.l4Ar : sk.l4En}</small></span><LevelPicker value={lv} auto={auto[sk.id]} label={L(sk)} onChange={(n) => setSkill(set, user.id, sk.id, n)} /></li>
           ); })}
         </ul>
         <p className="done-row">

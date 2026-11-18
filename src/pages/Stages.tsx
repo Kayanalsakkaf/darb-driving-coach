@@ -8,7 +8,7 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useStore, setSkill } from "../lib/store";
 import { SKILLS, SKILL_GROUPS, LEVELS, CH, LESSONS, THEORY_ONLY, CAR } from "../lib/data";
 import { STAGES, READY_STEPS, BOOK_STEPS, DVSA_BOOKING } from "../lib/journey";
-import { useStageStatus, CORE_SKILLS, TOPICS, topicTitle } from "../lib/progress";
+import { useStageStatus, CORE_SKILLS, TOPICS, topicTitle, useSkillLevels } from "../lib/progress";
 import { Checklist, LevelPicker, Md, NextPrev, Shield, SrcTag, StageHead, StepList } from "../components/ui";
 import { Blocks } from "./Theory";
 import { SKILL_COVERS } from "../illustrations";
@@ -73,7 +73,8 @@ export function SkillsPage() {
   const groups = Object.entries(SKILL_GROUPS).filter(([g]) => g !== "M");
   const logs = st.logs.filter((x) => x.userId === user.id).slice().sort((a, b) => (a.date < b.date ? -1 : 1));
   const history = (id: string) => logs.flatMap((x) => x.skills.filter((k) => k.id === id).map((k) => ({ date: x.date, level: k.level, lessons: x.lessons, notes: x.notes })));
-  const counts = LEVELS.map((l) => CORE_SKILLS.filter((k) => (p.skills[k.id]?.level || 0) === l.n).length);
+  const auto = useSkillLevels();
+  const counts = LEVELS.map((l) => CORE_SKILLS.filter((k) => (auto[k.id]?.level || 0) === l.n).length);
   return (
     <main className="page skills">
       <StageHead id="skills" />
@@ -94,7 +95,7 @@ export function SkillsPage() {
             </li>
           ))}
         </ol>
-        <p className="muted small">{ar ? "التقييمات من صفحات الدروس والجلسات المسجلة تظهر هنا تلقائيا. «مستقل» يعني جاهز للاختبار." : "Ratings from lesson pages and logged sessions appear here automatically. Independent means test-ready."}</p>
+        <p className="muted small">{ar ? "تمتلئ المستويات تلقائيا من الخطوات المنجزة والدروس المكتملة والجلسات المسجلة ومربعات «أتقنته»؛ «مستقل» يحتاج 3 جلسات أو أكثر وكل مربعات «أتقنته». قيّم يدويا للتعديل (اضغط المستوى نفسه مرة أخرى للعودة إلى التلقائي). «التأمل» يقيّمه شخص دائما. «مستقل» يعني جاهز للاختبار." : "Levels fill in automatically from ticked steps, finished lessons, logged sessions and the “You’ve got it when” boxes: Independent needs 3+ sessions and every “You’ve got it when” box ticked. Rate by hand to override (tap the same level again to go back to automatic). Reflection is always rated by a person. Independent means test-ready."}</p>
       </section>
 
       {groups.map(([g, gv]) => (
@@ -103,7 +104,7 @@ export function SkillsPage() {
           <h2>{L(gv)} {g === "I" ? <SrcTag src="moroor" /> : <SrcTag src="dvsa" at="Ready to Pass" />}</h2>
           <ul className="skill-rows">
             {SKILLS.filter((k) => k.g === g).map((k) => {
-              const lv = p.skills[k.id]?.level || 0;
+              const lv = auto[k.id]?.level || 0;
               const hasTopic = TOPICS.some((t) => t.id === "k" + k.id);
               const h = history(k.id);
               return (
@@ -113,7 +114,7 @@ export function SkillsPage() {
                     <small>{ar ? k.l4Ar : k.l4En}</small>
                     {h.length ? <span className="sk-trail" aria-label={ar ? "التقدم عبر الجلسات" : "Progress across sessions"}>{h.slice(-6).map((x, i) => <span key={i} className={"trail-dot lv-" + x.level} title={x.date + " · " + L(LEVELS[x.level - 1]) + (x.lessons.length ? " · " + x.lessons.join(", ") : "")}>{L(LEVELS[x.level - 1]).slice(0, ar ? 3 : 1)}</span>)}<small><bdi>{h[h.length - 1].date}</bdi></small></span> : p.skills[k.id] ? <small className="stamp">{p.skills[k.id].at}</small> : null}
                   </div>
-                  <LevelPicker value={lv} label={L(k)} onChange={(n) => setSkill(set, user.id, k.id, n)} />
+                  <LevelPicker value={p.skills[k.id]?.level || 0} auto={auto[k.id]} label={L(k)} onChange={(n) => setSkill(set, user.id, k.id, n)} />
                 </li>
               );
             })}

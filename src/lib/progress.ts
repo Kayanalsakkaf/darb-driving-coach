@@ -32,7 +32,8 @@ export function useStageStatus(): Record<StageId, StageState> & { next: StageId 
   const best = mocks.reduce((m, a) => Math.max(m, Math.round((a.score / a.total) * 100)), 0);
   const tt: StageState = { pct: streak ? 100 : best, done: streak, label: mocks.length ? (ar ? `أفضل نتيجة ${best}%` : `Best mock ${best}%`) : ar ? "لا اختبارات بعد" : "No mocks yet" };
   const lessons = f(LESSONS.filter((l) => p.lessons[l.id]).length, LESSONS.length, "lessons done", "دروس منجزة");
-  const skills = f(CORE_SKILLS.filter((k) => (p.skills[k.id]?.level || 0) >= 4).length, CORE_SKILLS.length, "skills at level 4+", "مهارات بالمستوى 4+");
+  const lv = skillLevels(p, s.logs, user.id);
+  const skills = f(CORE_SKILLS.filter((k) => (lv[k.id]?.level || 0) >= 4).length, CORE_SKILLS.length, "skills at level 4+", "مهارات بالمستوى 4+");
   const tests = f(BOOK_STEPS.filter((x) => p.steps[x.id]).length, BOOK_STEPS.length, "steps", "خطوات");
   const licence = f(LICENCE_STEPS.filter((k) => p.steps[k]).length, LICENCE_STEPS.length, "steps", "خطوات");
   const tAll = READY_STEPS.length + 1 + BOOK_STEPS.length + LICENCE_STEPS.length;
@@ -55,3 +56,32 @@ export function figCount(t: any) {
     return n + FIGURES.filter((f) => f.page >= a && f.page <= b).length;
   }, 0);
 }
+
+/** Automatic skill level from what has been done, following DVSA's scale:
+    1 introduced (a step of a lesson that trains it ticked), 2 lesson done or all its steps ticked,
+    3 practised in 2+ sessions, 4 practised in 3+ sessions and every "You've got it when" box ticked in one of its lessons.
+    Level 5 (reflection) is never automatic. A manual rating always wins. */
+export type SkillLevel = { level: number; auto: number; manual: number; why: string[] };
+import type { Progress, LogEntry } from "./store";
+export function skillLevels(p: Progress, logs: LogEntry[], userId: string): Record<string, SkillLevel> {
+  const out: Record<string, SkillLevel> = {};
+  for (const sk of SKILLS) {
+    const ls = LESSONS.filter((l: any) => l.skills.map(String).includes(String(sk.id)));
+    const ticked = ls.filter((l: any) => l.steps.some((_: any, k: number) => p.checks[`st:${l.id}:${k}`]));
+    const full = ls.filter((l: any) => p.lessons[l.id] || (l.steps.length && l.steps.every((_: any, k: number) => p.checks[`st:${l.id}:${k}`])));
+    const ids = new Set(ls.map((l: any) => l.id));
+    const sessions = new Set<string>();
+    ls.forEach((l: any) => { if (p.lessons[l.id]) sessions.add("d:" + l.id); });
+    logs.filter((g) => g.userId === userId && g.lessons.some((x) => ids.has(x))).forEach((g) => sessions.add("g:" + g.id));
+    const gotIt = ls.some((l: any) => l.check.length && l.check.every((_: any, k: number) => p.checks[`got:${l.id}:${k}`]));
+    let auto = 0; const why: string[] = [];
+    if (ticked.length) { auto = 1; why.push("steps"); }
+    if (full.length) { auto = 2; why.push("lesson"); }
+    if (sessions.size >= 2) { auto = 3; why.push("sessions"); }
+    if (sessions.size >= 3 && gotIt) { auto = 4; why.push("gotit"); }
+    const manual = p.skills[sk.id]?.level || 0;
+    out[sk.id] = { level: manual || auto, auto, manual, why };
+  }
+  return out;
+}
+export function useSkillLevels() { const { p, s, user } = useStore(); return skillLevels(p, s.logs, user.id); }

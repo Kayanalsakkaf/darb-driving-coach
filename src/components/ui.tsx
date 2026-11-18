@@ -54,7 +54,7 @@ export function Hl({ text }: { text: string }) {
 /** Legend for the colour code; shown at the top of reading pages. */
 export function ColourKey() {
   const { ar } = useStore();
-  const k: [string, string, string][] = [["k-must", "Must", "يجب"], ["k-never", "Never / prohibited", "ممنوع"], ["k-prio", "Priority / give way", "الأولوية"], ["k-num", "Numbers & limits", "أرقام وحدود"], ["k-ok", "Allowed", "مسموح"]];
+  const k: [string, string, string][] = [["k-must", "Must", "يجب"], ["k-never", "Never / prohibited", "ممنوع"], ["k-prio", "Priority / give way", "الأولوية"], ["k-num", "Numbers & limits", "أرقام وحدود"], ["k-watch", "Watch for", "انتبه"], ["k-ok", "Allowed", "مسموح"], ["k-tip", "Good practice", "ممارسة جيدة"]];
   return <p className="colour-key" aria-label={ar ? "دليل الألوان" : "Colour key"}>{k.map(([c, en, a]) => <mark key={c} className={c}>{ar ? a : en}</mark>)}</p>;
 }
 
@@ -198,15 +198,24 @@ export function StepList({ steps, bucket = "steps" }: { steps: { id: string; en:
   );
 }
 
-export function LevelPicker({ value, onChange, label }: { value: number; onChange: (n: number) => void; label: string }) {
-  const { L } = useStore();
+const WHY: Record<string, [string, string]> = {
+  steps: ["steps ticked", "خطوات منجزة"], lesson: ["lesson done", "درس منجز"], sessions: ["2+ sessions", "جلستان أو أكثر"], gotit: ["“got it” boxes all ticked", "كل مربعات «أتقنته» منجزة"],
+};
+/** Level buttons. With `auto`, the automatic level shows until someone rates by hand; tapping the rated level again returns to automatic. */
+export function LevelPicker({ value, onChange, label, auto }: { value: number; onChange: (n: number) => void; label: string; auto?: { auto: number; why: string[] } }) {
+  const { L, ar } = useStore();
+  const shown = value || auto?.auto || 0;
+  const isAuto = !value && !!auto?.auto;
   return (
-    <div className="levels" role="radiogroup" aria-label={label}>
+    <div className="lv-wrap">
+    <div className={"levels" + (isAuto ? " is-auto" : "")} role="radiogroup" aria-label={label}>
       {LEVELS.map((l) => (
-        <button key={l.n} type="button" role="radio" aria-checked={value === l.n} className={"lv lv-" + l.n + (value >= l.n ? " fill" : "") + (value === l.n ? " cur" : "")} title={L({ en: l.dEn, ar: l.dAr })} onClick={() => onChange(value === l.n ? 0 : l.n)}>
+        <button key={l.n} type="button" role="radio" aria-checked={shown === l.n} className={"lv lv-" + l.n + (shown >= l.n ? " fill" : "") + (shown === l.n ? " cur" : "")} title={L({ en: l.dEn, ar: l.dAr })} onClick={() => onChange(value === l.n ? 0 : l.n)}>
           {L(l)}
         </button>
       ))}
+    </div>
+    {auto ? <small className={"lv-src" + (isAuto ? " auto" : "")}>{value ? (ar ? "مقيّم يدويا" + (auto.auto ? ` · المقترح تلقائيا: ${L(LEVELS[auto.auto - 1])}` : "") : "Rated by hand" + (auto.auto ? ` · auto would say ${L(LEVELS[auto.auto - 1])}` : "")) : auto.auto ? (ar ? "⚙ تلقائي: " : "⚙ Auto: ") + auto.why.map((w) => (ar ? WHY[w]?.[1] : WHY[w]?.[0])).join(" · ") : ar ? "⚙ تلقائي: لم يبدأ بعد" : "⚙ Auto: not started yet"}</small> : null}
     </div>
   );
 }
