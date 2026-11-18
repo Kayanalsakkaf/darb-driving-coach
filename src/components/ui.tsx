@@ -7,6 +7,7 @@ import { STAGES, SRC_LABEL, stageOf, type Src } from "../lib/journey";
 import { CHECKLISTS, LEVELS } from "../lib/data";
 import { useStageStatus as stageStatus } from "../lib/progress";
 import { Street } from "./Street";
+import { CHECK_SYMBOLS } from "../illustrations";
 
 /* Inline markup in course text: **bold** __underline__ !!must!! ++priority++ ==number== */
 export function Md({ text }: { text: string }) {
@@ -91,6 +92,8 @@ export function Masthead() {
             </select>
           </label>
           <button className="lang" onClick={() => set((n) => { n.lang = n.lang === "ar" ? "en" : "ar"; })} lang={ar ? "en" : "ar"}>{ar ? "English" : "العربية"}</button>
+          <NavLink to="/theory" className="tool-link">{ar ? "📘 النظري" : "📘 Theory"}</NavLink>
+          <NavLink to="/car" className="tool-link">{ar ? "🚙 دليل السيارة" : "🚙 Car manual"}</NavLink>
           <NavLink to="/settings" className="tool-link">{ar ? "الإعدادات" : "Settings"}</NavLink>
         </div>
       </div>
@@ -101,10 +104,18 @@ export function Masthead() {
 }
 
 /** Stage page header: the exit panel for one stage. */
+/** Reference pages reached from the header rather than the journey. */
+const REF_PAGES: Record<string, any> = {
+  theory: { id: "theory", n: "📘", en: "Theory reference", ar: "مرجع النظري", dEn: "Every topic in the order you meet it in the lessons. The lessons already include what you need; come here to look something up.", dAr: "كل موضوع بترتيب ظهوره في الدروس. الدروس تتضمن ما تحتاجه؛ ارجع إلى هنا للبحث عن شيء." },
+  car: { id: "car", n: "🚙", en: "Car manual", ar: "دليل السيارة", dEn: "Your Fronx, most-used first. Lessons point here when a control comes up.", dAr: "فرونكس، الأكثر استخداما أولا. الدروس تحيل إلى هنا عند ظهور أي أداة." },
+};
+let refStatus: Record<string, any> = {};
 export function StageHead({ id, children }: { id: string; children?: ReactNode }) {
   const { L, ar } = useStore();
-  const x = STAGES.find((s) => s.id === id)!;
-  const st = stageStatus()[x.id];
+  const all = stageStatus();
+  refStatus = { theory: (all as any).theoryRef, car: (all as any).carRef };
+  const x: any = STAGES.find((s) => s.id === id) || REF_PAGES[id];
+  const st = (all as any)[x.id] || refStatus[id];
   return (
     <div className="stage-head">
       <Shield n={x.n} size="lg" />
@@ -141,7 +152,7 @@ export function Checklist({ id, title }: { id: string; title?: string }) {
   const done = cl.items.filter((_, i) => p.checks[`ck:${id}:${i}`]).length;
   return (
     <section className="checklist">
-      <header><h3>{title || L(cl)}</h3><span className="count">{done}/{cl.items.length}</span></header>
+      <header>{CHECK_SYMBOLS[id] ? <span className="cl-sym" aria-hidden="true">{(() => { const S = CHECK_SYMBOLS[id]; return <S size={34} />; })()}</span> : null}<h3>{title || L(cl)}</h3><span className="count">{done}/{cl.items.length}</span></header>
       <ul>
         {cl.items.map((it: any, i) => {
           const k = `ck:${id}:${i}`, on = !!p.checks[k];

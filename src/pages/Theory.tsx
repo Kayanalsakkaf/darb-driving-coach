@@ -74,7 +74,6 @@ export function TheoryIndex() {
         <h2>{ar ? "الإشارات واللوحات" : "Signs and signals"}</h2>
         <p><Link className="btn" to="/theory/signs">{ar ? "كل الإشارات" : "All signs"} ({SIGNS.length})</Link></p>
       </section>
-      <NextPrev id="theory" />
     </main>
   );
 }

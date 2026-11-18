@@ -804,3 +804,32 @@ kbd.gear { display: inline-grid; place-items: center; min-width: 1.45em; height:
 .by-lesson select { width: auto; min-width: 14rem; }
 .sign-les { font: 700 0.72rem var(--f-sign); color: #13703f; background: #dff2e7; border-radius: 4px; padding: 0.1rem 0.4rem; }
 .sign-grid li.focus .sign-card { border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber); }
+/* lesson flow */
+.glance { display: grid; gap: 0.75rem; margin: 0.5rem 0 1.25rem; }
+.gl-facts { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font: 700 0.9rem var(--f-sign); color: var(--ink-2); }
+.gl-facts span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.gl-key { background: var(--paper); border: 2px solid var(--hue); border-radius: 10px; padding: 0.8rem 1rem; }
+.gl-key b { font: 800 0.95rem var(--f-sign); color: var(--hue); }
+.gl-key ol { margin: 0.4rem 0 0; padding-inline-start: 1.3rem; display: grid; gap: 0.3rem; font-size: 1.04rem; }
+.scenes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; margin: 0 0 1.5rem; }
+.scene { margin: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+.scene svg { display: block; width: 100%; height: auto; background: #e9eee9; }
+.scene figcaption { padding: 0.55rem 0.85rem; font: 700 0.9rem var(--f-sign); color: var(--ink-2); }
+.pt-groups { display: grid; gap: 0.85rem; }
+.pt-group { --c: var(--ink-2); background: var(--paper); border-radius: 10px; overflow: hidden; box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--c) 30%, transparent); }
+.pt-head { display: flex; align-items: center; gap: 0.45rem; margin: 0; padding: 0.5rem 0.9rem; background: color-mix(in oklab, var(--c) 10%, white); color: var(--c); font-size: 0.95rem; }
+.rk-number .pt-head { background: #fff4c4; color: #5a4500; }
+.pt-count { margin-inline-start: auto; font: 800 0.75rem var(--f-sign); background: var(--c); color: #fff; border-radius: 10px; padding: 0.05rem 0.45rem; }
+.rk-number .pt-count { background: #ffd94a; color: #2b2200; }
+.pt-group ul { list-style: none; margin: 0; padding: 0; }
+.pt-group li { padding: 0.65rem 0.9rem; }
+.pt-group li + li { border-top: 1px solid var(--rule-2); }
+.pt-group li p { margin: 0; font-size: 1.04rem; line-height: 1.55; max-width: 64ch; }
+.pt-group .hbfig { max-width: 24rem; margin-top: 0.5rem; }
+.checklist header { justify-content: flex-start; }
+.checklist header .count { margin-inline-start: auto; }
+.cl-sym { display: inline-grid; place-items: center; flex: none; }
+.cl-sym svg { width: 34px; height: 34px; display: block; }
+.sg-cover { margin: 2.5rem 0 -1.6rem; border-radius: 12px 12px 0 0; overflow: hidden; }
+.sg-cover svg { display: block; width: 100%; height: auto; max-height: 150px; }
+.check-top { margin-bottom: 1.5rem; }

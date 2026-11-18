@@ -40,9 +40,10 @@ export function useStageStatus(): Record<StageId, StageState> & { next: StageId 
   const testsAll = f(tDone, tAll, "steps", "خطوات");
   const after = f(p.read.after ? 1 : 0, 1, "read", "مقروء");
   void ready; void tests; void licence; void tt;
-  const all = { theory, car, lessons, skills, tests: testsAll, licence: after } as Record<StageId, StageState>;
+  void theory; void car;
+  const all = { lessons, skills, tests: testsAll, licence: after } as Record<StageId, StageState>;
   const next = (STAGES.find((x) => !all[x.id].done)?.id || "licence") as StageId;
-  return Object.assign(all, { next });
+  return Object.assign(all, { next, theoryRef: theory, carRef: car });
 }
 
 /** Number of Moroor figures inside a topic's handbook page ranges. */

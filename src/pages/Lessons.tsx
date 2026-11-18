@@ -7,6 +7,7 @@ import { Checklist, LevelPicker, Md, NextPrev, SrcTag, StageHead, ColourKey } fr
 import { firstLessonPack } from "../lib/lesson0";
 import { Diagram, HbFigure } from "../components/sources";
 import { KINDS } from "../components/rules";
+import { SCENES, LESSON_SCENES } from "../illustrations";
 
 export const WHERE: Record<string, { en: string; ar: string; dEn: string; dAr: string; Icon: any }> = {
   quiet: { en: "Quiet roads and car parks", ar: "طرق هادئة ومواقف فارغة", dEn: "With your instructor, away from busy traffic: control, steering and the test manoeuvres.", dAr: "مع مدربك بعيدا عن الزحام: التحكم والتوجيه ومناورات الاختبار.", Icon: ParkingSquare },
@@ -123,25 +124,54 @@ function LessonSigns({ id }: { id: string }) {
   );
 }
 
+/** Theory points grouped by kind (Never, Must, Priority...), one heading per group instead of a badge on every line. */
 function Points({ points }: { points: any[] }) {
   const { L, ar } = useStore();
-  const sorted = [...points].sort((a, b) => ORDER.indexOf(a.kind) - ORDER.indexOf(b.kind));
+  let n = 0;
   return (
-    <ul className="before-list">
-      {sorted.map((b, k) => {
-        const K = KINDS[b.kind as keyof typeof KINDS];
-        const f = b.fig ? FIG[b.fig] : null;
+    <div className="pt-groups">
+      {ORDER.map((kind) => {
+        const list = points.filter((b) => b.kind === kind);
+        if (!list.length) return null;
+        const K = KINDS[kind as keyof typeof KINDS];
         return (
-          <li key={k} className={"bp rk-" + b.kind}>
-            <span className="bp-kind">{K ? <K.Icon size={15} strokeWidth={2.5} aria-hidden="true" /> : null}{K ? L(K) : ""}</span>
-            <div className="bp-body">
-              <p><Md text={L(b)} /> <SrcTag src={b.src} at={b.ref ? (b.src === "moroor" ? (ar ? "ص " : "p. ") : b.src === "dvsa" ? (ar ? "قاعدة " : "Rule ") : "") + b.ref : undefined} /></p>
-              {f ? <HbFigure f={f} n={k + 1} /> : null}
-            </div>
-          </li>
+          <section key={kind} className={"pt-group rk-" + kind}>
+            <h3 className="pt-head">{K ? <K.Icon size={17} strokeWidth={2.5} aria-hidden="true" /> : null}{K ? L(K) : kind}<span className="pt-count">{list.length}</span></h3>
+            <ul>
+              {list.map((b, k) => {
+                const f = b.fig ? FIG[b.fig] : null;
+                return (
+                  <li key={k}>
+                    <p><Md text={L(b)} /> <SrcTag src={b.src} at={b.ref ? (b.src === "moroor" ? (ar ? "ص " : "p. ") : b.src === "dvsa" ? (ar ? "قاعدة " : "Rule ") : "") + b.ref : undefined} /></p>
+                    {f ? <HbFigure f={f} n={++n} /> : null}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
         );
       })}
-    </ul>
+    </div>
+  );
+}
+
+/** Lesson at a glance: where, what you'll practise, the 3 rules that matter most, and progress. */
+function Glance({ l }: { l: any }) {
+  const { L, ar, p } = useStore();
+  const where = WHERE[l.where] || WHERE.road;
+  const key = l.before.filter((b: any) => b.kind === "never" || b.kind === "must").slice(0, 3);
+  const steps = l.steps.filter((_: any, k: number) => p.checks[`st:${l.id}:${k}`]).length;
+  const signs = SIGN_PLAN[l.id]?.signs.length || 0;
+  return (
+    <div className="glance">
+      <div className="gl-facts">
+        <span><where.Icon size={16} aria-hidden="true" /> {L(where)}</span>
+        <span>📖 {l.before.length} {ar ? "نقطة نظرية" : "theory points"}</span>
+        {signs ? <span>🚦 {signs} {ar ? "إشارة جديدة" : "new signs"}</span> : null}
+        <span>👣 <bdi>{steps}/{l.steps.length}</bdi> {ar ? "خطوات" : "steps done"}</span>
+      </div>
+      {key.length ? <div className="gl-key"><b>{ar ? "أهم ما يجب تذكره" : "If you remember only three things"}</b><ol>{key.map((b: any, k: number) => <li key={k}><Md text={L(b)} /></li>)}</ol></div> : null}
+    </div>
   );
 }
 
@@ -204,8 +234,10 @@ export function LessonPage() {
       <nav className="crumbs"><Link to="/lessons">{ar ? "الدروس العملية" : "Practical lessons"}</Link> <span>/</span> {L(where)}</nav>
       <div className="lesson-head">
         <span className="shield shield-lg"><span>{l.id}</span></span>
-        <div><h1>{L(l)}</h1><p className="muted">{ar ? "الأسبوع" : "Week"} {l.wk} · <where.Icon size={15} aria-hidden="true" /> {L(where)}</p></div>
+        <div><h1>{L(l)}</h1><p className="muted">{ar ? "الأسبوع" : "Week"} {l.wk}</p></div>
       </div>
+      <Glance l={l} />
+      {LESSON_SCENES[l.id]?.length ? <div className="scenes">{LESSON_SCENES[l.id].map((sid) => { const S = SCENES[sid]; return S ? <figure key={sid} className="scene"><S.C ar={ar} /><figcaption>{L(S)}</figcaption></figure> : null; })}</div> : null}
 
       <section id="before" className="anchor before-block">
         <h2 className="plate"><span className="sec-no">1</span> <BookOpen size={18} aria-hidden="true" /> {ar ? "النظري: قبل أن نبدأ" : "Theory: before we start"}</h2>

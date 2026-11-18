@@ -11,6 +11,7 @@ import { STAGES, READY_STEPS, BOOK_STEPS, DVSA_BOOKING } from "../lib/journey";
 import { useStageStatus, CORE_SKILLS, TOPICS, topicTitle } from "../lib/progress";
 import { Checklist, LevelPicker, Md, NextPrev, Shield, SrcTag, StageHead, StepList } from "../components/ui";
 import { Blocks } from "./Theory";
+import { SKILL_COVERS } from "../illustrations";
 import { STAGE_HUE } from "../components/Street";
 
 /* ---------- Home: where am I on the road ---------- */
@@ -21,7 +22,8 @@ export function JourneyPage() {
   const Fwd = ar ? ArrowLeft : ArrowRight;
   const firstTopic = TOPICS.find((t) => !p.read[t.id]);
   const firstLesson = LESSONS.find((l) => !p.lessons[l.id]);
-  const action = next.id === "theory" && firstTopic ? { to: "/theory/" + firstTopic.id, label: topicTitle(firstTopic, L) }
+  void firstTopic;
+  const action = !p.read.L0 ? { to: "/lessons/L0", label: ar ? "L0 · قبل الدرس الأول" : "L0 · Before your first lesson" }
     : next.id === "lessons" && firstLesson ? { to: "/lessons/" + firstLesson.id, label: firstLesson.id + " · " + L(firstLesson) }
     : { to: next.path, label: L(next) };
   return (
@@ -75,6 +77,12 @@ export function SkillsPage() {
   return (
     <main className="page skills">
       <StageHead id="skills" />
+      <section className="check-top">
+        <h2 className="plate">✅ {ar ? "قوائم التحقق" : "Checklists"}</h2>
+        <div className="check-grid">
+          {["cockpit", "movingoff", "lanes", "junctions", "roundabouts", "parking"].map((c) => <Checklist key={c} id={c} />)}
+        </div>
+      </section>
       <section className="scale-explainer" aria-labelledby="scale-h">
         <h2 id="scale-h">{ar ? `مقياس المهارات: أين ${user.name} الآن؟` : `The skill scale: where is ${user.name} now?`}</h2>
         <ol className="scale-road">
@@ -91,6 +99,7 @@ export function SkillsPage() {
 
       {groups.map(([g, gv]) => (
         <section key={g} className="skill-group">
+          {SKILL_COVERS[g] ? <div className="sg-cover" aria-hidden="true">{(() => { const C = SKILL_COVERS[g]; return <C />; })()}</div> : null}
           <h2>{L(gv)} {g === "I" ? <SrcTag src="moroor" /> : <SrcTag src="dvsa" at="Ready to Pass" />}</h2>
           <ul className="skill-rows">
             {SKILLS.filter((k) => k.g === g).map((k) => {
@@ -117,10 +126,6 @@ export function SkillsPage() {
         <LogPage embedded />
       </section>
 
-      <h2 className="section-title">{ar ? "قوائم التحقق" : "Checklists"}</h2>
-      <div className="check-grid">
-        {["cockpit", "movingoff", "lanes", "junctions", "roundabouts", "parking"].map((c) => <Checklist key={c} id={c} />)}
-      </div>
       <NextPrev id="skills" />
     </main>
   );

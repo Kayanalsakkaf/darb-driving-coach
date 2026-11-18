@@ -153,7 +153,6 @@ export function CarPage() {
         </section>
       ) : null}
       <p className="muted small">{CAR.source.title} · {CAR.source.edition}</p>
-      <NextPrev id="car" />
     </main>
   );
 }
