@@ -11,6 +11,7 @@ import "../data/bank.js";
 /* Optional gap-fill content (DVSA syllabus): merged into lessons and the question bank when present. */
 const _gap = import.meta.glob("../data/gapfill.js", { eager: true }); void _gap;
 const _sp = import.meta.glob("../data/signplan.js", { eager: true }); void _sp;
+const _fl = import.meta.glob("../data/finallesson.js", { eager: true }); void _fl;
 import car from "../data/car.js";
 import figures, { points as figPoints } from "../data/figures.js";
 
@@ -40,6 +41,10 @@ for (const { to, point } of GAP.lessonPoints || []) {
 }
 if (D.bank && GAP.questions?.length) D.bank.questions.push(...GAP.questions.filter((q: any) => !D.bank.questions.some((b: any) => b.id === q.id)));
 export const SYLLABUS: any[] = GAP.syllabus || [];
+/* Final gap check: an extra last lesson, plus points for L0. */
+const FL = D.finallesson;
+if (FL?.lesson && !D.lessons2.lessons.some((l: any) => l.id === FL.lesson.id)) D.lessons2.lessons.push({ ...FL.lesson, car: (FL.lesson.car || []).map((c: any) => ({ ...c, applies: c.applies === "both" ? "all" : c.applies })) });
+export const L0_EXTRA: any[] = FL?.l0 || [];
 export const LESSONS: any[] = D.lessons2.lessons;
 export const THEORY_ONLY: { id: string; en: string; ar: string; points: any[] }[] = D.lessons2.theoryOnly;
 export const FIG = Object.fromEntries((figures as any[]).map((f) => [f.id, { ...f, page: f.printedPage ?? f.page - 1, src: "img/hbf/" + f.src }]));
