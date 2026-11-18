@@ -24,3 +24,10 @@ They are added to the test after the 14 animated clips when the learner ticks
   (two for a two-hazard clip). Start the window when the hazard first starts to
   develop; end it when the driver would have to brake or swerve.
 - Keep clips around a minute, no audio needed. Start with an empty array `[]`.
+
+## TheoryPass clips
+
+`clips.json` lists the 36 TheoryPass hazard clips (videos load from `cdn.theorypass.co.uk`).
+Only clips with a filled-in `windows` array are used in the test. Clips 1–3 have their
+scoring windows (read from the TheoryPass review screen). For clips 4–36 add each clip's
+window(s) in seconds; clips 7, 19 and 36 have two hazards (10 points), so give two windows.

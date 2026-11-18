@@ -159,7 +159,7 @@ function Player({ clip, mode, clicks: given, onDone }: { clip: Clip; mode: Mode;
         onContextMenu={(e) => e.preventDefault()}>
         {clip.type === "scene"
           ? <canvas ref={canvas} className="hz-canvas" />
-          : <video ref={video} className="hz-canvas" src={base() + clip.src.replace(/^\//, "")} playsInline preload="auto" controls={false} disablePictureInPicture />}
+          : <video ref={video} className="hz-canvas" src={/^https?:/.test(clip.src) ? clip.src : base() + clip.src.replace(/^\//, "")} playsInline preload="auto" controls={false} disablePictureInPicture />}
         {!review && <span key={pulse} className={"hz-pulse" + (pulse ? " on" : "")} aria-hidden="true" />}
         {!review && <span className="hz-count" aria-live="polite">{ar ? "النقرات" : "Clicks"}: {clicks.length}</span>}
       </div>
