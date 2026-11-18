@@ -12,6 +12,7 @@ import "../data/bank.js";
 const _gap = import.meta.glob("../data/gapfill.js", { eager: true }); void _gap;
 const _sp = import.meta.glob("../data/signplan.js", { eager: true }); void _sp;
 const _fl = import.meta.glob("../data/finallesson.js", { eager: true }); void _fl;
+const _pt = import.meta.glob("../data/ptgfill.js", { eager: true }); void _pt;
 import car from "../data/car.js";
 import figures, { points as figPoints } from "../data/figures.js";
 
@@ -34,7 +35,7 @@ export const FIGURES: { id: string; page: number; src: string; ar: string; en: s
 export const FIG_POINTS: { page: number; topic: string; ar: string; en: string }[] = ((figPoints as any[]) || []).map((f) => ({ ...f, page: pp(f) }));
 
 export const CHAPTERS: any[] = COURSE.chapters;
-const GAP = D.gapfill || { questions: [], lessonPoints: [] };
+const GAP = { ...(D.gapfill || {}), questions: [...(D.gapfill?.questions || []), ...(D.ptgfill?.questions || [])], lessonPoints: [...(D.gapfill?.lessonPoints || []), ...(D.ptgfill?.lessonPoints || [])] };
 for (const { to, point } of GAP.lessonPoints || []) {
   const l = D.lessons2.lessons.find((x: any) => x.id === to) || D.lessons2.theoryOnly.find((x: any) => x.id === to);
   if (l) (l.before || l.points).push({ ...point, topic: /^k\d+$/.test(point.topic || "") ? point.topic : undefined, gap: true });
